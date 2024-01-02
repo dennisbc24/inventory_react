@@ -1,7 +1,9 @@
-import './header.css'
+import './menu.css'
+import {useState} from 'react'
 
-export function Header(params) {
-    
+export function Menu({children,titulo}) {
+
+  
     return (
         <header>
     
@@ -18,29 +20,43 @@ export function Header(params) {
       </div>
       
       <ul className="caja_pestañas">
-        <li className="pestaña">
-          <a className='pestana_a' href="https://inventario.elwayardo.com">Home</a>
         
-        </li>
-        <li className="pestaña"><a className='pestana_a' href="https://inventario.elwayardo.com/nuevo_producto">Gastos</a></li>
-        <li className="pestaña"><a className='pestana_a' href="https://inventario.elwayardo.com/ventas_por_fecha">Ventas</a>
-        <ul className='dropDown'>
-          <li className='dropDown_li'><a className='dropDown_a' href="#">Registrar venta</a></li>
-          <li className='dropDown_li'><a className='dropDown_a' href="#">Borrar venta</a></li>
-          <li className='dropDown_li'><a className='dropDown_a' href="#">Ver ventas</a></li>
-          <li className='dropDown_li'><a className='dropDown_a' href="#">Registrar venta</a></li>
-        </ul>
-        </li>
-        <li className="pestaña"><a className='pestana_a' href="https://inventario.elwayardo.com/actualizar_producto">Productos</a></li>
-        <li className="pestaña"><a  className='pestana_a'href="https://inventario.elwayardo.com/gastos">Inventario</a></li>
-        <li className="pestaña"><a className='pestana_a' href="https://inventario.elwayardo.com/summaries">Resumenes</a></li>
+        {children}
+        
         
 
       </ul>
     </header>
-    )
+    )    
+}
+
+
+export function Pestana({children,titulo}) {
+
+  const [vista, setVista] = useState('close')
+  const classDropDown = vista=='close' ? 'dropDown dropDownClose' : 'dropDown'
     
-    
+  function witch() {
+    const changeView = vista=='close' ? setVista('abierto') : setVista('close')
+  }
+
+  return(
+    <li className="pestaña" onClick={witch}>
+          {titulo}
+          <ul className={classDropDown}>
+            
+            {children}
+          </ul>
+        </li>
+  )
+}
+
+
+export function EnlaceLi({name}) {
+  return(
+    <li className='dropDown_li'><a className='dropDown_a' href='#'>{name}</a></li>
+  )
+  
 }
 
 
