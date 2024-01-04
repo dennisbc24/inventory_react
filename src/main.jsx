@@ -4,13 +4,15 @@ import './index.css'
 import {MainMenu} from './components/menuDespelgable.jsx'
 import { TitleForm } from "./components/form/titleForm.jsx";
 import { InputSearch, InputSimple, SelectSimple, ParrafoInput } from "./components/form/inputSearch.jsx";
-
+import {SearchBar} from "./components/barraBuscar.jsx";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 <>
 <MainMenu></MainMenu>
 <TitleForm text='Registrar Venta'></TitleForm>
 <InputSearch></InputSearch>
+
+<SearchBar></SearchBar>
 <div>
 <SelectSimple titulo='Sucursal'>
 <option value="1">B17</option>
@@ -35,6 +37,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 <ParrafoInput titulo='Creado'></ParrafoInput>
 <InputSimple titulo='Cliente' tipo='text'></InputSimple>
 </div>
+
 
 
 </>
