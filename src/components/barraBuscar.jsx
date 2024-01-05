@@ -6,6 +6,7 @@ export const SearchBar = () => {
   const [query, setQuery] = useState('');
   const [allProducts, setAllProducts] = useState([]); // Array con todos los productos
   const [suggestions, setSuggestions] = useState([]);
+  const [product_name, setProduct_name] = useState('');
 
   useEffect(() => {
     // Simula la carga de todos los productos al inicio
@@ -36,16 +37,16 @@ export const SearchBar = () => {
         const match = product.name.substring(index, index + query.length);
         const end = product.name.substring(index + query.length);
         return (
-          <span key={product.id}>
+          <span key={product.id_product}>
             {start}
             <strong>{match}</strong>
             {end}
           </span>
         );
       });
-
+   
     setSuggestions(filteredNames);
-    console.log('useEffect de filtros');
+    
   }, [query, allProducts]);
 
   const handleChange = (e) => {
@@ -54,19 +55,40 @@ export const SearchBar = () => {
   };
 
   const handleSuggestionClick = (suggestion) => {
-    console.log(suggestion);
+    console.log(`la sugerencia es${suggestion}`);
+    const resultado = allProducts.find((ele) => ele.id_product == 500);
+  
+  console.log(resultado); 
+  console.log(`la sugerencia es${suggestion}`);
     setQuery(suggestion);
-    console.log('clic en sugerencias');
+    
     setSuggestions([]); // Limpiar las sugerencias después de hacer clic
-    console.log('clic en sugerencias');
+    
   };
 
-  const handleInputBlur = () => {
-    // Limpiar las sugerencias si se pierde el foco en el input
-    setSuggestions([]);
-    console.log('limpiar sugerencias');
-  };
+  // const handleInputBlur = () => {
+  //   // Limpiar las sugerencias si se pierde el foco en el input
+  //   setSuggestions([]);
+  //   console.log('limpiar sugerencias');
+  // };
+  
+  const handleClick = (event) => {
+    // Accede al texto del elemento li mediante event.target.textContent
+    const textoLi = event.target.textContent;
 
+    allProducts.forEach((elem) => {
+      if (elem.name == textoLi) {
+        console.log(elem)
+        setSuggestions([])
+        setProduct_name(elem.name)
+        
+      }
+    });
+
+    // Haz lo que necesites con el texto capturado
+    console.log(event);
+    console.log('Texto del li clicado:', textoLi);
+  };
   return (
     <div>
       <input
@@ -78,17 +100,17 @@ export const SearchBar = () => {
       />
       <ul>
         {suggestions.map((suggestion, index) => (
-          <li key={index}  onClick={() => handleSuggestionClick(allProducts[index].name)}>
+        <li key={index}  onClick={handleClick}>
             {suggestion}
           </li>
         ))}
       </ul>
 
-      <ParrafoInput titulo='Producto' parrafo={query}></ParrafoInput>
+      <ParrafoInput titulo='Producto' parrafo={product_name}></ParrafoInput>
     </div>
   );
-
 };
+
 
 
 
