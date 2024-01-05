@@ -31,11 +31,11 @@ export function SelectSimple({children,titulo}) {
     )  
 }
 
-export function ParrafoInput({titulo}) {
+export function ParrafoInput({titulo, parrafo}) {
     return(
         <>
         <h3>{titulo}</h3>
-        <p></p>
+        <p>{parrafo}</p>
         </>
         
     )  
