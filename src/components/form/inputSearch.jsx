@@ -1,6 +1,6 @@
 import React from 'react'
 
-/* import './index.css' */
+import './inputSearch.css'
 
 export function InputSearch() {
     return(
@@ -8,35 +8,35 @@ export function InputSearch() {
     )  
 }
 
-export function InputSimple({titulo,tipo}) {
+export function InputSimple({titulo,tipo,func}) {
     return(
-        <>
-        <p>{titulo}</p>
-        <input type={tipo}/>
-        </>
-        
+        <div className='inputSimple'>
+            <h3>{titulo}</h3>
+        <input type={tipo} onChange={func}/>
+        </div>
+       
     )  
 }
 
 export function SelectSimple({children,titulo}) {
     return(
-        <>
+        <div className='selectSimple'> 
         <h3>{titulo}</h3>
         <select name="listSelect">
             
             {children}
         </select>
-        </>
+        </div>
         
     )  
 }
 
 export function ParrafoInput({titulo, parrafo}) {
     return(
-        <>
+        <div className='parrafoForm'>
         <h3>{titulo}</h3>
         <p>{parrafo}</p>
-        </>
+        </div>
         
     )  
 }

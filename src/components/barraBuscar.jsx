@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { ParrafoInput } from "../components/form/inputSearch";
+import { InputSimple, SelectSimple, ParrafoInput } from "../components/form/inputSearch";
 import axios from 'axios';
+import './barraBuscar.css'
 
 export const SearchBar = () => {
   const [query, setQuery] = useState('');
   const [allProducts, setAllProducts] = useState([]); // Array con todos los productos
   const [suggestions, setSuggestions] = useState([]);
-  const [product_name, setProduct_name] = useState('');
-
+  const [product, setProduct] = useState([]);
+  const [count, setCount] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [PUnit, setPUnit] = useState('');
+ 
   useEffect(() => {
     // Simula la carga de todos los productos al inicio
     const fetchAllProducts = async () => {
@@ -49,17 +53,29 @@ export const SearchBar = () => {
     
   }, [query, allProducts]);
 
+
+  useEffect(() => {
+        setPUnit(total/count)
+      
+  }, [count, total]);
+
+  const handleCount = ({target:{value}}) => {
+    
+    setCount(parseInt(value));
+  };
+
+  const handleTotal = ({target:{value}}) => {
+    
+    setTotal(parseInt(value));
+  };
+
+
   const handleChange = (e) => {
     setQuery(e.target.value);
-    console.log('setQuery e.target.value');
   };
 
   const handleSuggestionClick = (suggestion) => {
-    console.log(`la sugerencia es${suggestion}`);
     const resultado = allProducts.find((ele) => ele.id_product == 500);
-  
-  console.log(resultado); 
-  console.log(`la sugerencia es${suggestion}`);
     setQuery(suggestion);
     
     setSuggestions([]); // Limpiar las sugerencias después de hacer clic
@@ -78,19 +94,18 @@ export const SearchBar = () => {
 
     allProducts.forEach((elem) => {
       if (elem.name == textoLi) {
-        console.log(elem)
+        
         setSuggestions([])
-        setProduct_name(elem.name)
+        setProduct(elem)
         
       }
-    });
-
-    // Haz lo que necesites con el texto capturado
-    console.log(event);
-    console.log('Texto del li clicado:', textoLi);
+    }); 
+    
   };
   return (
-    <div>
+    <>
+    
+    
       <input
         type="text"
         value={query}
@@ -106,8 +121,36 @@ export const SearchBar = () => {
         ))}
       </ul>
 
-      <ParrafoInput titulo='Producto' parrafo={product_name}></ParrafoInput>
+      <div className='divForm'>
+      <InputSimple titulo='Fecha' tipo='date'></InputSimple>
+      <SelectSimple titulo='Sucursal'>
+<option value="1">B17</option>
+<option value="3">Qoripata</option>
+<option value="7">Tambopata</option>
+<option value="4">Deposito</option>
+<option value="5">Los Nogales</option>
+<option value="6">Los Incas</option>
+</SelectSimple>
+<SelectSimple titulo='Usuario'>
+<option value="1">Dennis</option>
+<option value="2">Luz</option>
+<option value="3">Miguel</option>
+
+</SelectSimple>
+
+<InputSimple titulo='Cantidad' tipo='number' func={handleCount}></InputSimple>
+        <ParrafoInput titulo='Precio Unitario' parrafo={PUnit}></ParrafoInput>
+<InputSimple titulo='Total' tipo='number'func={handleTotal}></InputSimple>
+        <ParrafoInput titulo='Ganancia' ></ParrafoInput>
+
+
+<InputSimple titulo='Cliente' tipo='text'></InputSimple>
+      <ParrafoInput titulo='Producto' parrafo={product.name}></ParrafoInput>
+      <ParrafoInput titulo='Costo' parrafo={product.cost}></ParrafoInput>
+      <ParrafoInput titulo='Creado' parrafo={product.created}></ParrafoInput>
+      
     </div>
+    </>
   );
 };
 
