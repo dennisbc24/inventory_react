@@ -18,11 +18,11 @@ export function InputSimple({titulo,tipo,func}) {
     )  
 }
 
-export function SelectSimple({children,titulo}) {
+export function SelectSimple({children,titulo,func}) {
     return(
         <div className='selectSimple'> 
         <h3>{titulo}</h3>
-        <select name="listSelect">
+        <select name="listSelect" onChange={func}>
             
             {children}
         </select>
