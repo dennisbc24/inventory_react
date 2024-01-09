@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {
-  InputSimple,
-  SelectSimple,
-  ParrafoInput,
-} from "../components/form/inputSearch";
+import {  InputSimple,  SelectSimple,  ParrafoInput,} from "./form/inputSearch";
 import axios from "axios";
-import "./barraBuscar.css";
+import "./salesForm.css";
+import { TitleForm } from "./form/titleForm.jsx";
 
 const urlBase = "https://inventario.elwayardo.com";
 //const urlBase = 'http://localhost:3000'
@@ -13,7 +10,7 @@ const urlBase = "https://inventario.elwayardo.com";
 const urlUploadVendings = `${urlBase}/api/v1/ventas/vendings`;
 const urlUMofifyExistence = `${urlBase}/api/v1/existence/vendings`;
 
-export const SearchBar = () => {
+export const SelesForm = () => {
   const [query, setQuery] = useState("");
   const [allProducts, setAllProducts] = useState([]); // Array con todos los productos
   const [suggestions, setSuggestions] = useState([]);
@@ -25,6 +22,8 @@ export const SearchBar = () => {
   const [PUnit, setPUnit] = useState(0);
   const [dateSell, setDateSell] = useState('');
   const [dataCustomer, setDataCustomer] = useState('');
+  const [idUser, setIdUser] = useState(1);
+  const [idBranch, setIdBranch] = useState(1);
 
   useEffect(() => {
     // Simula la carga de todos los productos al inicio
@@ -76,45 +75,28 @@ export const SearchBar = () => {
     setRevenue((PUnit - cost) * count);
   }, [PUnit]);
 
-  const handleCount = ({ target: { value } }) => {
-    setCount(parseInt(value));
-  };
-
-  const handleTotal = ({ target: { value } }) => {
-    setTotal(parseInt(value));
-  };
-
-  const handleChange = (e) => {
-    setQuery(e.target.value);
-  };
-
-const handleDate = (e) =>{
-  setDateSell(e.target.value)
-}
-
-const changeCostumer = (e) => {
-setDataCustomer(e.target.textContent)
-}
-  const handleClick = (event) => {
-    // Accede al texto del elemento li mediante event.target.textContent
-    const textoLi = event.target.textContent;
-
-    allProducts.forEach((elem) => {
-      if (elem.name == textoLi) {
-        setSuggestions([]);
-        setProduct(elem);
-        setCost(elem.cost);
-        setQuery('')
-      }
-    });
-  };
-
-
+  const handleCount = ({ target: { value } }) => { setCount(parseInt(value))};
+  const handleTotal = ({ target: { value } }) => {setTotal(parseInt(value))};
+  const handleChange = (e) => {setQuery(e.target.value)}
+  const handleDate = (e) =>{setDateSell(e.target.value)}
+  const handleIdUser = (e) =>{  setIdUser(e.target.value)}
+  const handleIdBranch = (e) =>{  setIdBranch(e.target.value)}
+  const changeCostumer = (e) => {setDataCustomer(e.target.textContent)}
+  const handleClick = (event) => { 
+    const textoLi = event.target.textContent
+      allProducts.forEach((elem) => {
+        if (elem.name == textoLi) {
+          setSuggestions([]);
+          setProduct(elem);
+          setCost(elem.cost);
+          setQuery('')
+        }
+      });
+    };
 
 
   const handleButton = () => {
-    
-    
+      
     const sendVending = async () => {
       try {
         const sendData = await axios.post(urlUploadVendings,{
@@ -125,10 +107,17 @@ setDataCustomer(e.target.textContent)
           revenue: parseInt(revenue),
           customer: dataCustomer,
           fk_id_product: product.id_product,
-          fk_id_user: 1,
-          fk_id_branch:1,
+          fk_id_user: idUser,
+          fk_id_branch:idBranch,
           branch:'nuevo',
           product:product.name
+        })
+
+        const modifyExistence = await axios.patch(urlUMofifyExistence,{
+          amount: count, 
+          fk_branch: idBranch, 
+          fk_product:product.id_product, 
+          fk_user:idUser
         })
         console.log('guardado');
         
@@ -136,31 +125,26 @@ setDataCustomer(e.target.textContent)
         console.error("Error al obtener todos los productos:", error);
       }
     };
-
-    sendVending();
+ 
+    sendVending()
+    
     
   };
   return (
     <>
-      <input
-        type="text"
-        value={query}
-        onChange={handleChange}
-        placeholder="Buscar..."
-        
-      />
-      <ul>
-        {suggestions.map((suggestion, index) => (
+    <TitleForm text='Registrar Venta'></TitleForm>
+      <input type="text"  value={query} onChange={handleChange} placeholder="Buscar..." />
+      <ul>   {suggestions.map((suggestion, index) => (
           <li key={index} onClick={handleClick}>
             {suggestion}
-          </li>
+         </li>
         ))}
       </ul>
 
       <div className="divForm">
         <ParrafoInput titulo="Producto" parrafo={product.name}></ParrafoInput>
         <InputSimple titulo="Fecha" tipo="date" func={handleDate}></InputSimple>
-        <SelectSimple titulo="Sucursal">
+        <SelectSimple titulo="Sucursal"func={handleIdBranch}>
           <option value="1">B17</option>
           <option value="3">Qoripata</option>
           <option value="7">Tambopata</option>
@@ -168,7 +152,7 @@ setDataCustomer(e.target.textContent)
           <option value="5">Los Nogales</option>
           <option value="6">Los Incas</option>
         </SelectSimple>
-        <SelectSimple titulo="Usuario">
+        <SelectSimple titulo="Usuario" func={handleIdUser}>
           <option value="1">Dennis</option>
           <option value="2">Luz</option>
           <option value="3">Miguel</option>
