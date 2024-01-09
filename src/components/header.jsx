@@ -1,6 +1,6 @@
 import './menu.css'
 import {useState} from 'react'
-
+import { Link } from "react-router-dom";
 export function Menu({children,titulo}) {
 
   
@@ -52,9 +52,9 @@ export function Pestana({children,titulo}) {
 }
 
 
-export function EnlaceLi({name}) {
+export function EnlaceLi({name,link='#'}) {
   return(
-    <li className='dropDown_li'><a className='dropDown_a' href='#'>{name}</a></li>
+    <li className='dropDown_li'><Link className='dropDown_a' to={link}>{name}</Link></li>
   )
   
 }
