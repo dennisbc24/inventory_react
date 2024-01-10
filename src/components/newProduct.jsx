@@ -12,14 +12,12 @@ import { TitleForm } from "./form/titleForm.jsx";
 
 
 const newProduct = {
-    name: name.value,
-    cost: parseInt(cost.value),
+    
     supplier: supplier.value,
     lowest_price: parseInt(lowest_price.value),
     list_price: parseInt(list_price.value),
-    fk_user: userId.value,
-    fk_branch:sucur.value,
-    amount: amount.value
+    
+    
     
   } */
 
@@ -31,140 +29,64 @@ const urlUploadVendings = `${urlBase}/api/v1/ventas/vendings`;
 const urlUMofifyExistence = `${urlBase}/api/v1/existence/vendings`;
 
 export const NewProduct = () => {
-  const [query, setQuery] = useState("");
-  const [allProducts, setAllProducts] = useState([]); // Array con todos los productos
-  const [suggestions, setSuggestions] = useState([]);
-  const [product, setProduct] = useState([]);
+  const [nameProduct, setNameProduct] = useState('');
   const [count, setCount] = useState(0);
-  const [cost, setCost] = useState(0);
-  const [total, setTotal] = useState(0);
-  const [revenue, setRevenue] = useState(0);
+  const [costProduct, SetCostProduct] = useState(0);
+  const [supplierProduct, SetSupplierProduct] = useState('');
+  const [pMayor, setPMayor] = useState(0);
   const [PUnit, setPUnit] = useState(0);
-  const [dateSell, setDateSell] = useState('');
-  const [dataCustomer, setDataCustomer] = useState('');
   const [idUser, setIdUser] = useState(1);
   const [idBranch, setIdBranch] = useState(1);
 
-  useEffect(() => {
-    // Simula la carga de todos los productos al inicio
-    const fetchAllProducts = async () => {
-      try {
-        const response = await axios.get(
-          "https://inventario.elwayardo.com/api/v1/products"
-        );
-        setAllProducts(response.data);
-      } catch (error) {
-        console.error("Error al obtener todos los productos:", error);
-      }
-    };
-
-    fetchAllProducts();
-  }, []);
-
-  useEffect(() => {
-    // Filtra los nombres localmente en base a la query
-    const filteredNames = allProducts
-      .filter(
-        (product) =>
-          product.name.toLowerCase().includes(query.toLowerCase()) &&
-          query !== ""
-      )
-      .map((product) => {
-        // Resalta las letras coincidentes
-        const index = product.name.toLowerCase().indexOf(query.toLowerCase());
-        const start = product.name.substring(0, index);
-        const match = product.name.substring(index, index + query.length);
-        const end = product.name.substring(index + query.length);
-        return (
-          <span key={product.id_product}>
-            {start}
-            <strong>{match}</strong>
-            {end}
-          </span>
-        );
-      });
-
-    setSuggestions(filteredNames);
-  }, [query, allProducts]);
-
-  useEffect(() => {
-    setPUnit(total / count);
-  }, [count, total]);
-
-  useEffect(() => {
-    setRevenue((PUnit - cost) * count);
-  }, [PUnit]);
-
+  
   const handleCount = ({ target: { value } }) => { setCount(parseInt(value))};
-  const handleTotal = ({ target: { value } }) => {setTotal(parseInt(value))};
-  const handleChange = (e) => {setQuery(e.target.value)}
-  const handleDate = (e) =>{setDateSell(e.target.value)}
+  const handleName = ({ target: { value } }) => { setNameProduct(parseInt(value))};
+  const handleCost = ({ target: { value } }) => { SetCostProduct(parseInt(value))};
+  const handleSupplier = ({ target: { textContent } }) => {SetSupplierProduct(textContent)};
+  const handlePUnit = (e) => {setPUnit(e.target.value)}
+  const handlePMayor = (e) =>{setPMayor(e.target.value)}
   const handleIdUser = (e) =>{  setIdUser(e.target.value)}
   const handleIdBranch = (e) =>{  setIdBranch(e.target.value)}
-  const changeCostumer = (e) => {setDataCustomer(e.target.textContent)}
-  const handleClick = (event) => { 
-    const textoLi = event.target.textContent
-      allProducts.forEach((elem) => {
-        if (elem.name == textoLi) {
-          setSuggestions([]);
-          setProduct(elem);
-          setCost(elem.cost);
-          setQuery('')
-        }
-      });
-    };
-
 
   const handleButton = () => {
-      
-    const sendVending = async () => {
+          const sendData = async () => {
       try {
         const sendData = await axios.post(urlUploadVendings,{
-          date: dateSell,
+          
+          
+          fk_user: idUser,
+          fk_branch:idBranch,
+          supplier:supplierProduct,
           amount: count,
-          p_total: total,
-          p_unit: parseInt(PUnit),
-          revenue: parseInt(revenue),
-          customer: dataCustomer,
-          fk_id_product: product.id_product,
-          fk_id_user: idUser,
-          fk_id_branch:idBranch,
-          branch:'nuevo',
-          product:product.name
+          name:nameProduct,
+          cost: costProduct,
+          lowest_price: parseInt(PUnit),
+          list_price: parseInt(pMayor),
         })
 
-        const modifyExistence = await axios.patch(urlUMofifyExistence,{
-          amount: count, 
-          fk_branch: idBranch, 
-          fk_product:product.id_product, 
-          fk_user:idUser
-        })
-        console.log('guardado');
+
+        console.log('exito');
         
       } catch (error) {
         console.error("Error al obtener todos los productos:", error);
       }
     };
  
-    sendVending()
+    sendData()
     
     
   };
   return (
     <>
     <TitleForm text='Crear Nuevo Producto'></TitleForm>
-      <input type="text"  value={query} onChange={handleChange} placeholder="Buscar..." />
-      <ul>   {suggestions.map((suggestion, index) => (
-          <li key={index} onClick={handleClick}>
-            {suggestion}
-         </li>
-        ))}
-      </ul>
-
+      
       <div className="divForm">
-        <ParrafoInput titulo="Producto" parrafo={product.name}></ParrafoInput>
-        <InputSimple titulo="Fecha" tipo="date" func={handleDate}></InputSimple>
-        <SelectSimple titulo="Sucursal"func={handleIdBranch}>
+      <SelectSimple titulo="Usuario" func={handleIdUser}>
+          <option value="1">Dennis</option>
+          <option value="2">Luz</option>
+          <option value="3">Miguel</option>
+        </SelectSimple>
+        <SelectSimple titulo="Establecimiento"func={handleIdBranch}>
           <option value="1">B17</option>
           <option value="3">Qoripata</option>
           <option value="7">Tambopata</option>
@@ -172,29 +94,14 @@ export const NewProduct = () => {
           <option value="5">Los Nogales</option>
           <option value="6">Los Incas</option>
         </SelectSimple>
-        <SelectSimple titulo="Usuario" func={handleIdUser}>
-          <option value="1">Dennis</option>
-          <option value="2">Luz</option>
-          <option value="3">Miguel</option>
-        </SelectSimple>
-
-        <InputSimple
-          titulo="Cantidad"
-          tipo="number"
-          func={handleCount}
-        ></InputSimple>
-        <ParrafoInput titulo="Precio Unitario" parrafo={PUnit}></ParrafoInput>
-        <InputSimple
-          titulo="Total"
-          tipo="number"
-          func={handleTotal}
-        ></InputSimple>
-
-        <InputSimple titulo="Cliente" tipo="text" func={changeCostumer}></InputSimple>
-
-        <ParrafoInput titulo="Costo" parrafo={cost}></ParrafoInput>
-        <ParrafoInput titulo="Ganancia" parrafo={revenue}></ParrafoInput>
-        <ParrafoInput titulo="Creado" parrafo={product.created}></ParrafoInput>
+        <InputSimple titulo="Cantidad" tipo="number" func={handleCount}></InputSimple>
+        <InputSimple titulo="Nombre" tipo="text" func={handleName}></InputSimple>
+        <InputSimple titulo="Costo" tipo="number" func={handleCost}></InputSimple>
+        <InputSimple titulo="Proveedor" tipo="text" func={handleSupplier}   ></InputSimple>
+        <InputSimple titulo="Precio Unitario" tipo="number" func={handlePUnit}></InputSimple>
+        <InputSimple titulo="Precio por Mayor" tipo="number" func={handlePMayor}></InputSimple>
+        
+        
       </div>
       <button onClick={handleButton}>Guardar</button>
     </>
