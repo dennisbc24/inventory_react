@@ -1,0 +1,71 @@
+import React, { useState } from "react";
+import {  InputSimple,  SelectSimple} from "./form/inputSearch";
+import axios from "axios";
+import "./salesForm.css";
+import { TitleForm } from "./form/titleForm.jsx";
+
+//const baseUrl = 'https://inventario.elwayardo.com'
+const baseUrl = 'http://localhost:3000'
+
+const urlUpload = `${baseUrl}/api/v1/box`
+
+
+export const SendExpense = () => {
+    const [concept, setConcept] = useState('');
+    const [date, setDate] = useState('');
+    const [amount, setAmount] = useState(0);
+    const [user, setUser] = useState('');
+    const [type, setType] = useState('false');
+
+
+    const handleConcept = ({ target: { value } }) => { setConcept(value)};
+    const handleMount = ({ target: { value } }) => { setAmount(value)}
+    const handleDate = ({ target: { value } }) => { setDate(value)}
+    const handleUser = ({ target: { value } }) => { setUser(value)}
+    const handleType = ({ target: { value } }) => { setType(value)}
+
+    const handleButton = () => {
+        const sendData = async () => {
+    try {
+      const sendData = await axios.post(urlUpload,{
+        concept: concept,
+        amount: parseInt(amount),
+        date: date,
+        branch: user,
+        bill: type
+      })
+
+      console.log('exito');
+      
+    } catch (error) {
+      console.error("Error de solicitud:", error);
+    }
+  };
+
+  sendData()
+  
+  
+};
+
+    return (
+        <>
+        <TitleForm text='Crear Nuevo Producto'></TitleForm>
+          
+          <div className="divForm">
+          <InputSimple titulo="Concepto" tipo="text" func={handleConcept}></InputSimple>
+          <InputSimple titulo="Monto" tipo="number" func={handleMount}></InputSimple>
+          <InputSimple titulo="Fecha" tipo="date" func={handleDate}></InputSimple>
+          <SelectSimple titulo="Usuario" func={handleUser}>
+              <option value="B17">B17</option>
+              <option value="luz">Luz Marina</option>
+              <option value="miguel">Miguel Angel</option>
+            </SelectSimple>
+            <SelectSimple titulo="Tipo"func={handleType}>
+              <option value="false">Inversion</option>
+              <option value="true">Egreso</option>
+            </SelectSimple>
+          </div>
+          <button onClick={handleButton}>Guardar</button>
+        </>
+      );
+}

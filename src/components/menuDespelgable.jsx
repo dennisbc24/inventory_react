@@ -10,25 +10,25 @@ export function MainMenu() {
 
 <Pestana titulo='Ventas'>
    <EnlaceLi name='Registrar' link='/'/>
-   <EnlaceLi name='Buscar Venta'/>
-   <EnlaceLi name='Eliminar'/>
+   {/* <EnlaceLi name='Buscar Venta'/> */}
+   {/* <EnlaceLi name='Eliminar'/> */}
 </Pestana>
 <Pestana titulo='Productos'>
    <EnlaceLi name='Nuevo' link='/newProduct'/>
-   <EnlaceLi name='Actualizar'/>
-   <EnlaceLi name='Borrar'/>
+   {/* <EnlaceLi name='Actualizar'/> */}
+   {/* <EnlaceLi name='Borrar'/> */}
 </Pestana>
 <Pestana titulo='Stock'>
-   <EnlaceLi name='Ingreso'/>
-   <EnlaceLi name='Inventario'/>
-   <EnlaceLi name='Transacciones'/>
-   <EnlaceLi name='Borrar'/>
+   <EnlaceLi name='Ingreso' link='/entries'/>
+   {/* <EnlaceLi name='Inventario'/> */}
+   {/* <EnlaceLi name='Transacciones'/> */}
+   {/* <EnlaceLi name='Borrar'/> */}
 </Pestana>
 <Pestana titulo='Otros'>
-   <EnlaceLi name='Gastos'/>
-   <EnlaceLi name='Buscar Gasto'/>
-   <EnlaceLi name='Resumen'/>
-   <EnlaceLi name='Buscar Resumen'/>
+   <EnlaceLi name='Registrar Gasto' link='/expense'/>
+   {/* <EnlaceLi name='Buscar Gasto'/> */}
+   {/* <EnlaceLi name='Resumen'/> */}
+   {/* <EnlaceLi name='Buscar Resumen'/> */}
 </Pestana>
  
 </Menu>

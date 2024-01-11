@@ -1,32 +1,14 @@
-import React, { useState, useEffect } from "react";
-import {  InputSimple,  SelectSimple,  ParrafoInput,} from "./form/inputSearch";
+import React, { useState } from "react";
+import {  InputSimple,  SelectSimple} from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 
+//const urlBase = 'https://inventario.elwayardo.com'
+const urlBase = 'http://localhost:3000'
 
-/* const NewData = {
-    url: xxxx,
-    dataJson: xxxx
-}
-
-
-const newProduct = {
-    
-    supplier: supplier.value,
-    lowest_price: parseInt(lowest_price.value),
-    list_price: parseInt(list_price.value),
-    
-    
-    
-  } */
-
-
-const urlBase = "https://inventario.elwayardo.com";
-//const urlBase = 'http://localhost:3000'
-
-const urlUploadVendings = `${urlBase}/api/v1/ventas/vendings`;
-const urlUMofifyExistence = `${urlBase}/api/v1/existence/vendings`;
+const urlUpload = `${urlBase}/api/v1/products`
+const urlLatest = `${urlBase}/api/v1/products/latestproducts`
 
 export const NewProduct = () => {
   const [nameProduct, setNameProduct] = useState('');
@@ -40,9 +22,9 @@ export const NewProduct = () => {
 
   
   const handleCount = ({ target: { value } }) => { setCount(parseInt(value))};
-  const handleName = ({ target: { value } }) => { setNameProduct(parseInt(value))};
+  const handleName = ({ target: { value } }) => { setNameProduct(value)};
   const handleCost = ({ target: { value } }) => { SetCostProduct(parseInt(value))};
-  const handleSupplier = ({ target: { textContent } }) => {SetSupplierProduct(textContent)};
+  const handleSupplier = ({ target: { value } }) => {SetSupplierProduct(value)};
   const handlePUnit = (e) => {setPUnit(e.target.value)}
   const handlePMayor = (e) =>{setPMayor(e.target.value)}
   const handleIdUser = (e) =>{  setIdUser(e.target.value)}
@@ -51,9 +33,7 @@ export const NewProduct = () => {
   const handleButton = () => {
           const sendData = async () => {
       try {
-        const sendData = await axios.post(urlUploadVendings,{
-          
-          
+        const sendData = await axios.post(urlUpload,{
           fk_user: idUser,
           fk_branch:idBranch,
           supplier:supplierProduct,
@@ -63,7 +43,6 @@ export const NewProduct = () => {
           lowest_price: parseInt(PUnit),
           list_price: parseInt(pMayor),
         })
-
 
         console.log('exito');
         
