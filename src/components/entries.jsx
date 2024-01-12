@@ -159,7 +159,7 @@ export const EntriesForm = () => {
   };
   return (
     <>
-    <TitleForm text='Registrar Venta'></TitleForm>
+    <TitleForm text='Ingreso de Producto'></TitleForm>
       <input type="text"  value={query} onChange={handleChangeProducts} placeholder="Buscar..." />
       <ul>   {suggestions.map((suggestion, index) => (
           <li key={index} onClick={handleSearchProducts}>

@@ -49,7 +49,7 @@ export const SendExpense = () => {
 
     return (
         <>
-        <TitleForm text='Crear Nuevo Producto'></TitleForm>
+        <TitleForm text='Registrar Gasto'></TitleForm>
           
           <div className="divForm">
           <InputSimple titulo="Concepto" tipo="text" func={handleConcept}></InputSimple>

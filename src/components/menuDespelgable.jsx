@@ -10,7 +10,7 @@ export function MainMenu() {
 
 <Pestana titulo='Ventas'>
    <EnlaceLi name='Registrar' link='/'/>
-   {/* <EnlaceLi name='Buscar Venta'/> */}
+   <EnlaceLi name='Buscar Venta' link='/searchSales'/>
    {/* <EnlaceLi name='Eliminar'/> */}
 </Pestana>
 <Pestana titulo='Productos'>
