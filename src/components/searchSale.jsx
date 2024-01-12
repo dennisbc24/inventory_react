@@ -3,6 +3,7 @@ import {  InputSimple,  SelectSimple} from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
+import {  TableGet } from "./table.jsx";
 
 //const urlBase = 'https://inventario.elwayardo.com'
 const urlBase = 'http://localhost:3000'
@@ -62,6 +63,7 @@ export const SearchSale = () => {
             <InputSimple titulo="Cantidad" tipo="date" func={handleCount}></InputSimple>
     </div>
       <button onClick={handleButton}>Buscar</button>
+      <TableGet/>
     </>
   );
 };
