@@ -1,62 +1,81 @@
 
 import React, { useState, useEffect } from "react";
-
 import axios from "axios";
-const url = 'http://localhost:3000/api/v1/ventas/salesByDate?date=2024-01-11'
 
-async function  Head  () {
-    const [ventas, setVentas] = useState([]);
-    const [propiedades, setEjemplo] = useState([]);
+const TableTh =  ({urlApi}) =>{
 
+  const [llaves, setLlaves] = useState([])
 
-    useEffect(async ()=>{
-        try {
-            const response = await axios.get(url);
-            setVentas(response.data)
+  useEffect(()=>{
+    axios.get(urlApi)
+    .then(function (response) {
+      const data3 = response.data
+      setLlaves(Object.keys(data3[0]))
       
-            const algo = (Object.keys(ventas[0]))
-            console.log(algo);
-          } catch (error) {
-            console.error("Error al obtener todos los datos:", error);
-          }
-    },[])
-
-    
-
+      
+    })
+      .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+  },[])
   
-   
-    return(
-        <th>{propiedades}</th>
-    )
-        
+     
+return(
+  llaves.map((sell)=>{
+  
+  return(<th key={sell} >{sell}</th>)
+}
     
+  )
+)
+  
 }
 
 
-export function TableGet() {
+const TableTd =  () =>{
+
+  const [fill, setFill] = useState([])
+
+  useEffect(()=>{
+    axios.get('http://localhost:3000/api/v1/ventas')
+    .then(function (response) {
+      const data3 = response.data
+      setFill(Object.values(data3[0]))
+      
+      
+    })
+      .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+  },[])
+  console.log(fill);
+  
+return(
+  
+fill.map((sell)=>{
+  
+  return(<td key={sell} >{sell}</td>)
+}
     
+  )
+)
+  
+}
+export  function TableGet() {
+  
+    return(
+  <table>
+        <thead>
+          <tr>
+              {<TableTh urlApi='http://localhost:3000/api/v1/ventas'/> }      
 
-
-        return(
-            <table>
-    <thead>
+          </tr>
+        </thead>
+        <tbody>
       <tr>
-            
-        <Head/>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>dato 1</td>
-        <td>dato 2</td>
-        <td>dato 1</td>
-        <td>dato 2</td>
-        <td>dato 1</td>
-        <td>dato 2</td>
-        <td>dato 1</td>
-        <td>dato 2</td>
-        <td>dato 1</td>
-        <td>dato 2</td>
+        <TableTd/>
       </tr>
     </tbody>
   </table>
