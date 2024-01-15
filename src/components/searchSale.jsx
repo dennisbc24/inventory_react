@@ -63,7 +63,7 @@ export const SearchSale = () => {
             <InputSimple titulo="Cantidad" tipo="date" func={handleCount}></InputSimple>
     </div>
       <button onClick={handleButton}>Buscar</button>
-      <TableGet/>
+      <TableGet url='http://localhost:3000/api/v1/ventas'/>
     </>
   );
 };

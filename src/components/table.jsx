@@ -2,8 +2,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const unaVenta = {id_sale: 18271, branch: 'nuevo', date: '2024-01-13T05:00:00.000Z', amount: 1, product: 'Ropero 2C YIWU 105x173 MARRON'}
-
 const TableTh =  ({urlApi}) =>{
 
   const [llaves, setLlaves] = useState([])
@@ -35,60 +33,62 @@ return(
   
 }
 
+const TableTd2 =  (Adata) =>{ 
+const {dato} = Adata
 
-const TableTd =  () =>{
-  const [fill, setFill] = useState([])
-  useEffect(()=>{
-    axios.get('http://localhost:3000/api/v1/ventas')
-    .then(function (response) {
-      const data3 = response.data
-      console.log(data3)
-      setFill(Object.values(data3[0]))
-      console.log(data3[0])
-    })
-      
-    .catch(function (error) { console.log(error)})},
-     [])
-  
-console.log(fill);
-return( fill.map((sell)=>{return(<td key={crypto.randomUUID()} >{sell}</td>)}))
+  const data = Object.values(dato)
+    return(   
+  <>{data.map((ele)=>{
+    return(<td key={crypto.randomUUID()}>{ele}</td>)})
+      }
+  </>)
 }
 
-
-const TableTd2 =  (dato) =>{
+const TableTr =  ({urlApi}) =>{
   const [fill, setFill] = useState([])
   useEffect(()=>{
-    axios.get('http://localhost:3000/api/v1/ventas')
+    axios.get(urlApi)
     .then(function (response) {
       const data3 = response.data
-      console.log(dato);
-      setFill(Object.values(data3[0]))
-      console.log(fill)
+      
+      setFill(data3)
+      
     })
       
-    .catch(function (error) { console.log(error)})},
-     [])
+    .catch(function (e) { console.log(e)})
   
-console.log(fill);
-return( fill.map((sell)=>{return(<td key={crypto.randomUUID()} >{sell}</td>)}))
+    console.log(fill);
+  },[])
+  
+return(
+  <>
+  {
+    fill.map((ele)=>{
+      return(
+        <tr key={crypto.randomUUID()}>
+        <TableTd2 dato={ele}/>
+      </tr>
+      )
+    })
+  }
+  </>
+)
+
 }
 
-
-
-export  function TableGet() {
+export  function TableGet({url}) {
   
     return(
   <table>
         <thead>
           <tr>
-              {<TableTh urlApi='http://localhost:3000/api/v1/ventas'/> }      
+              {<TableTh urlApi={url}/> }      
 
           </tr>
         </thead>
         <tbody>
-      <tr>
-        <TableTd2 dato={unaVenta}/>
-      </tr>
+          <TableTr urlApi={url} />
+      
     </tbody>
   </table>
         )}
