@@ -12,6 +12,7 @@ import {SendExpense} from "./spending.jsx";
 import {EntriesForm} from "./entries.jsx";
 import {SearchSale} from "./searchSale.jsx";
 import {DeleteSale} from "./deleteSale.jsx";
+import {UpdateProductForm} from "./updateProducts.jsx";
 
 export function App(){
     return(<>
@@ -23,6 +24,7 @@ export function App(){
         <Route path='/entries' element={<EntriesForm/>}/>
         <Route path='/searchSales' element={<SearchSale/>}/>
         <Route path='/deleteSale' element={<DeleteSale/>}/>
+        <Route path='/updateProduct' element={<UpdateProductForm/>}/>
     </Routes>
         
         </>

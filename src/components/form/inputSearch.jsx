@@ -8,11 +8,11 @@ export function InputSearch() {
     )  
 }
 
-export function InputSimple({titulo,tipo,func}) {
+export function InputSimple({titulo,tipo,func, valor}) {
     return(
         <div className='inputSimple'>
             <h3>{titulo}</h3>
-        <input type={tipo} onChange={func}/>
+        <input type={tipo} onChange={func} value={valor}/>
         </div>
        
     )  
