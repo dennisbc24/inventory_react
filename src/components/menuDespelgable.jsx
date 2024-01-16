@@ -11,7 +11,7 @@ export function MainMenu() {
 <Pestana titulo='Ventas'>
    <EnlaceLi name='Registrar' link='/'/>
    <EnlaceLi name='Buscar Venta' link='/searchSales'/>
-   {/* <EnlaceLi name='Eliminar'/> */}
+   <EnlaceLi name='Eliminar' link='/deleteSale'/>
 </Pestana>
 <Pestana titulo='Productos'>
    <EnlaceLi name='Nuevo' link='/newProduct'/>

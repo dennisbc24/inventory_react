@@ -56,8 +56,6 @@ const TableTr =  ({urlApi}) =>{
     })
       
     .catch(function (e) { console.log(e)})
-  
-    console.log(fill);
   },[])
   
 return(

@@ -3,6 +3,7 @@ import {  InputSimple,  SelectSimple,  ParrafoInput,} from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
+import { TableGet } from "./table.jsx";
 
 const urlBase = "https://inventario.elwayardo.com";
 //const urlBase = 'http://localhost:3000'
@@ -177,6 +178,8 @@ export const SelesForm = () => {
         <ParrafoInput titulo="Creado" parrafo={product.created}></ParrafoInput>
       </div>
       <button onClick={handleButton}>Guardar</button>
+      <h3>Ultimas Ventas</h3>
+      <TableGet url='http://localhost:3000/api/v1/ventas'/>
     </>
   );
 };
