@@ -23,8 +23,10 @@ export const EntriesForm = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [product, setProduct] = useState([]);
   const [count, setCount] = useState(0);
-    const [idUser, setIdUser] = useState(1);
+  const [idUser, setIdUser] = useState(1);
   const [idBranch, setIdBranch] = useState(1);
+  const [idProduct, setId_Product] = useState(1);
+  const [show, setShow] = useState(false)
 
   useEffect(() => {
     // Simula la carga de todos los productos al inicio
@@ -104,13 +106,11 @@ export const EntriesForm = () => {
 
 
   const handleCount = ({ target: { value } }) => { setCount(parseInt(value))};
-  const handleTotal = ({ target: { value } }) => {setTotal(parseInt(value))};
-  const handleChangeProducts = (e) => {setQuery(e.target.value)}
+  const handleChangeProducts = (e) => {setQuery(e.target.value), setShow(false)}
   const handleChangeSuppliers = (e) => {setQuerySuppliers(e.target.value)}
-  const handleDate = (e) =>{setDateSell(e.target.value)}
   const handleIdUser = (e) =>{  setIdUser(e.target.value)}
   const handleIdBranch = (e) =>{  setIdBranch(e.target.value)}
-  const changeCostumer = (e) => {setDataCustomer(e.target.textContent)}
+  
 
   const handleSearchProducts = (event) => { 
     const textoLi = event.target.textContent
@@ -118,7 +118,8 @@ export const EntriesForm = () => {
         if (elem.name == textoLi) {
           setSuggestions([]);
           setProduct(elem);
-          setCost(elem.cost);
+          setId_Product(elem.id_product)
+          setShow('true')
           setQuery('')
         }
       });
@@ -143,7 +144,7 @@ export const EntriesForm = () => {
             amount: count,
             fk_user:idUser,
             fk_supplier:supplier.id_supplier,
-            fk_product: product.id_product ,
+            fk_product: idProduct ,
             /* string_supplier: newSupplier.value */
         })
         
@@ -161,14 +162,14 @@ export const EntriesForm = () => {
   return (
     <>
     <TitleForm text='Ingreso de Producto'></TitleForm>
-      <input type="text"  value={query} onChange={handleChangeProducts} placeholder="Buscar..." />
+      <input type="text"  value={query} onChange={handleChangeProducts} placeholder="Buscar producto..." />
       <ul>   {suggestions.map((suggestion, index) => (
           <li key={index} onClick={handleSearchProducts}>
             {suggestion}
          </li>
         ))}
       </ul>
-      <input type="text"  value={querySuppliers} onChange={handleChangeSuppliers} placeholder="Buscar..." />
+      <input type="text"  value={querySuppliers} onChange={handleChangeSuppliers} placeholder="Buscar proveedor..." />
       <ul>   {suggestionsSupplier.map((suggestion, index) => (
           <li key={index} onClick={handleSearchSuppliers}>
             {suggestion}
@@ -195,6 +196,9 @@ export const EntriesForm = () => {
         <InputSimple titulo="Cantidad" tipo="number" func={handleCount} ></InputSimple>
       </div>
       <button onClick={handleButton}>Guardar</button>
+      {<>{ show ? <TableGet url={`${urlBase}/api/v1/existence?product=${idProduct}`}/> : <></>
+    }</>}
+      
       <h3>Ultimos Ingresos</h3>
       <TableGet url='http://localhost:3000/api/v1/entries'/>
     </>
