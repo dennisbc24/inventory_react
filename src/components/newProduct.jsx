@@ -9,10 +9,12 @@ import { TableGet } from "./table.jsx";
 //const urlBase = 'https://inventario.elwayardo.com'
 const urlBase = 'http://localhost:3000'
 
-const urlUpload = `${urlBase}/api/v1/products`
-const urlLatest = `${urlBase}/api/v1/products/latestproducts`
 
-export const NewProduct = () => {
+
+export const NewProduct = ({urlBase}) => {
+  const urlUpload = `${urlBase}/api/v1/products`
+  const urlLatest = `${urlBase}/api/v1/products/latestproducts`
+
   const [nameProduct, setNameProduct] = useState('');
   const [count, setCount] = useState(0);
   const [costProduct, SetCostProduct] = useState(0);

@@ -22,6 +22,7 @@ export const UpdateProductForm = () => {
   const [p_sugerido, setP_sugerido] = useState('')
   const [p_xmayor, setP_pxmayor] = useState('')
   const [id_product, setId_Product] = useState('')
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     // Simula la carga de todos los productos al inicio
@@ -91,6 +92,7 @@ export const UpdateProductForm = () => {
           setP_sugerido(elem.list_price)
           setP_pxmayor(elem.lowest_price)
           setId_Product(elem.id_product)
+          setShow('true')
         }
       });
     };
@@ -99,7 +101,8 @@ export const UpdateProductForm = () => {
   const handleButton = () => {
       
     const sendVending = async () => {
-      try {
+        try {
+          
         const urlPatch = `${urlBase}/api/v1/products/${id_product}`
         const sendData = await axios.patch(urlPatch,{
             name: name,
@@ -121,7 +124,7 @@ export const UpdateProductForm = () => {
   };
   return (
     <>
-    <TitleForm text='Registrar Venta'></TitleForm>
+    <TitleForm text='Actualizar Producto'></TitleForm>
       <input type="text"  value={query} onChange={handleChange} placeholder="Buscar..." />
       <ul>   {suggestions.map((suggestion, index) => (
           <li key={index} onClick={handleClick}>
@@ -129,8 +132,7 @@ export const UpdateProductForm = () => {
          </li>
         ))}
       </ul>
-
-      <div className="divForm">
+{<>{show ? <div className="divForm">
         <InputSimple titulo='Nombre' tipo='text' valor={name} func={handleName}></InputSimple>
         <InputSimple titulo='Costo' tipo='text' valor={cost} func={handleCost}></InputSimple>
         <InputSimple titulo='Precio Sugerido' tipo='number' valor={p_sugerido} func={handle_p_sugerido}></InputSimple>
@@ -139,7 +141,9 @@ export const UpdateProductForm = () => {
         <ParrafoInput titulo="Proveedor" parrafo={product.supplier}></ParrafoInput>
         <ParrafoInput titulo="Creado" parrafo={product.created}></ParrafoInput>
         
-      </div>
+      </div> : <></>
+      }</>}
+      
       <button onClick={handleButton}>Actualizar</button>
       
       

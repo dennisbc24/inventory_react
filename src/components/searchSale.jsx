@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {  InputSimple,  SelectSimple} from "./form/inputSearch";
+import {  InputSimple} from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
@@ -7,9 +7,6 @@ import {  TableGet } from "./table.jsx";
 
 //const urlBase = 'https://inventario.elwayardo.com'
 const urlBase = 'http://localhost:3000'
-
-const urlUpload = `${urlBase}/api/v1/products`
-const urlLatest = `${urlBase}/api/v1/products/latestproducts`
 
 export const SearchSale = () => {
   
@@ -34,8 +31,7 @@ export const SearchSale = () => {
     </div>
       <button onClick={handleButton}>Buscar</button>
       
-    {<>{
-      show ? <TableGet url={`http://localhost:3000/api/v1/ventas/salesByDate?date=${date}`}/> : <></>
+    {<>{ show ? <TableGet url={`http://localhost:3000/api/v1/ventas/salesByDate?date=${date}`}/> : <></>
     }</>}
     </>
   );

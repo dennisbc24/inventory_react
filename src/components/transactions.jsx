@@ -3,25 +3,24 @@ import {  InputSimple,  SelectSimple,  ParrafoInput,} from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
-import { TableGet } from "./table.jsx";
 
-export const SelesForm = ({urlBase}) => {
-  const urlUploadVendings = `${urlBase}/api/v1/ventas/vendings`;
-  const urlUMofifyExistence = `${urlBase}/api/v1/existence/vendings`;
 
+//const urlBase = "https://inventario.elwayardo.com";
+const urlBase = 'http://localhost:3000'
+
+const urlTransactions = `${urlBase}/api/v1/transactions`;
+
+export const TransactionsForm = () => {
   const [query, setQuery] = useState("");
   const [allProducts, setAllProducts] = useState([]); // Array con todos los productos
   const [suggestions, setSuggestions] = useState([]);
   const [product, setProduct] = useState([]);
-  const [count, setCount] = useState(0);
-  const [cost, setCost] = useState(0);
-  const [total, setTotal] = useState(0);
-  const [revenue, setRevenue] = useState(0);
-  const [PUnit, setPUnit] = useState(0);
-  const [dateSell, setDateSell] = useState('');
-  const [dataCustomer, setDataCustomer] = useState('');
+  const [count, setCount] = useState('');
   const [idUser, setIdUser] = useState(1);
-  const [idBranch, setIdBranch] = useState(1);
+
+  const [dateTrans, setDateTrans] = useState('');
+  const [branchA, setBranchA] = useState('');
+  const [branchB, setBranchB] = useState('');
 
   useEffect(() => {
     // Simula la carga de todos los productos al inicio
@@ -65,28 +64,20 @@ export const SelesForm = ({urlBase}) => {
     setSuggestions(filteredNames);
   }, [query, allProducts]);
 
-  useEffect(() => {
-    setPUnit(total / count);
-  }, [count, total]);
-
-  useEffect(() => {
-    setRevenue((PUnit - cost) * count);
-  }, [PUnit]);
 
   const handleCount = ({ target: { value } }) => { setCount(parseInt(value))};
-  const handleTotal = ({ target: { value } }) => {setTotal(parseInt(value))};
   const handleChange = (e) => {setQuery(e.target.value)}
-  const handleDate = (e) =>{setDateSell(e.target.value)}
+  const handleDate = (e) =>{setDateTrans(e.target.value)}
   const handleIdUser = (e) =>{  setIdUser(e.target.value)}
-  const handleIdBranch = (e) =>{  setIdBranch(e.target.value)}
-  const changeCostumer = (e) => {setDataCustomer(e.target.textContent)}
+  const handleIdBranchA = (e) =>{  setBranchA(e.target.value)}
+  const handleIdBranchB = (e) =>{  setBranchB(e.target.value)}
   const handleClick = (event) => { 
     const textoLi = event.target.textContent
       allProducts.forEach((elem) => {
         if (elem.name == textoLi) {
           setSuggestions([]);
           setProduct(elem);
-          setCost(elem.cost);
+          
           setQuery('')
         }
       });
@@ -97,30 +88,20 @@ export const SelesForm = ({urlBase}) => {
       
     const sendVending = async () => {
       try {
-        const sendData = await axios.post(urlUploadVendings,{
-          date: dateSell,
-          amount: count,
-          p_total: total,
-          p_unit: parseInt(PUnit),
-          revenue: parseInt(revenue),
-          customer: dataCustomer,
-          fk_id_product: product.id_product,
-          fk_id_user: idUser,
-          fk_id_branch:idBranch,
-          branch:'nuevo',
-          product:product.name
+        const sendData = await axios.post(urlTransactions,{
+            pointA: branchA,
+            pointB: branchB,
+            amount: count,
+            fk_user:idUser,
+            date: dateTrans,
+            fk_product: product.id_product
         })
 
-        const modifyExistence = await axios.patch(urlUMofifyExistence,{
-          amount: count, 
-          fk_branch: idBranch, 
-          fk_product:product.id_product, 
-          fk_user:idUser
-        })
+       
         console.log('guardado');
         
       } catch (error) {
-        console.error("Error al obtener todos los productos:", error);
+        console.error("Error al hacer petición:", error);
       }
     };
  
@@ -130,7 +111,7 @@ export const SelesForm = ({urlBase}) => {
   };
   return (
     <>
-    <TitleForm text='Registrar Venta'></TitleForm>
+    <TitleForm text='Traslado de Mercaderia'></TitleForm>
       <input type="text"  value={query} onChange={handleChange} placeholder="Buscar..." />
       <ul>   {suggestions.map((suggestion, index) => (
           <li key={index} onClick={handleClick}>
@@ -142,7 +123,15 @@ export const SelesForm = ({urlBase}) => {
       <div className="divForm">
         <ParrafoInput titulo="Producto" parrafo={product.name}></ParrafoInput>
         <InputSimple titulo="Fecha" tipo="date" func={handleDate}></InputSimple>
-        <SelectSimple titulo="Sucursal"func={handleIdBranch}>
+        <SelectSimple titulo="Origen"func={handleIdBranchA}>
+          <option value="1">B17</option>
+          <option value="3">Qoripata</option>
+          <option value="7">Tambopata</option>
+          <option value="4">Deposito</option>
+          <option value="5">Los Nogales</option>
+          <option value="6">Los Incas</option>
+        </SelectSimple>
+        <SelectSimple titulo="Destino"func={handleIdBranchB}>
           <option value="1">B17</option>
           <option value="3">Qoripata</option>
           <option value="7">Tambopata</option>
@@ -156,27 +145,12 @@ export const SelesForm = ({urlBase}) => {
           <option value="3">Miguel</option>
         </SelectSimple>
 
-        <InputSimple
-          titulo="Cantidad"
-          tipo="number"
-          func={handleCount}
-        ></InputSimple>
-        <ParrafoInput titulo="Precio Unitario" parrafo={PUnit}></ParrafoInput>
-        <InputSimple
-          titulo="Total"
-          tipo="number"
-          func={handleTotal}
-        ></InputSimple>
-
-        <InputSimple titulo="Cliente" tipo="text" func={changeCostumer}></InputSimple>
-
-        <ParrafoInput titulo="Costo" parrafo={cost}></ParrafoInput>
-        <ParrafoInput titulo="Ganancia" parrafo={revenue}></ParrafoInput>
-        <ParrafoInput titulo="Creado" parrafo={product.created}></ParrafoInput>
+        <InputSimple titulo="Cantidad"  tipo="number" func={handleCount}></InputSimple>
+        
       </div>
       <button onClick={handleButton}>Guardar</button>
-      <h3>Ultimas Ventas</h3>
-      <TableGet url='http://localhost:3000/api/v1/ventas'/>
+      <h3>Ultimas Movimientos</h3>
+      
     </>
   );
 };

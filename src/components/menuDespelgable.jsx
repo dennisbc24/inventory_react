@@ -20,8 +20,8 @@ export function MainMenu() {
 </Pestana>
 <Pestana titulo='Stock'>
    <EnlaceLi name='Ingreso' link='/entries'/>
-   {/* <EnlaceLi name='Inventario'/> */}
-   {/* <EnlaceLi name='Transacciones'/> */}
+   <EnlaceLi name='Inventario'link='/inventory'/>
+   <EnlaceLi name='Transacciones' link='/transactions'/>
    {/* <EnlaceLi name='Borrar'/> */}
 </Pestana>
 <Pestana titulo='Otros'>
