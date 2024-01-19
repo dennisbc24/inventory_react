@@ -70,16 +70,15 @@ background: linear-gradient(90deg, var(--persian-blue-600) 0%, var(--persian-blu
 	margin: 0px 10px;
 }
 header .caja_pestañas{
+	border-radius: 0 0 0 8px;
 	display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 3.7rem 0 9rem 0;
-    
-	position: fixed;
-	width: 50%;
-    height: auto;
+    padding: 3% 0%;
+    position: fixed;
+	height: auto;
    
-background: linear-gradient(90deg, var(--persian-blue-600) 0%, var(--persian-blue-950)  67%, var(--persian-blue-900)) ;
+	background-color: #051d51;
     right: -100%;
     top: 38px;
 	transition: .5s;

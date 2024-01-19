@@ -6,3 +6,26 @@
     align-items: baseline;
     height: 25px;
 }
+
+.dropDown{
+    background-color: #0b2969;
+    color: white;
+    width: 30vw;
+}
+.caja_pestañas{
+    color: white;
+    background: linear-gradient(90deg, var(--persian-blue-600) 0%, var(--persian-blue-950)  67%, var(--persian-blue-900)) ;
+
+}
+.pestaña{
+    width: 30vw;
+    
+    text-transform: uppercase;
+}
+
+.dropDown_a{
+        color: white;
+        font-size: large;
+        text-transform: capitalize;
+}
+
