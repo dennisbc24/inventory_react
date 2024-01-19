@@ -5,15 +5,11 @@ import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import { TableGet } from "./table.jsx";
 
-//const urlBase = "https://inventario.elwayardo.com";
-const urlBase = 'http://localhost:3000'
-
-const urlEntries = `${urlBase}/api/v1/entries`;
+export const EntriesForm = ({urlBase}) => {
+  const urlEntries = `${urlBase}/api/v1/entries`;
 const urlSuppliers = `${urlBase}/api/v1/suppliers`;
 const urlApiProducts = `${urlBase}/api/v1/products`;
 
-
-export const EntriesForm = () => {
   const [query, setQuery] = useState("");
   const [allProducts, setAllProducts] = useState([]); // Array con todos los productos
   const [allSuppliers, setAllSuppliers] = useState([]); // Array con todos los suppliers

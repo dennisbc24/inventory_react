@@ -62,6 +62,8 @@ return(
   <>
   {
     fill.map((ele)=>{
+
+      
       return(
         <tr key={crypto.randomUUID()}>
         <TableTd2 dato={ele}/>
@@ -77,7 +79,8 @@ return(
 export  function TableGet({url}) {
   
     return(
-  <table>
+      <div className="result">
+ <table className="infoTable">
         <thead>
           <tr>
               {<TableTh urlApi={url}/> }      
@@ -89,4 +92,6 @@ export  function TableGet({url}) {
       
     </tbody>
   </table>
+      </div>
+ 
         )}

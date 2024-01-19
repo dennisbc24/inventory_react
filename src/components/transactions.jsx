@@ -4,13 +4,8 @@ import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 
-
-//const urlBase = "https://inventario.elwayardo.com";
-const urlBase = 'http://localhost:3000'
-
-const urlTransactions = `${urlBase}/api/v1/transactions`;
-
-export const TransactionsForm = () => {
+export const TransactionsForm = ({urlBase}) => {
+  const urlTransactions = `${urlBase}/api/v1/transactions`;
   const [query, setQuery] = useState("");
   const [allProducts, setAllProducts] = useState([]); // Array con todos los productos
   const [suggestions, setSuggestions] = useState([]);
@@ -27,7 +22,7 @@ export const TransactionsForm = () => {
     const fetchAllProducts = async () => {
       try {
         const response = await axios.get(
-          "https://inventario.elwayardo.com/api/v1/products"
+          `${urlBase}/api/v1/products`
         );
         setAllProducts(response.data);
       } catch (error) {

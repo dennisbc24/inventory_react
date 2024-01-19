@@ -1,16 +1,12 @@
 import React, { useState } from "react";
-import {  InputSimple,  SelectSimple} from "./form/inputSearch";
+import {  InputSimple} from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 
-//const urlBase = 'https://inventario.elwayardo.com'
-const urlBase = "http://localhost:3000";
+export const DeleteSale = ({urlBase}) => {
+  const urlApi = `${urlBase}/api/v1/ventas`;
 
-const urlApi = `${urlBase}/api/v1/ventas`;
-
-export const DeleteSale = () => {
-  
   const [idSale, setIdSale] = useState(0);
   const [show, setShow] = useState(false);
 

@@ -26,7 +26,7 @@ export function MainMenu() {
 </Pestana>
 <Pestana titulo='Otros'>
    <EnlaceLi name='Registrar Gasto' link='/expense'/>
-   {/* <EnlaceLi name='Buscar Gasto'/> */}
+   <EnlaceLi name='Buscar Gasto' link='/searchSpends'/>
    {/* <EnlaceLi name='Resumen'/> */}
    {/* <EnlaceLi name='Buscar Resumen'/> */}
 </Pestana>

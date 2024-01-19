@@ -4,13 +4,9 @@ import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 
-//const baseUrl = 'https://inventario.elwayardo.com'
-const baseUrl = 'http://localhost:3000'
+export const SendExpense = ({urlBase}) => {
+  const urlUpload = `${urlBase}/api/v1/box`
 
-const urlUpload = `${baseUrl}/api/v1/box`
-
-
-export const SendExpense = () => {
     const [concept, setConcept] = useState('');
     const [date, setDate] = useState('');
     const [amount, setAmount] = useState(0);

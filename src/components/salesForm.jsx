@@ -176,7 +176,10 @@ export const SelesForm = ({urlBase}) => {
       </div>
       <button onClick={handleButton}>Guardar</button>
       <h3>Ultimas Ventas</h3>
-      <TableGet url='http://localhost:3000/api/v1/ventas'/>
+      
+        <TableGet url='http://localhost:3000/api/v1/ventas'/>
+      
+      
     </>
   );
 };

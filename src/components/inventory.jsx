@@ -4,12 +4,9 @@ import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import {  TableGet } from "./table.jsx";
 
-//const urlBase = 'https://inventario.elwayardo.com'
-const urlBase = 'http://localhost:3000'
-
-export const Inventory = () => {
+export const Inventory = ({urlBase}) => {
   
-  const [branch, setBranch] = useState(0);
+  const [branch, setBranch] = useState('');
   const [show, setShow] = useState(false);
 
   

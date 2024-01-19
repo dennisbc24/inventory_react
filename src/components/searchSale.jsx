@@ -5,10 +5,7 @@ import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import {  TableGet } from "./table.jsx";
 
-//const urlBase = 'https://inventario.elwayardo.com'
-const urlBase = 'http://localhost:3000'
-
-export const SearchSale = () => {
+export const SearchSale = ({urlBase}) => {
   
   const [date, setDate] = useState(0);
   const [show, setShow] = useState(false);
@@ -31,7 +28,7 @@ export const SearchSale = () => {
     </div>
       <button onClick={handleButton}>Buscar</button>
       
-    {<>{ show ? <TableGet url={`http://localhost:3000/api/v1/ventas/salesByDate?date=${date}`}/> : <></>
+    {<>{ show ? <TableGet url={`${urlBase}/api/v1/ventas/salesByDate?date=${date}`}/> : <></>
     }</>}
     </>
   );

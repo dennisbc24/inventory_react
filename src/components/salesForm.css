@@ -4,3 +4,14 @@
     align-items: center;
     gap: 10px;
 }
+
+.result{
+    width: auto;
+    overflow-x: scroll;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+}
+
+.infoTable{
+    min-width: 1050px;
+}

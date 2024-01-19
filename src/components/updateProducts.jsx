@@ -4,20 +4,12 @@ import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 
-const urlBase = "https://inventario.elwayardo.com";
-//const urlBase = 'http://localhost:3000'
-
-export const UpdateProductForm = () => {
+export const UpdateProductForm = ({urlBase}) => {
   const [query, setQuery] = useState("");
   const [allProducts, setAllProducts] = useState([]); // Array con todos los productos
   const [suggestions, setSuggestions] = useState([]);
   const [product, setProduct] = useState([]);
-  const [count, setCount] = useState(0);
-  const [cost, setCost] = useState('');
-  const [total, setTotal] = useState(0);
-  const [revenue, setRevenue] = useState(0);
-  const [PUnit, setPUnit] = useState(0);
-  const [dataCustomer, setDataCustomer] = useState('');
+  const [cost, setCost] = useState(0);
   const [name, setName] = useState('')
   const [p_sugerido, setP_sugerido] = useState('')
   const [p_xmayor, setP_pxmayor] = useState('')
@@ -29,7 +21,7 @@ export const UpdateProductForm = () => {
     const fetchAllProducts = async () => {
       try {
         const response = await axios.get(
-          "https://inventario.elwayardo.com/api/v1/products"
+          `${urlBase}/api/v1/products`
         );
         setAllProducts(response.data);
       } catch (error) {
@@ -66,13 +58,6 @@ export const UpdateProductForm = () => {
     setSuggestions(filteredNames);
   }, [query, allProducts]);
 
-  useEffect(() => {
-    setPUnit(total / count);
-  }, [count, total]);
-
-  useEffect(() => {
-    setRevenue((PUnit - cost) * count);
-  }, [PUnit]);
 
   const handleCost = (e) => setCost(e.target.value)
   const handleChange = (e) => {setQuery(e.target.value)}
@@ -89,8 +74,17 @@ export const UpdateProductForm = () => {
           setCost(elem.cost);
           setQuery('')
           setName(elem.name)
-          setP_sugerido(elem.list_price)
-          setP_pxmayor(elem.lowest_price)
+          if (elem.list_price==null) {
+            setP_sugerido(0)
+          } else {
+            setP_sugerido(elem.list_price)
+          }
+          if (elem.lowest_price==null) {
+            setP_pxmayor(0)
+          } else {
+            setP_pxmayor(elem.lowest_price)
+          }
+          
           setId_Product(elem.id_product)
           setShow('true')
         }

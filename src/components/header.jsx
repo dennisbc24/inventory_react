@@ -1,6 +1,9 @@
 import './menu.css'
 import {useState} from 'react'
 import { Link } from "react-router-dom";
+import close from './icons/close.png';
+import menu from './icons/menu.png';
+import repartidor from './icons/repartidor.png';
 
 
 export function Menu({children,titulo}) {
@@ -10,12 +13,12 @@ export function Menu({children,titulo}) {
       <input type="checkbox" name="" id="boton-menu" className="boton-menu"/>
       <label htmlFor="boton-menu" className="boton-check">
         <p>menu</p>
-        <img src="../icons/menu.png" alt="" className="boton_open"/>
-        <img src="../icons/close.png" alt="" className="boton_close"/>
+        <img src={menu} alt="" className="boton_open"/>
+        <img src={close} alt="" className="boton_close"/>
       </label>
       
       <div className="caja-logo">
-        <img src="../icons/repartidor.png" alt="" className="logito"/>
+        <img src={repartidor} alt="" className="logito"/>
         <a href="#" className="main_title">El Wayardo</a>
       </div>
       
