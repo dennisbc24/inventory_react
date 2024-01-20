@@ -15,8 +15,8 @@ import {Inventory} from "./inventory.jsx";
 import {TransactionsForm} from "./transactions.jsx";
 import {SearchSpends} from "./searchSpends.jsx";
 
-//const home = "https://inventario.elwayardo.com";
-const home = 'http://localhost:3000'
+const home = "https://inventario.elwayardo.com";
+//const home = 'http://localhost:3000'
 
 export function App(){
     return(<>
