@@ -28,7 +28,7 @@ export const SelesForm = ({urlBase}) => {
     const fetchAllProducts = async () => {
       try {
         const response = await axios.get(
-          "https://inventario.elwayardo.com/api/v1/products"
+          `${urlBase}/api/v1/products`
         );
         setAllProducts(response.data);
       } catch (error) {
@@ -177,7 +177,7 @@ export const SelesForm = ({urlBase}) => {
       <button onClick={handleButton}>Guardar</button>
       <h3>Ultimas Ventas</h3>
       
-        <TableGet url='http://localhost:3000/api/v1/ventas'/>
+        <TableGet url={`${urlBase}/api/v1/ventas`}/>
       
       
     </>
