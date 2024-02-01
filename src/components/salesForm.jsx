@@ -28,7 +28,7 @@ export const SelesForm = ({urlBase}) => {
     const fetchAllProducts = async () => {
       try {
         const response = await axios.get(
-          "https://inventario.elwayardo.com/api/v1/products"
+          `${urlBase}/api/v1/products`
         );
         setAllProducts(response.data);
       } catch (error) {
