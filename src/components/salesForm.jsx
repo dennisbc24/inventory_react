@@ -23,7 +23,7 @@ export const SelesForm = ({urlBase}) => {
   const [idUser, setIdUser] = useState(1);
   const [idBranch, setIdBranch] = useState(1);
 
-  useEffect(() => {
+    useEffect(() => {
     // Simula la carga de todos los productos al inicio
     const fetchAllProducts = async () => {
       try {
@@ -127,6 +127,7 @@ export const SelesForm = ({urlBase}) => {
     sendVending()
     
     
+    
   };
   return (
     <>
@@ -177,7 +178,7 @@ export const SelesForm = ({urlBase}) => {
       <button onClick={handleButton}>Guardar</button>
       <h3>Ultimas Ventas</h3>
       
-        <TableGet url='http://localhost:3000/api/v1/ventas'/>
+        <TableGet url={`${urlBase}/api/v1/ventas`}/>
       
       
     </>

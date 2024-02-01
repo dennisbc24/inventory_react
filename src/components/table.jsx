@@ -78,6 +78,7 @@ return(
 
 export  function TableGet({url}) {
   
+
     return(
       <div className="result">
  <table className="infoTable">
