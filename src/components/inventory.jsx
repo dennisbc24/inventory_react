@@ -6,16 +6,16 @@ import {  TableGet } from "./table.jsx";
 
 export const Inventory = ({urlBase}) => {
   
-  const [branch, setBranch] = useState('');
+  const [branch, setBranch] = useState(1);
   const [show, setShow] = useState(false);
-
-  
+     
   const handleIdBranch = ({ target: { value } }) => { setBranch(value), setShow(false)};
   
 
   const handleButton = () => {
 
     setShow(true)
+    
     
     
   };
@@ -35,7 +35,7 @@ export const Inventory = ({urlBase}) => {
     </div>
       <button onClick={handleButton}>Buscar</button>
       
-    {<>{ show ? <TableGet url={`http://localhost:3000/api/v1/existence/inventary?branch=${branch}`}/> : <></>
+    {<>{ show ? <TableGet url={`${urlBase}/api/v1/existence/inventary?branch=${branch}`}/> : <></>
     }</>}
     </>
   );

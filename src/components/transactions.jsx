@@ -10,12 +10,12 @@ export const TransactionsForm = ({urlBase}) => {
   const [allProducts, setAllProducts] = useState([]); // Array con todos los productos
   const [suggestions, setSuggestions] = useState([]);
   const [product, setProduct] = useState([]);
-  const [count, setCount] = useState('');
+  const [count, setCount] = useState(0);
   const [idUser, setIdUser] = useState(1);
 
   const [dateTrans, setDateTrans] = useState('');
-  const [branchA, setBranchA] = useState('');
-  const [branchB, setBranchB] = useState('');
+  const [branchA, setBranchA] = useState(1);
+  const [branchB, setBranchB] = useState(1);
 
   useEffect(() => {
     // Simula la carga de todos los productos al inicio
@@ -80,9 +80,10 @@ export const TransactionsForm = ({urlBase}) => {
 
 
   const handleButton = () => {
-      
+          
     const sendVending = async () => {
       try {
+
         const sendData = await axios.post(urlTransactions,{
             pointA: branchA,
             pointB: branchB,
@@ -93,7 +94,7 @@ export const TransactionsForm = ({urlBase}) => {
         })
 
        
-        console.log('guardado');
+        console.log('guardado con exito');
         
       } catch (error) {
         console.error("Error al hacer petición:", error);

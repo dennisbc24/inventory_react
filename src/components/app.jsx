@@ -29,7 +29,7 @@ export function App(){
         <Route path='/searchSales' element={<SearchSale urlBase={home}/>}/>
         <Route path='/deleteSale' element={<DeleteSale urlBase={home}/>}/>
         <Route path='/updateProduct' element={<UpdateProductForm urlBase={home}/>}/>
-        <Route path='/inventory' element={<Inventory/>} urlBase={home}/>
+        <Route path='/inventory' element={<Inventory urlBase={home}/>}/>
         <Route path='/transactions' element={<TransactionsForm urlBase={home}/>}/>
         <Route path='/searchSpends' element={<SearchSpends urlBase={home}/>}/>
     </Routes>
