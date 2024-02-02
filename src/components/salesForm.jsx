@@ -22,8 +22,9 @@ export const SelesForm = ({urlBase}) => {
   const [dataCustomer, setDataCustomer] = useState('');
   const [idUser, setIdUser] = useState(1);
   const [idBranch, setIdBranch] = useState(1);
+  const [show, setShow] = useState(false)
 
-  useEffect(() => {
+    useEffect(() => {
     // Simula la carga de todos los productos al inicio
     const fetchAllProducts = async () => {
       try {
@@ -75,7 +76,7 @@ export const SelesForm = ({urlBase}) => {
 
   const handleCount = ({ target: { value } }) => { setCount(parseInt(value))};
   const handleTotal = ({ target: { value } }) => {setTotal(parseInt(value))};
-  const handleChange = (e) => {setQuery(e.target.value)}
+  const handleChange = (e) => {setQuery(e.target.value), setShow(false)}
   const handleDate = (e) =>{setDateSell(e.target.value)}
   const handleIdUser = (e) =>{  setIdUser(e.target.value)}
   const handleIdBranch = (e) =>{  setIdBranch(e.target.value)}
@@ -88,6 +89,7 @@ export const SelesForm = ({urlBase}) => {
           setProduct(elem);
           setCost(elem.cost);
           setQuery('')
+          setShow('true')
         }
       });
     };
@@ -127,6 +129,7 @@ export const SelesForm = ({urlBase}) => {
     sendVending()
     
     
+    
   };
   return (
     <>
@@ -156,17 +159,9 @@ export const SelesForm = ({urlBase}) => {
           <option value="3">Miguel</option>
         </SelectSimple>
 
-        <InputSimple
-          titulo="Cantidad"
-          tipo="number"
-          func={handleCount}
-        ></InputSimple>
+        <InputSimple titulo="Cantidad" tipo="number" func={handleCount} ></InputSimple>
         <ParrafoInput titulo="Precio Unitario" parrafo={PUnit}></ParrafoInput>
-        <InputSimple
-          titulo="Total"
-          tipo="number"
-          func={handleTotal}
-        ></InputSimple>
+        <InputSimple titulo="Total" tipo="number" func={handleTotal}></InputSimple>
 
         <InputSimple titulo="Cliente" tipo="text" func={changeCostumer}></InputSimple>
 
@@ -175,6 +170,9 @@ export const SelesForm = ({urlBase}) => {
         <ParrafoInput titulo="Creado" parrafo={product.created}></ParrafoInput>
       </div>
       <button onClick={handleButton}>Guardar</button>
+      <h3>Stock</h3>
+      {<>{ show ? <TableGet url={`${urlBase}/api/v1/existence?product=${product.id_product}`}/> : <></>
+    }</>}
       <h3>Ultimas Ventas</h3>
       
         <TableGet url={`${urlBase}/api/v1/ventas`}/>

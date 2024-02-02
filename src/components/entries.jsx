@@ -196,7 +196,7 @@ const urlApiProducts = `${urlBase}/api/v1/products`;
     }</>}
       
       <h3>Ultimos Ingresos</h3>
-      <TableGet url='http://localhost:3000/api/v1/entries'/>
+      <TableGet url={`${urlBase}/api/v1/entries`}/>
     </>
   );
 };
