@@ -14,6 +14,7 @@ import {UpdateProductForm} from "./updateProducts.jsx";
 import {Inventory} from "./inventory.jsx";
 import {TransactionsForm} from "./transactions.jsx";
 import {SearchSpends} from "./searchSpends.jsx";
+import {SearchSummary} from "./summaries.jsx";
 
 //const home = "https://inventario.elwayardo.com";
 const home = 'http://localhost:3000'
@@ -32,6 +33,7 @@ export function App(){
         <Route path='/inventory' element={<Inventory urlBase={home}/>}/>
         <Route path='/transactions' element={<TransactionsForm urlBase={home}/>}/>
         <Route path='/searchSpends' element={<SearchSpends urlBase={home}/>}/>
+        <Route path='/summaries' element={<SearchSummary urlBase={home}/>}/>
     </Routes>
         
         </>

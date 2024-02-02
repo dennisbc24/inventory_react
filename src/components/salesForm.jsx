@@ -23,6 +23,7 @@ export const SelesForm = ({urlBase}) => {
   const [idUser, setIdUser] = useState(1);
   const [idBranch, setIdBranch] = useState(1);
   const [show, setShow] = useState(false)
+  const [showSales, SetShowSales] = useState(true)
 
     useEffect(() => {
     // Simula la carga de todos los productos al inicio
@@ -76,7 +77,7 @@ export const SelesForm = ({urlBase}) => {
 
   const handleCount = ({ target: { value } }) => { setCount(parseInt(value))};
   const handleTotal = ({ target: { value } }) => {setTotal(parseInt(value))};
-  const handleChange = (e) => {setQuery(e.target.value), setShow(false)}
+  const handleChange = (e) => {setQuery(e.target.value), setShow(false), SetShowSales(false)}
   const handleDate = (e) =>{setDateSell(e.target.value)}
   const handleIdUser = (e) =>{  setIdUser(e.target.value)}
   const handleIdBranch = (e) =>{  setIdBranch(e.target.value)}
@@ -90,6 +91,7 @@ export const SelesForm = ({urlBase}) => {
           setCost(elem.cost);
           setQuery('')
           setShow('true')
+          
         }
       });
     };
@@ -125,9 +127,10 @@ export const SelesForm = ({urlBase}) => {
         console.error("Error al obtener todos los productos:", error);
       }
     };
- 
-    sendVending()
     
+    sendVending()
+    SetShowSales(true)
+    setShow(false)
     
     
   };
@@ -174,8 +177,12 @@ export const SelesForm = ({urlBase}) => {
       {<>{ show ? <TableGet url={`${urlBase}/api/v1/existence?product=${product.id_product}`}/> : <></>
     }</>}
       <h3>Ultimas Ventas</h3>
+
+      {<>{ showSales ? <TableGet url={`${urlBase}/api/v1/ventas`}/> : <></>
+    }</>}
       
-        <TableGet url={`${urlBase}/api/v1/ventas`}/>
+      
+        
       
       
     </>
