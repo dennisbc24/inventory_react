@@ -178,7 +178,7 @@ const urlApiProducts = `${urlBase}/api/v1/products`;
         <ParrafoInput titulo="Proveedor" parrafo={supplier.name}></ParrafoInput>
         <SelectSimple titulo="Sucursal"func={handleIdBranch}>
           <option value="1">B17</option>
-          <option value="3">Qoripata</option>
+          <option value="3">Departamento</option>
           <option value="7">Tambopata</option>
           <option value="4">Deposito</option>
           <option value="5">Los Nogales</option>

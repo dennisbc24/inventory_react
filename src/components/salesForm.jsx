@@ -81,7 +81,7 @@ export const SelesForm = ({urlBase}) => {
   const handleDate = (e) =>{setDateSell(e.target.value)}
   const handleIdUser = (e) =>{  setIdUser(e.target.value)}
   const handleIdBranch = (e) =>{  setIdBranch(e.target.value)}
-  const changeCostumer = (e) => {setDataCustomer(e.target.textContent)}
+  const changeCostumer = (e) => {setDataCustomer(e.target.value)}
   const handleClick = (event) => { 
     const textoLi = event.target.textContent
       allProducts.forEach((elem) => {
@@ -150,7 +150,7 @@ export const SelesForm = ({urlBase}) => {
         <InputSimple titulo="Fecha" tipo="date" func={handleDate}></InputSimple>
         <SelectSimple titulo="Sucursal"func={handleIdBranch}>
           <option value="1">B17</option>
-          <option value="3">Qoripata</option>
+          <option value="3">Departamento</option>
           <option value="7">Tambopata</option>
           <option value="4">Deposito</option>
           <option value="5">Los Nogales</option>
