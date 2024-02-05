@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SelectSimple} from "./form/inputSearch";
+import { SelectSimple, ButtonSave} from "./form/inputSearch";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import {  TableGet } from "./table.jsx";
@@ -33,7 +33,8 @@ export const Inventory = ({urlBase}) => {
         </SelectSimple>
            {/*  <InputSimple titulo="Fecha" tipo="date" func={handleDate}></InputSimple> */}
     </div>
-      <button onClick={handleButton}>Buscar</button>
+    <ButtonSave titulo={"Buscar"} func={handleButton}></ButtonSave>
+      
       
     {<>{ show ? <TableGet url={`${urlBase}/api/v1/existence/inventary?branch=${branch}`}/> : <></>
     }</>}

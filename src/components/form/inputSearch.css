@@ -5,10 +5,11 @@
     gap: 10px;
     align-items: baseline;
     height: 25px;
+    color: var(--ligth-text);
 }
 
 .dropDown{
-    background-color: #0b2969;
+    background-color: var(--persian-blue-900);
     color: white;
     width: 30vw;
 }

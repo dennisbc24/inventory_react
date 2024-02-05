@@ -1,0 +1,8 @@
+.table_header{
+    background-color: var(--persian-blue-800);
+    color:var(--persian-blue-100);
+}
+
+.table_body{
+    color: var(--persian-blue-100) ;
+}

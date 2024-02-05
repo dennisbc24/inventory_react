@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import "./table.css"
 const TableTh =  ({urlApi}) =>{
 
   const [llaves, setLlaves] = useState([])
@@ -82,13 +82,13 @@ export  function TableGet({url}) {
     return(
       <div className="result">
  <table className="infoTable">
-        <thead>
+        <thead className="table_header">
           <tr>
               {<TableTh urlApi={url}/> }      
 
           </tr>
         </thead>
-        <tbody>
+        <tbody className="table_body">
           <TableTr urlApi={url} />
       
     </tbody>

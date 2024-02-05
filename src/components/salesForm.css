@@ -1,10 +1,3 @@
-.divForm{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
 .result{
     width: auto;
     overflow-x: scroll;
@@ -14,4 +7,20 @@
 
 .infoTable{
     min-width: 1050px;
+}
+
+
+.button_save{
+
+    background-color: var(--persian-blue-400);
+    color: var(--persian-blue-950);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    border: solid var(--persian-blue-400) 0.1px;
+    
+    padding: 7px;
+}
+
+.suggestions_lu{
+    background-color: var(--persian-blue-200);
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {  InputSimple} from "./form/inputSearch";
+import {  ButtonSave, InputSimple} from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
@@ -26,7 +26,8 @@ export const SearchSale = ({urlBase}) => {
     <div className="divForm">
             <InputSimple titulo="Fecha" tipo="date" func={handleDate}></InputSimple>
     </div>
-      <button onClick={handleButton}>Buscar</button>
+    <ButtonSave titulo={"Buscar"} func={handleButton}/>
+     
       
     {<>{ show ? <TableGet url={`${urlBase}/api/v1/ventas/salesByDate?date=${date}`}/> : <></>
     }</>}

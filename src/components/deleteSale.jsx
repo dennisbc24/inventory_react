@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {  InputSimple} from "./form/inputSearch";
+import {  InputSimple, ButtonSave} from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
@@ -8,10 +8,9 @@ export const DeleteSale = ({urlBase}) => {
   const urlApi = `${urlBase}/api/v1/ventas`;
 
   const [idSale, setIdSale] = useState(0);
-  const [show, setShow] = useState(false);
 
-  
-  const handleID = ({ target: { value } }) => { setIdSale(value)};
+  const [textButton, SetTextButton] = useState('Eliminar')
+  const handleID = ({ target: { value } }) => { setIdSale(value), SetTextButton("Eliminar")};
   
 
   const handleButton = () => {
@@ -29,6 +28,7 @@ export const DeleteSale = ({urlBase}) => {
         }
       };
       deleteNow()  
+      SetTextButton("Eliminado")
   };
 
 
@@ -38,7 +38,8 @@ export const DeleteSale = ({urlBase}) => {
     <div className="divForm">
             <InputSimple titulo="ID" tipo="number" func={handleID}></InputSimple>
     </div>
-      <button onClick={handleButton}>Eliminar</button>
+    <ButtonSave titulo={textButton} func={handleButton}/>
+    
     </>
   );
 };

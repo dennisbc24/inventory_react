@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {  InputSimple,  ParrafoInput,} from "./form/inputSearch";
+import {  InputSimple,  ParrafoInput, ButtonSave} from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
@@ -120,7 +120,7 @@ export const UpdateProductForm = ({urlBase}) => {
     <>
     <TitleForm text='Actualizar Producto'></TitleForm>
       <input type="text"  value={query} onChange={handleChange} placeholder="Buscar..." />
-      <ul>   {suggestions.map((suggestion, index) => (
+      <ul className="suggestions_lu">   {suggestions.map((suggestion, index) => (
           <li key={index} onClick={handleClick}>
             {suggestion}
          </li>
@@ -137,7 +137,7 @@ export const UpdateProductForm = ({urlBase}) => {
         
       </div> : <></>
       }</>}
-      
+      <ButtonSave titulo={"Actualizar"} func={handleButton}/>
       <button onClick={handleButton}>Actualizar</button>
       
       

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {  InputSimple,  SelectSimple} from "./form/inputSearch";
+import {  InputSimple,  SelectSimple, ButtonSave} from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
@@ -61,7 +61,8 @@ export const SendExpense = ({urlBase}) => {
               <option value="true">Egreso</option>
             </SelectSimple>
           </div>
-          <button onClick={handleButton}>Guardar</button>
+          <ButtonSave titulo={"Guardar"} func={handleButton}/>
+          
         </>
       );
 }

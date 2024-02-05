@@ -40,3 +40,12 @@ export function ParrafoInput({titulo, parrafo}) {
         
     )  
 }
+
+export function ButtonSave({titulo,func }) {
+    return(
+       <button className='button_save' onClick={func}> 
+            {titulo}
+       </button>
+        
+    )  
+}

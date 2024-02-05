@@ -1,25 +1,3 @@
-:root{
-	
-	--color-third: black;
-	--color-fourth: #484C4D;
-	--dark-text: white;
-	--ligth-text: black;
-  --persian-blue-50: #ecf7ff;
-  --persian-blue-100: #d4ecff;
-  --persian-blue-200: #b3dfff;
-  --persian-blue-300: #7fcdff;
-  --persian-blue-400: #43b0ff;
-  --persian-blue-500: #188bff;
-  --persian-blue-600: #0067ff;
-  --persian-blue-700: #004ffb;
-  --persian-blue-800: #0340ca;
-  --persian-blue-900: #0a3b9e;
-  --persian-blue-950: #0c255f;
-  
-}
-
-
-
 
 .boton-menu{
 	display: none;
@@ -86,6 +64,7 @@ header .caja_pestañas{
 header .caja_pestañas .pestaña{
 	font-size: 1.6rem;
 	text-align: center;
+	
 }
 
 header .caja_pestañas .pestaña .pestana_a{
@@ -111,6 +90,7 @@ header .caja_pestañas .pestaña .pestana_a{
 	display: flex;
     flex-direction: column;
     align-items: flex-start;
+	
 }
 
 .dropDownClose{

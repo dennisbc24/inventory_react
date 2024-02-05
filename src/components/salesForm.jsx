@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {  InputSimple,  SelectSimple,  ParrafoInput,} from "./form/inputSearch";
+import {  InputSimple,  SelectSimple,  ParrafoInput, ButtonSave} from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
@@ -24,6 +24,7 @@ export const SelesForm = ({urlBase}) => {
   const [idBranch, setIdBranch] = useState(1);
   const [show, setShow] = useState(false)
   const [showSales, SetShowSales] = useState(true)
+  const [textButton, SetTextButton] = useState('Guardar')
 
     useEffect(() => {
     // Simula la carga de todos los productos al inicio
@@ -91,7 +92,7 @@ export const SelesForm = ({urlBase}) => {
           setCost(elem.cost);
           setQuery('')
           setShow('true')
-          
+          SetTextButton('Guardar')
         }
       });
     };
@@ -130,7 +131,9 @@ export const SelesForm = ({urlBase}) => {
     
     sendVending()
     SetShowSales(true)
+    SetTextButton('Guardado')
     setShow(false)
+
     
     
   };
@@ -138,7 +141,7 @@ export const SelesForm = ({urlBase}) => {
     <>
     <TitleForm text='Registrar Venta'></TitleForm>
       <input type="text"  value={query} onChange={handleChange} placeholder="Buscar..." />
-      <ul>   {suggestions.map((suggestion, index) => (
+      <ul className="suggestions_lu">   {suggestions.map((suggestion, index) => (
           <li key={index} onClick={handleClick}>
             {suggestion}
          </li>
@@ -172,7 +175,8 @@ export const SelesForm = ({urlBase}) => {
         <ParrafoInput titulo="Ganancia" parrafo={revenue}></ParrafoInput>
         <ParrafoInput titulo="Creado" parrafo={product.created}></ParrafoInput>
       </div>
-      <button onClick={handleButton}>Guardar</button>
+      
+      <ButtonSave titulo={textButton} func={handleButton}/>
       <h3>Stock</h3>
       {<>{ show ? <TableGet url={`${urlBase}/api/v1/existence?product=${product.id_product}`}/> : <></>
     }</>}

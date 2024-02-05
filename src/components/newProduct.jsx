@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {  InputSimple,  SelectSimple} from "./form/inputSearch";
+import {  InputSimple,  SelectSimple, ButtonSave} from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
@@ -86,7 +86,8 @@ export const NewProduct = ({urlBase}) => {
         
         
       </div>
-      <button onClick={handleButton}>Guardar</button>
+      <ButtonSave titulo={"Crear"} func={handleButton}/>
+      
       <h3>Ultimos Creados</h3>
       <TableGet url='http://localhost:3000/api/v1/products/latestproducts'/>
     </>

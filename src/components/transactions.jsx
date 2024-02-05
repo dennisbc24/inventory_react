@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {  InputSimple,  SelectSimple,  ParrafoInput,} from "./form/inputSearch";
+import {  InputSimple,  SelectSimple,  ParrafoInput, ButtonSave} from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
+import { TableGet } from "./table.jsx";
 
 export const TransactionsForm = ({urlBase}) => {
   const urlTransactions = `${urlBase}/api/v1/transactions`;
@@ -16,6 +17,7 @@ export const TransactionsForm = ({urlBase}) => {
   const [dateTrans, setDateTrans] = useState('');
   const [branchA, setBranchA] = useState(1);
   const [branchB, setBranchB] = useState(1);
+  const [show, setShow] = useState(true)
 
   useEffect(() => {
     // Simula la carga de todos los productos al inicio
@@ -61,7 +63,7 @@ export const TransactionsForm = ({urlBase}) => {
 
 
   const handleCount = ({ target: { value } }) => { setCount(parseInt(value))};
-  const handleChange = (e) => {setQuery(e.target.value)}
+  const handleChange = (e) => {setQuery(e.target.value), setShow(false)}
   const handleDate = (e) =>{setDateTrans(e.target.value)}
   const handleIdUser = (e) =>{  setIdUser(e.target.value)}
   const handleIdBranchA = (e) =>{  setBranchA(e.target.value)}
@@ -102,6 +104,7 @@ export const TransactionsForm = ({urlBase}) => {
     };
  
     sendVending()
+    setShow(true)
     
     
   };
@@ -109,7 +112,7 @@ export const TransactionsForm = ({urlBase}) => {
     <>
     <TitleForm text='Traslado de Mercaderia'></TitleForm>
       <input type="text"  value={query} onChange={handleChange} placeholder="Buscar..." />
-      <ul>   {suggestions.map((suggestion, index) => (
+      <ul className="suggestions_lu">   {suggestions.map((suggestion, index) => (
           <li key={index} onClick={handleClick}>
             {suggestion}
          </li>
@@ -144,8 +147,11 @@ export const TransactionsForm = ({urlBase}) => {
         <InputSimple titulo="Cantidad"  tipo="number" func={handleCount}></InputSimple>
         
       </div>
-      <button onClick={handleButton}>Guardar</button>
+      <ButtonSave titulo={"Guardar"} func={handleButton}/>
+      
       <h3>Ultimas Movimientos</h3>
+      {<>{ show ? <TableGet url={`${urlBase}/api/v1/transactions`}/> : <></>
+    }</>}
       
     </>
   );

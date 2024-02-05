@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {  InputSimple,  SelectSimple,  ParrafoInput,} from "./form/inputSearch";
+import {  InputSimple,  SelectSimple,  ParrafoInput, ButtonSave} from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
-import { TitleForm } from "./form/titleForm.jsx";
+import { TitleForm} from "./form/titleForm.jsx";
 import { TableGet } from "./table.jsx";
 
 export const EntriesForm = ({urlBase}) => {
@@ -159,14 +159,14 @@ const urlApiProducts = `${urlBase}/api/v1/products`;
     <>
     <TitleForm text='Ingreso de Producto'></TitleForm>
       <input type="text"  value={query} onChange={handleChangeProducts} placeholder="Buscar producto..." />
-      <ul>   {suggestions.map((suggestion, index) => (
+      <ul className="suggestions_lu">   {suggestions.map((suggestion, index) => (
           <li key={index} onClick={handleSearchProducts}>
             {suggestion}
          </li>
         ))}
       </ul>
       <input type="text"  value={querySuppliers} onChange={handleChangeSuppliers} placeholder="Buscar proveedor..." />
-      <ul>   {suggestionsSupplier.map((suggestion, index) => (
+      <ul className="suggestions_lu">   {suggestionsSupplier.map((suggestion, index) => (
           <li key={index} onClick={handleSearchSuppliers}>
             {suggestion}
          </li>
@@ -191,7 +191,8 @@ const urlApiProducts = `${urlBase}/api/v1/products`;
         </SelectSimple>
         <InputSimple titulo="Cantidad" tipo="number" func={handleCount} ></InputSimple>
       </div>
-      <button onClick={handleButton}>Guardar</button>
+      <ButtonSave titulo={"Guardar"} func={handleButton}/>
+      
       {<>{ show ? <TableGet url={`${urlBase}/api/v1/existence?product=${idProduct}`}/> : <></>
     }</>}
       

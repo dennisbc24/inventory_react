@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import {  InputSimple} from "./form/inputSearch";
+import {  InputSimple, ButtonSave} from "./form/inputSearch";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import {  TableGet } from "./table.jsx";
+
 
 export const SearchSummary = ({urlBase}) => {
   
@@ -29,7 +30,8 @@ export const SearchSummary = ({urlBase}) => {
       <div className="divForm">
               <InputSimple titulo="Fecha" tipo="month" func={handleDate}></InputSimple>
       </div>
-        <button onClick={handleButton}>Buscar</button>
+      <ButtonSave titulo={"Buscar"} func={handleButton}/>
+        
         
       {<>{ show ? <TableGet url={`${urlBase}/api/v1/summaries/summaryByMonth?year=${year}&month=${month}`}/> : <></>
       }</>}

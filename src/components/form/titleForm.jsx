@@ -1,10 +1,10 @@
 import React from 'react'
 
-/* import './index.css' */
+import './titleForm.css'
 
 export function TitleForm({text}) {
     return(
-<h1>{text}</h1>
+<h1 className='title_form'>{text}</h1>
     )  
 }
 
