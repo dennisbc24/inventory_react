@@ -17,8 +17,8 @@ import {SearchSpends} from "./searchSpends.jsx";
 import {SearchSummary} from "./summaries.jsx";
 
 import "./theme.css";
-const home = "https://inventario.elwayardo.com";
-//const home = 'http://localhost:3000'
+//const home = "https://inventario.elwayardo.com";
+const home = 'http://localhost:3000'
 
 export function App(){
     return(<>

@@ -115,7 +115,7 @@ const urlApiProducts = `${urlBase}/api/v1/products`;
           setSuggestions([]);
           setProduct(elem);
           setId_Product(elem.id_product)
-          setShow('true')
+          setShow(true)
           setQuery('')
         }
       });
