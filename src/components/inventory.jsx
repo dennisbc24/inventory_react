@@ -36,7 +36,7 @@ export const Inventory = ({urlBase}) => {
     <ButtonSave titulo={"Buscar"} func={handleButton}></ButtonSave>
       
       
-    {<>{ show ? <TableGet url={`${urlBase}/api/v1/existence/inventary?branch=${branch}`}/> : <></>
+    {<>{ show ? <TableGet url={`${urlBase}/api/v1/existence/inventary?branch=${branch}`} minWitdh="450px"/> : <></>
     }</>}
     </>
   );

@@ -138,7 +138,7 @@ export const UpdateProductForm = ({urlBase}) => {
       </div> : <></>
       }</>}
       <ButtonSave titulo={"Actualizar"} func={handleButton}/>
-      <button onClick={handleButton}>Actualizar</button>
+      
       
       
     </>

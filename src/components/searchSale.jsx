@@ -29,7 +29,7 @@ export const SearchSale = ({urlBase}) => {
     <ButtonSave titulo={"Buscar"} func={handleButton}/>
      
       
-    {<>{ show ? <TableGet url={`${urlBase}/api/v1/ventas/salesByDate?date=${date}`}/> : <></>
+    {<>{ show ? <TableGet url={`${urlBase}/api/v1/ventas/salesByDate?date=${date}`} minWitdh="800px"/> : <></>
     }</>}
     </>
   );

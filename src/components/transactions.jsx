@@ -150,7 +150,7 @@ export const TransactionsForm = ({urlBase}) => {
       <ButtonSave titulo={"Guardar"} func={handleButton}/>
       
       <h3>Ultimas Movimientos</h3>
-      {<>{ show ? <TableGet url={`${urlBase}/api/v1/transactions`}/> : <></>
+      {<>{ show ? <TableGet url={`${urlBase}/api/v1/transactions`} minWitdh="860px"/> : <></>
     }</>}
       
     </>

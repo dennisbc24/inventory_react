@@ -197,7 +197,7 @@ const urlApiProducts = `${urlBase}/api/v1/products`;
     }</>}
       
       <h3>Ultimos Ingresos</h3>
-      <TableGet url={`${urlBase}/api/v1/entries`}/>
+      <TableGet url={`${urlBase}/api/v1/entries`} minWitdh="735px"/>
     </>
   );
 };

@@ -6,3 +6,7 @@
 .table_body{
     color: var(--persian-blue-100) ;
 }
+
+td{
+    padding-left: 8px;
+}

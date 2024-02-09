@@ -76,12 +76,12 @@ return(
 
 }
 
-export  function TableGet({url}) {
+export  function TableGet({url, minWitdh='1051px'}) {
   
 
     return(
       <div className="result">
- <table className="infoTable">
+ <table className="infoTable" style={{'min-width':`${minWitdh}`}}>
         <thead className="table_header">
           <tr>
               {<TableTh urlApi={url}/> }      

@@ -15,10 +15,11 @@ import {Inventory} from "./inventory.jsx";
 import {TransactionsForm} from "./transactions.jsx";
 import {SearchSpends} from "./searchSpends.jsx";
 import {SearchSummary} from "./summaries.jsx";
+import {InventorySearchForm} from "./inventory_search_form.jsx";
 
 import "./theme.css";
-//const home = "https://inventario.elwayardo.com";
-const home = 'http://localhost:3000'
+const home = "https://inventario.elwayardo.com";
+//const home = 'http://localhost:3000'
 
 export function App(){
     return(<>
@@ -35,6 +36,7 @@ export function App(){
         <Route path='/transactions' element={<TransactionsForm urlBase={home}/>}/>
         <Route path='/searchSpends' element={<SearchSpends urlBase={home}/>}/>
         <Route path='/summaries' element={<SearchSummary urlBase={home}/>}/>
+        <Route path='/inventorySearch' element={<InventorySearchForm urlBase={home}/>}/>
     </Routes>
         
         </>
