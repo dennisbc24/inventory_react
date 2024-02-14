@@ -17,7 +17,7 @@ export const SendExpense = ({urlBase}) => {
     const handleConcept = ({ target: { value } }) => { setConcept(value)};
     const handleMount = ({ target: { value } }) => { setAmount(value)}
     const handleDate = ({ target: { value } }) => { setDate(value)}
-    const handleUser = ({ target: { value } }) => { setUser(value)}
+    const handleUser = ({ target: { value } }) => { setUser(parseInt(value))}
     const handleType = ({ target: { value } }) => { setType(value)}
 
     const handleButton = () => {

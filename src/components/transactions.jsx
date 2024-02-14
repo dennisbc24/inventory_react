@@ -18,6 +18,7 @@ export const TransactionsForm = ({urlBase}) => {
   const [branchA, setBranchA] = useState(1);
   const [branchB, setBranchB] = useState(1);
   const [show, setShow] = useState(true)
+  const [showStock, setShowStock] = useState(false)
 
   useEffect(() => {
     // Simula la carga de todos los productos al inicio
@@ -63,18 +64,18 @@ export const TransactionsForm = ({urlBase}) => {
 
 
   const handleCount = ({ target: { value } }) => { setCount(parseInt(value))};
-  const handleChange = (e) => {setQuery(e.target.value), setShow(false)}
+  const handleChange = (e) => {setQuery(e.target.value), setShow(false), setShowStock(false)}
   const handleDate = (e) =>{setDateTrans(e.target.value)}
   const handleIdUser = (e) =>{  setIdUser(e.target.value)}
-  const handleIdBranchA = (e) =>{  setBranchA(e.target.value)}
-  const handleIdBranchB = (e) =>{  setBranchB(e.target.value)}
+  const handleIdBranchA = (e) =>{  setBranchA(parseInt(e.target.value))}
+  const handleIdBranchB = (e) =>{  setBranchB(parseInt(e.target.value))}
   const handleClick = (event) => { 
     const textoLi = event.target.textContent
       allProducts.forEach((elem) => {
         if (elem.name == textoLi) {
           setSuggestions([]);
           setProduct(elem);
-          
+          setShowStock(true)
           setQuery('')
         }
       });
@@ -148,7 +149,9 @@ export const TransactionsForm = ({urlBase}) => {
         
       </div>
       <ButtonSave titulo={"Guardar"} func={handleButton}/>
-      
+      <h3>Stock</h3>
+      {<>{ showStock ? <TableGet url={`${urlBase}/api/v1/existence?product=${product.id_product}`}/> : <></>
+    }</>}
       <h3>Ultimas Movimientos</h3>
       {<>{ show ? <TableGet url={`${urlBase}/api/v1/transactions`} minWitdh="860px"/> : <></>
     }</>}

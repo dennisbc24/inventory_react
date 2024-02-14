@@ -104,8 +104,8 @@ const urlApiProducts = `${urlBase}/api/v1/products`;
   const handleCount = ({ target: { value } }) => { setCount(parseInt(value))};
   const handleChangeProducts = (e) => {setQuery(e.target.value), setShow(false)}
   const handleChangeSuppliers = (e) => {setQuerySuppliers(e.target.value)}
-  const handleIdUser = (e) =>{  setIdUser(e.target.value)}
-  const handleIdBranch = (e) =>{  setIdBranch(e.target.value)}
+  const handleIdUser = (e) =>{  setIdUser(parseInt(e.target.value))}
+  const handleIdBranch = (e) =>{  setIdBranch(parseInt(e.target.value))}
   
 
   const handleSearchProducts = (event) => { 

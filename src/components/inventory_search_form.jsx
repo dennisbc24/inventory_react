@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SelectSimple, ButtonSave, InputSimple} from "./form/inputSearch";
+import { ButtonSave, InputSimple} from "./form/inputSearch";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import {  TableGet } from "./table.jsx";

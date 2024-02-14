@@ -9,7 +9,7 @@ export const Inventory = ({urlBase}) => {
   const [branch, setBranch] = useState(1);
   const [show, setShow] = useState(false);
      
-  const handleIdBranch = ({ target: { value } }) => { setBranch(value), setShow(false)};
+  const handleIdBranch = ({ target: { value } }) => { setBranch(parseInt(value)), setShow(false)};
   
 
   const handleButton = () => {

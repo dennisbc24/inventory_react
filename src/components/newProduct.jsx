@@ -31,8 +31,8 @@ export const NewProduct = ({urlBase}) => {
   const handleSupplier = ({ target: { value } }) => {SetSupplierProduct(value)};
   const handlePUnit = (e) => {setPUnit(e.target.value)}
   const handlePMayor = (e) =>{setPMayor(e.target.value)}
-  const handleIdUser = (e) =>{  setIdUser(e.target.value)}
-  const handleIdBranch = (e) =>{  setIdBranch(e.target.value)}
+  const handleIdUser = (e) =>{  setIdUser(parseInt(e.target.value))}
+  const handleIdBranch = (e) =>{  setIdBranch(parseInt(e.target.value))}
 
   const handleButton = () => {
           const sendData = async () => {

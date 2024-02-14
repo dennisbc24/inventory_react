@@ -18,8 +18,8 @@ import {SearchSummary} from "./summaries.jsx";
 import {InventorySearchForm} from "./inventory_search_form.jsx";
 
 import "./theme.css";
-const home = "https://inventario.elwayardo.com";
-//const home = 'http://localhost:3000'
+//const home = "https://inventario.elwayardo.com";
+const home = 'http://localhost:3000'
 
 export function App(){
     return(<>

@@ -10,7 +10,7 @@ export const DeleteSale = ({urlBase}) => {
   const [idSale, setIdSale] = useState(0);
 
   const [textButton, SetTextButton] = useState('Eliminar')
-  const handleID = ({ target: { value } }) => { setIdSale(value), SetTextButton("Eliminar")};
+  const handleID = ({ target: { value } }) => { setIdSale(parseInt(value)), SetTextButton("Eliminar")};
   
 
   const handleButton = () => {

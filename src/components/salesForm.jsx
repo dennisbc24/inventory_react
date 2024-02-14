@@ -80,8 +80,8 @@ export const SelesForm = ({urlBase}) => {
   const handleTotal = ({ target: { value } }) => {setTotal(parseInt(value))};
   const handleChange = (e) => {setQuery(e.target.value), setShow(false), SetShowSales(false)}
   const handleDate = (e) =>{setDateSell(e.target.value)}
-  const handleIdUser = (e) =>{  setIdUser(e.target.value)}
-  const handleIdBranch = (e) =>{  setIdBranch(e.target.value)}
+  const handleIdUser = (e) =>{  setIdUser(parseInt(e.target.value))}
+  const handleIdBranch = (e) =>{  setIdBranch(parseInt(e.target.value))}
   const changeCostumer = (e) => {setDataCustomer(e.target.value)}
   const handleClick = (event) => { 
     const textoLi = event.target.textContent
