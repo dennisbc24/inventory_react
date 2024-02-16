@@ -16,6 +16,7 @@ import {TransactionsForm} from "./transactions.jsx";
 import {SearchSpends} from "./searchSpends.jsx";
 import {SearchSummary} from "./summaries.jsx";
 import {InventorySearchForm} from "./inventory_search_form.jsx";
+import {UpdateExistenceCount} from "./updateExistenceCount.jsx";
 
 import "./theme.css";
 //const home = "https://inventario.elwayardo.com";
@@ -37,6 +38,7 @@ export function App(){
         <Route path='/searchSpends' element={<SearchSpends urlBase={home}/>}/>
         <Route path='/summaries' element={<SearchSummary urlBase={home}/>}/>
         <Route path='/inventorySearch' element={<InventorySearchForm urlBase={home}/>}/>
+        <Route path='/existenceCount' element={<UpdateExistenceCount urlBase={home}/>}/>
     </Routes>
         
         </>

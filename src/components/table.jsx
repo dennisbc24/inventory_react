@@ -81,7 +81,7 @@ export  function TableGet({url, minWitdh='1051px'}) {
 
     return(
       <div className="result">
- <table className="infoTable" style={{'min-width':`${minWitdh}`}}>
+ <table className="infoTable" style={{'minWidth':`${minWitdh}`}}>
         <thead className="table_header">
           <tr>
               {<TableTh urlApi={url}/> }      

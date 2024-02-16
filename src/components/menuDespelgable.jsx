@@ -23,6 +23,7 @@ export function MainMenu() {
    <EnlaceLi name='Inventario'link='/inventory'/>
    <EnlaceLi name='Transacciones' link='/transactions'/>
    <EnlaceLi name='Buscar' link='/inventorySearch'/>
+   <EnlaceLi name='Actualizar Stock' link='/existenceCount'/>
    {/* <EnlaceLi name='Borrar'/> */}
 </Pestana>
 <Pestana titulo='Otros'>
