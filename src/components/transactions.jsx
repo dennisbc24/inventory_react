@@ -125,7 +125,7 @@ export const TransactionsForm = ({urlBase}) => {
         <InputSimple titulo="Fecha" tipo="date" func={handleDate}></InputSimple>
         <SelectSimple titulo="Origen"func={handleIdBranchA}>
           <option value="1">B17</option>
-          <option value="3">Qoripata</option>
+          <option value="3">Departamento</option>
           <option value="7">Tambopata</option>
           <option value="4">Deposito</option>
           <option value="5">Los Nogales</option>
@@ -133,7 +133,7 @@ export const TransactionsForm = ({urlBase}) => {
         </SelectSimple>
         <SelectSimple titulo="Destino"func={handleIdBranchB}>
           <option value="1">B17</option>
-          <option value="3">Qoripata</option>
+          <option value="3">Departamento</option>
           <option value="7">Tambopata</option>
           <option value="4">Deposito</option>
           <option value="5">Los Nogales</option>
