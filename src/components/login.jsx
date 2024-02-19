@@ -1,21 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {  InputSimple} from "./form/inputSearch";
 import loginServices from "../services/login"
 import "./salesForm.css";
 
 
-let userGlobal;
-
-const Acceso = () =>{
-    return(
-        <p>Usuario si existe</p>
-    )
-}
-
-const Form = () => {
+export const Login = ({urlBase, inicio}) => {
 const [email, setEmail] = useState(null)
 const [password, setPassword] = useState(null)
-const [user, setUser] = useState(null)
+
 
 const handleEmail = ({target: { value }}) => {setEmail(value)}
 const handlePassword = ({target: { value }}) => {setPassword(value)}
@@ -23,14 +15,18 @@ const handleLogin =  async (e) => {
     e.preventDefault()
     try {
         console.log(email, password);
-        const user = await loginServices.login({
+        const user = await loginServices.login(urlBase, {
             email, 
             password
         })
         console.log(user);
-        setUser(user)
+        
         setEmail('')
         setPassword('')
+        inicio(user)
+        window.localStorage.setItem(
+            "loggedAppUser", JSON.stringify(user)
+        )
     } catch (error) {
         console.error(error);
     }
@@ -41,18 +37,11 @@ const handleLogin =  async (e) => {
         <form onSubmit={handleLogin}>
         <InputSimple tipo="email" titulo="Email: " func={handleEmail}/>
         <InputSimple tipo="password" titulo="Contraseña: " func={handlePassword}/>
-        <button>Login</button>
-        </form>
+        <button>Iniciar Sesión</button>
         
+        </form>
+        {/* <button onClick={inicio}>login</button> */}
         </>
     )
 }
 
- export const Login = () =>{
-    const [user, setUser] = useState(userGlobal)
-    return(
-        <>
-           {user ? <Acceso/> : <Form/>}
-        </>
-    )
-}

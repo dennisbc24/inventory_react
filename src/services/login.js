@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-const url = 'http://localhost:3000/api/v1/auth/login'
 
-const login = async credentials => {
+const login = async (urlBase, credentials) => {
+    const url = `${urlBase}/api/v1/auth/login`
     const {data} = await axios.post(url, credentials)
     return data
 }
