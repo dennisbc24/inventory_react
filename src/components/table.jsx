@@ -2,12 +2,19 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./table.css"
-const TableTh =  ({urlApi}) =>{
+
+const TableTh =  ({urlApi, token}) =>{
+
+  let config = {
+    headers:{
+      'Authorization': `Bearer ${token}`
+    }
+  }
 
   const [llaves, setLlaves] = useState([])
 
   useEffect(()=>{
-    axios.get(urlApi)
+    axios.get(urlApi, config)
     .then(function (response) {
       const data3 = response.data
       setLlaves(Object.keys(data3[0]))
@@ -44,10 +51,16 @@ const {dato} = Adata
   </>)
 }
 
-const TableTr =  ({urlApi}) =>{
+const TableTr =  ({urlApi, token}) =>{
+
+  let config = {
+    headers:{
+      'Authorization': `Bearer ${token}`
+    }
+  }
   const [fill, setFill] = useState([])
   useEffect(()=>{
-    axios.get(urlApi)
+    axios.get(urlApi, config)
     .then(function (response) {
       const data3 = response.data
       
@@ -76,20 +89,18 @@ return(
 
 }
 
-export  function TableGet({url, minWitdh='1051px'}) {
-  
-
-    return(
+export  function TableGet({url, minWitdh='1051px', token}) {
+      return(
       <div className="result">
  <table className="infoTable" style={{'minWidth':`${minWitdh}`}}>
         <thead className="table_header">
           <tr>
-              {<TableTh urlApi={url}/> }      
+              {<TableTh urlApi={url} token={token}/> }      
 
           </tr>
         </thead>
         <tbody className="table_body">
-          <TableTr urlApi={url} />
+          <TableTr urlApi={url} token={token} />
       
     </tbody>
   </table>

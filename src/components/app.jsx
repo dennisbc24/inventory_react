@@ -27,15 +27,13 @@ const home = 'http://localhost:3000'
 
 export function App(){
     const [user, setUser] = useState(null)
+    const [token, setToken] = useState()
 
     const login = (user) =>{setUser(user)}
     const logout = () => {
         window.localStorage.removeItem('loggedAppUser')
         setUser(null)
     }
-
-    const [storageUser, setStorageUser] = useState(null)
-
 
 useEffect(()=>{
     const loggedUserJSON = window.localStorage.getItem('loggedAppUser')
@@ -45,7 +43,11 @@ useEffect(()=>{
     }
 
 }, [])
-    
+
+useEffect(()=>{
+    user ? setToken(user.token) : console.log('no hay token');
+   
+},[user])
     return(<>  
     <Routes>
 
@@ -67,7 +69,7 @@ useEffect(()=>{
             <Route path='/updateProduct' element={<UpdateProductForm urlBase={home}/>}/>
             <Route path='/inventory' element={<Inventory urlBase={home}/>}/>
             <Route path='/transactions' element={<TransactionsForm urlBase={home}/>}/>
-            <Route path='/searchSpends' element={<SearchSpends urlBase={home}/>}/>
+            <Route path='/searchSpends' element={<SearchSpends urlBase={home} token={token}/>}/>
             <Route path='/summaries' element={<SearchSummary urlBase={home}/>}/>
             <Route path='/inventorySearch' element={<InventorySearchForm urlBase={home}/>}/>
             <Route path='/existenceCount' element={<UpdateExistenceCount urlBase={home}/>}/>
