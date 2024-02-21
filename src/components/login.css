@@ -1,0 +1,23 @@
+.box{
+display: flex;
+flex-direction: column;
+align-items: center;
+height: 70vh;
+justify-content: center;
+}
+
+.login{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input{
+    width: -webkit-fill-available;
+}
+
+.button_save{
+    margin-top: 25px;
+    width: 100px;
+    align-self: center;
+}

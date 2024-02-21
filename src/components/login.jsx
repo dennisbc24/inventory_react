@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import {  InputSimple} from "./form/inputSearch";
+import {  InputSimple, ButtonSave} from "./form/inputSearch";
 import loginServices from "../services/login"
-import "./salesForm.css";
+import "./login.css";
 
 
 export const Login = ({urlBase, inicio}) => {
@@ -14,13 +14,11 @@ const handlePassword = ({target: { value }}) => {setPassword(value)}
 const handleLogin =  async (e) => {
     e.preventDefault()
     try {
-        console.log(email, password);
         const user = await loginServices.login(urlBase, {
             email, 
             password
         })
-        console.log(user);
-        
+               
         setEmail('')
         setPassword('')
         inicio(user)
@@ -34,13 +32,17 @@ const handleLogin =  async (e) => {
 }
     return(
         <>
-        <form onSubmit={handleLogin}>
-        <InputSimple tipo="email" titulo="Email: " func={handleEmail}/>
-        <InputSimple tipo="password" titulo="Contraseña: " func={handlePassword}/>
-        <button>Iniciar Sesión</button>
+        <main className="box">
+            <h1 className="title_form">Iniciar Sesión</h1>
+            <form className="login" onSubmit={handleLogin}>
+            <InputSimple tipo="email" titulo="Email: " func={handleEmail}/>
+            <InputSimple tipo="password" titulo="Contraseña: " func={handlePassword}/>
+            {/* <button className="button_form">Iniciar Sesión</button> */}
+            <ButtonSave titulo={'Iniciar Sesión'}/>
+            </form>
+            {/* <button onClick={inicio}>login</button> */}
+        </main>
         
-        </form>
-        {/* <button onClick={inicio}>login</button> */}
         </>
     )
 }

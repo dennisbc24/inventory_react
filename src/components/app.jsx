@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import {MainMenu} from './menuDespelgable.jsx'
 import { Route, Routes } from "react-router-dom";
-
+import { ButtonSave} from "./form/inputSearch";
 
 import {SelesForm} from "./salesForm.jsx";
 import {NewProduct} from "./newProduct.jsx";
@@ -51,12 +51,9 @@ useEffect(()=>{
     return(<>  
     <Routes>
 
-    <Route path='/' element={user ?    <>
-        <MainMenu/>
-    <button onClick={logout}>Logout</button>
-            
-    </>
-    :  <><Login urlBase={home} inicio={login}/>      </> 
+    <Route path='/' element={
+    user ?    <><MainMenu/> <ButtonSave titulo={'Cerrar Sesión'} func={logout} /></>
+    :  <><Login urlBase={home} inicio={login}/></> 
     }/>
         
         <Route element={<ProtectedRoute isAllow={!!user}/>}>
