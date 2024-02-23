@@ -26,6 +26,8 @@ export const SelesForm = ({urlBase}) => {
   const [showSales, SetShowSales] = useState(true)
   const [textButton, SetTextButton] = useState('Guardar')
 
+ 
+
     useEffect(() => {
     // Simula la carga de todos los productos al inicio
     const fetchAllProducts = async () => {
