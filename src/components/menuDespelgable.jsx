@@ -9,7 +9,7 @@ export function MainMenu() {
 <Menu titulo='Ventas'>
 
 <Pestana titulo='Ventas'>
-   <EnlaceLi name='Registrar' link='/'/>
+   <EnlaceLi name='Registrar' link='/putSale'/>
    <EnlaceLi name='Buscar Venta' link='/searchSales'/>
    <EnlaceLi name='Eliminar' link='/deleteSale'/>
 </Pestana>

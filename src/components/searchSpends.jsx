@@ -4,7 +4,7 @@ import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import {  TableGet } from "./table.jsx";
 
-export const SearchSpends = ({urlBase}) => {
+export const SearchSpends = ({urlBase, token}) => {
   
   const [date, setDate] = useState(0);
   const [show, setShow] = useState(false);
@@ -12,7 +12,6 @@ export const SearchSpends = ({urlBase}) => {
   const [month, setMonth] = useState('');
 
   const handleDate = ({ target: { value } }) => { 
-    console.log(value);
     setDate(value), 
     setShow(false),
     console.log(date);
@@ -32,7 +31,7 @@ export const SearchSpends = ({urlBase}) => {
     <ButtonSave titulo={"Buscar"} func={handleButton}/>
      
       
-    {<>{ show ? <TableGet url={`${urlBase}/api/v1/box/byMonth?year=${year}&month=${month}`}/> : <></>
+    {<>{ show ? <TableGet url={`${urlBase}/api/v1/box/byMonth?year=${year}&month=${month}`} token={token}/> : <></>
     }</>}
     </>
   );
