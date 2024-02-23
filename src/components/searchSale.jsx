@@ -10,16 +10,8 @@ export const SearchSale = ({urlBase}) => {
   const [date, setDate] = useState(0);
   const [show, setShow] = useState(false);
 
-  
   const handleDate = ({ target: { value } }) => { setDate(value), setShow(false)};
-  
-
-  const handleButton = () => {
-
-    setShow(true)
-    
-    
-  };
+  const handleButton = () => {setShow(true)};
   return (
     <>
     <TitleForm text='Buscar Ventas'></TitleForm>
