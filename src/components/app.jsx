@@ -52,9 +52,14 @@ useEffect(()=>{
     <Routes>
 
     <Route path='/' element={
-    user ?    <><MainMenu/> <ButtonSave titulo={'Cerrar Sesión'} func={logout} /></>
-    :  <><Login urlBase={home} inicio={login}/></> 
-    }/>
+    user ?  <>  
+                <MainMenu/> 
+                <ButtonSave titulo={'Cerrar Sesión'} func={logout} />
+                <SelesForm urlBase={home}/>
+            </>
+    :  <>
+            <Login urlBase={home} inicio={login}/>
+        </> }/>
         
         <Route element={<ProtectedRoute isAllow={!!user}/>}>
             <Route path='/newProduct' element={<NewProduct urlBase={home}/>}/>

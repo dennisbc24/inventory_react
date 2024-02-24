@@ -32,6 +32,8 @@ export const UpdateProductForm = ({urlBase}) => {
     fetchAllProducts();
   }, []);
 
+
+  
   useEffect(() => {
     // Filtra los nombres localmente en base a la query
     const filteredNames = allProducts

@@ -89,7 +89,7 @@ export const NewProduct = ({urlBase}) => {
       <ButtonSave titulo={"Crear"} func={handleButton}/>
       
       <h3>Ultimos Creados</h3>
-      <TableGet url='http://localhost:3000/api/v1/products/latestproducts'/>
+      <TableGet url={`${urlBase}/api/v1/products/latestproducts`}/>
     </>
   );
 };

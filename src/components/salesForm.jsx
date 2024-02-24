@@ -5,6 +5,8 @@ import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import { TableGet } from "./table.jsx";
 
+import { SalesService } from "../services/sales.js";
+const saleService = new SalesService()
 export const SelesForm = ({urlBase}) => {
   const urlUploadVendings = `${urlBase}/api/v1/ventas/vendings`;
   const urlUMofifyExistence = `${urlBase}/api/v1/existence/vendings`;
@@ -26,6 +28,8 @@ export const SelesForm = ({urlBase}) => {
   const [showSales, SetShowSales] = useState(true)
   const [textButton, SetTextButton] = useState('Guardar')
  const [allProducts, setAllProducts] = useState([]);
+
+ 
 
       useEffect(() => {
       // Simula la carga de todos los productos al inicio
@@ -102,44 +106,8 @@ export const SelesForm = ({urlBase}) => {
 
 
   const handleButton = () => {
-      
-    const sendVending = async () => {
-      try {
-        const sendData = await axios.post(urlUploadVendings,{
-          date: dateSell,
-          amount: count,
-          p_total: total,
-          p_unit: parseInt(PUnit),
-          revenue: parseInt(revenue),
-          customer: dataCustomer,
-          fk_id_product: product.id_product,
-          fk_id_user: idUser,
-          fk_id_branch:idBranch,
-          branch:'nuevo',
-          product:product.name
-        })
-
-        const modifyExistence = await axios.patch(urlUMofifyExistence,{
-          amount: count, 
-          fk_branch: idBranch, 
-          fk_product:product.id_product, 
-          fk_user:idUser
-        })
-        console.log('guardado');
-        
-      } catch (error) {
-        console.error("Error al obtener todos los productos:", error);
-      }
-    };
-    
-    sendVending()
-    SetShowSales(true)
-    SetTextButton('Guardado')
-    setShow(false)
-
-    
-    
-  };
+    const body = {dateSell, count, total,PUnit, revenue, dataCustomer, product, idUser, idBranch}
+      const upload = saleService.registerSale(urlBase, body)};
   return (
     <>
     <TitleForm text='Registrar Venta'></TitleForm>

@@ -3,11 +3,9 @@ import {  InputSimple, ButtonSave} from "./form/inputSearch";
 import loginServices from "../services/login"
 import "./login.css";
 
-
 export const Login = ({urlBase, inicio}) => {
 const [email, setEmail] = useState(null)
 const [password, setPassword] = useState(null)
-
 
 const handleEmail = ({target: { value }}) => {setEmail(value)}
 const handlePassword = ({target: { value }}) => {setPassword(value)}

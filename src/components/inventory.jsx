@@ -10,15 +10,8 @@ export const Inventory = ({urlBase}) => {
   const [show, setShow] = useState(false);
      
   const handleIdBranch = ({ target: { value } }) => { setBranch(parseInt(value)), setShow(false)};
-  
+  const handleButton = () => {setShow(true)}
 
-  const handleButton = () => {
-
-    setShow(true)
-    
-    
-    
-  };
   return (
     <>
     <TitleForm text='Inventario por local'></TitleForm>
@@ -34,8 +27,6 @@ export const Inventory = ({urlBase}) => {
            {/*  <InputSimple titulo="Fecha" tipo="date" func={handleDate}></InputSimple> */}
     </div>
     <ButtonSave titulo={"Buscar"} func={handleButton}></ButtonSave>
-      
-      
     {<>{ show ? <TableGet url={`${urlBase}/api/v1/existence/inventary?branch=${branch}`} minWitdh="450px"/> : <></>
     }</>}
     </>
