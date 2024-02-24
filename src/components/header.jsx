@@ -5,7 +5,35 @@ import close from "./icons/close.png";
 import menu from "./icons/menu.png";
 import repartidor from "./icons/repartidor.png";
 
-export function Menu({ children, titulo }) {
+export function Pestana({ children, titulo }) {
+  const [vista, setVista] = useState("close");
+  const classDropDown =
+    vista == "close" ? "dropDown dropDownClose" : "dropDown";
+
+  function witch() {
+    const changeView =
+      vista == "close" ? setVista("abierto") : setVista("close");
+  }
+
+  return (
+    <li className="pestaña" onClick={witch}>
+      {titulo}
+      <ul className={classDropDown}>{children}</ul>
+    </li>
+  );
+}
+
+export function EnlaceLi({ name, link = "#", func }) {
+  return (
+    <li className="dropDown_li" onClick={func}>
+      <Link className="dropDown_a" to={link}>
+        {name}
+      </Link>
+    </li>
+  );
+}
+
+export function Menu() {
   const [check, setCheck] = useState(true);
   const [cerrar, setCerrar] = useState('-100%')
 
@@ -16,6 +44,15 @@ export function Menu({ children, titulo }) {
   const change = () => {
     setCheck(!check);
     setCerrar('0')
+  };
+
+  const change2 = (e) => {
+    
+    if (e.target.className === 'dropDown_a') {
+      setCheck(!check);
+    setCerrar('0')
+    }
+    
   };
   return (
     <header>
@@ -44,35 +81,34 @@ export function Menu({ children, titulo }) {
         </a>
       </div>
 
-      <ul style={{right:`${cerrar}`}} className="caja_pestañas">{children}</ul>
+      <ul style={{right:`${cerrar}`}} className="caja_pestañas" onClick={change2}>
+      <Pestana titulo='Ventas'>
+         <EnlaceLi name='Registrar' link='/putSale'/>
+         <EnlaceLi name='Buscar Venta' link='/searchSales'/>
+         <EnlaceLi name='Eliminar' link='/deleteSale'/>
+      </Pestana>
+      <Pestana titulo='Productos'>
+         <EnlaceLi name='Nuevo' link='/newProduct'/>
+         <EnlaceLi name='Actualizar' link='/updateProduct'/>
+         {/* <EnlaceLi name='Borrar'/> */}
+      </Pestana>
+      <Pestana titulo='Stock'>
+         <EnlaceLi name='Ingreso' link='/entries'/>
+         <EnlaceLi name='Inventario'link='/inventory'/>
+         <EnlaceLi name='Transacciones' link='/transactions'/>
+         <EnlaceLi name='Buscar' link='/inventorySearch'/>
+         <EnlaceLi name='Actualizar Stock' link='/existenceCount'/>
+         {/* <EnlaceLi name='Borrar'/> */}
+      </Pestana>
+      <Pestana titulo='Otros'>
+         <EnlaceLi name='Registrar Gasto' link='/expense'/>
+         <EnlaceLi name='Buscar Gasto' link='/searchSpends'/>
+         {/* <EnlaceLi name='Resumen'/> */}
+         {/* <EnlaceLi name='Buscar Resumen' link='/summaries'/> */}
+      </Pestana>
+      </ul>
     </header>
   );
 }
 
-export function Pestana({ children, titulo }) {
-  const [vista, setVista] = useState("close");
-  const classDropDown =
-    vista == "close" ? "dropDown dropDownClose" : "dropDown";
 
-  function witch() {
-    const changeView =
-      vista == "close" ? setVista("abierto") : setVista("close");
-  }
-
-  return (
-    <li className="pestaña" onClick={witch}>
-      {titulo}
-      <ul className={classDropDown}>{children}</ul>
-    </li>
-  );
-}
-
-export function EnlaceLi({ name, link = "#" }) {
-  return (
-    <li className="dropDown_li">
-      <Link className="dropDown_a" to={link}>
-        {name}
-      </Link>
-    </li>
-  );
-}
