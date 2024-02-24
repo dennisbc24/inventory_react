@@ -4,17 +4,11 @@ import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import { TableGet } from "./table.jsx";
+import {ProductService} from "../services/product.js"
 
-
-//const urlBase = 'https://inventario.elwayardo.com'
-const urlBase = 'http://localhost:3000'
-
-
+const service = new ProductService()
 
 export const NewProduct = ({urlBase}) => {
-  const urlUpload = `${urlBase}/api/v1/products`
-  const urlLatest = `${urlBase}/api/v1/products/latestproducts`
-
   const [nameProduct, setNameProduct] = useState('');
   const [count, setCount] = useState(0);
   const [costProduct, SetCostProduct] = useState(0);
@@ -24,7 +18,6 @@ export const NewProduct = ({urlBase}) => {
   const [idUser, setIdUser] = useState(1);
   const [idBranch, setIdBranch] = useState(1);
 
-  
   const handleCount = ({ target: { value } }) => { setCount(parseInt(value))};
   const handleName = ({ target: { value } }) => { setNameProduct(value)};
   const handleCost = ({ target: { value } }) => { SetCostProduct(parseInt(value))};
@@ -33,32 +26,10 @@ export const NewProduct = ({urlBase}) => {
   const handlePMayor = (e) =>{setPMayor(e.target.value)}
   const handleIdUser = (e) =>{  setIdUser(parseInt(e.target.value))}
   const handleIdBranch = (e) =>{  setIdBranch(parseInt(e.target.value))}
-
-  const handleButton = () => {
-          const sendData = async () => {
-      try {
-        const sendData = await axios.post(urlUpload,{
-          fk_user: idUser,
-          fk_branch:idBranch,
-          supplier:supplierProduct,
-          amount: count,
-          name:nameProduct,
-          cost: costProduct,
-          lowest_price: parseInt(PUnit),
-          list_price: parseInt(pMayor),
-        })
-
-        console.log('exito');
-        
-      } catch (error) {
-        console.error("Error al obtener todos los productos:", error);
-      }
-    };
- 
-    sendData()
-    
-    
-  };
+  const handleButton = async () => {
+    const body = {idUser,idBranch,supplierProduct,count,nameProduct,costProduct,PUnit,pMayor}
+    const petition =  service.create(urlBase, body)
+   };
   return (
     <>
     <TitleForm text='Crear Nuevo Producto'></TitleForm>

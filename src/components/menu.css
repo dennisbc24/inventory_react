@@ -19,7 +19,6 @@
 	height: 20px;
 }
 .boton-check .boton_close{
-	display: none;
 	width:  20px;
 }
 header{
@@ -57,7 +56,7 @@ header .caja_pestañas{
 	height: auto;
    
 	background-color: #051d51;
-    right: -100%;
+    
     top: 38px;
 	transition: .5s;
 }
@@ -69,20 +68,6 @@ header .caja_pestañas .pestaña{
 
 header .caja_pestañas .pestaña .pestana_a{
 	color: white;
-}
-.pestaña a.active, .pestaña .pestana_a:hover{
-	background-color:brown;
-	transition: .5s;
-}
-
-#boton-menu:checked ~ .caja_pestañas{
-	right: 0;
-}
-#boton-menu:checked + label .boton_open{
-	display: none;
-}
-#boton-menu:checked + label .boton_close{
-	display: block;
 }
 
 

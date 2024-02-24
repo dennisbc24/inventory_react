@@ -7,10 +7,8 @@ import { TableGet } from "./table.jsx";
 
 import { SalesService } from "../services/sales.js";
 const saleService = new SalesService()
-export const SelesForm = ({urlBase}) => {
-  const urlUploadVendings = `${urlBase}/api/v1/ventas/vendings`;
-  const urlUMofifyExistence = `${urlBase}/api/v1/existence/vendings`;
 
+export const SelesForm = ({urlBase}) => {
   const [query, setQuery] = useState("");
  // Array con todos los productos
   const [suggestions, setSuggestions] = useState([]);
@@ -44,12 +42,11 @@ export const SelesForm = ({urlBase}) => {
           console.error("Error al obtener todos los productos:", error);
         }
       };
-  
+  fetchAllProducts()
       
     }, [])
  
    useEffect(() => {
-    console.log(allProducts);
     // Filtra los nombres localmente en base a la query
     const filteredNames = allProducts
       .filter(
@@ -107,7 +104,10 @@ export const SelesForm = ({urlBase}) => {
 
   const handleButton = () => {
     const body = {dateSell, count, total,PUnit, revenue, dataCustomer, product, idUser, idBranch}
-      const upload = saleService.registerSale(urlBase, body)};
+      const upload = saleService.register(urlBase, body)
+      SetShowSales(true)
+    };
+      
   return (
     <>
     <TitleForm text='Registrar Venta'></TitleForm>

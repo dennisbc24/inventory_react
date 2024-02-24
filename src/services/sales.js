@@ -2,10 +2,10 @@ import axios from 'axios'
 
 export class SalesService {
     constructor(){}
-    async registerSale(urlBase, body){
+    async register(urlBase, body){
         const urlUploadVendings = `${urlBase}/api/v1/ventas/vendings`;
         const urlUMofifyExistence = `${urlBase}/api/v1/existence/vendings`;
-const {dateSell, count, total,PUnit, revenue, dataCustomer, product, idUser, idBranch} = body
+        const {dateSell, count, total,PUnit, revenue, dataCustomer, product, idUser, idBranch} = body
         try {
             const sendData = await axios.post(urlUploadVendings,{
               date: dateSell,
@@ -32,6 +32,22 @@ const {dateSell, count, total,PUnit, revenue, dataCustomer, product, idUser, idB
           } catch (error) {
             console.error("Error al obtener todos los productos:", error);
           }
+    }
+
+    async delete(urlBase, id) {
+      const urlApi = `${urlBase}/api/v1/ventas`;
+      try {
+        const urlWithQuery =`${urlApi}?id=${id}`
+          const deleteSale = await axios.delete(urlWithQuery)
+  
+          console.log('borrado');
+          
+        } catch (error) {
+          console.error("Error al borrar:", error);
+        }
+      
+    
+      
     }
 
 }
