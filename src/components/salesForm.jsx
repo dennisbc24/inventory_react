@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {  InputSimple,  SelectSimple,  ParrafoInput, ButtonSave} from "./form/inputSearch";
-import axios from "axios";
+import axios, { all } from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import { TableGet } from "./table.jsx";
@@ -10,7 +10,7 @@ export const SelesForm = ({urlBase}) => {
   const urlUMofifyExistence = `${urlBase}/api/v1/existence/vendings`;
 
   const [query, setQuery] = useState("");
-  const [allProducts, setAllProducts] = useState([]); // Array con todos los productos
+ // Array con todos los productos
   const [suggestions, setSuggestions] = useState([]);
   const [product, setProduct] = useState([]);
   const [count, setCount] = useState(0);
@@ -25,24 +25,27 @@ export const SelesForm = ({urlBase}) => {
   const [show, setShow] = useState(false)
   const [showSales, SetShowSales] = useState(true)
   const [textButton, SetTextButton] = useState('Guardar')
+ const [allProducts, setAllProducts] = useState([]);
 
-    useEffect(() => {
-    // Simula la carga de todos los productos al inicio
-    const fetchAllProducts = async () => {
-      try {
-        const response = await axios.get(
-          `${urlBase}/api/v1/products`
-        );
-        setAllProducts(response.data);
-      } catch (error) {
-        console.error("Error al obtener todos los productos:", error);
-      }
-    };
-
-    fetchAllProducts();
-  }, []);
-
-  useEffect(() => {
+      useEffect(() => {
+      // Simula la carga de todos los productos al inicio
+      const fetchAllProducts = async () => {
+        try {
+          const response = await axios.get(
+            `${urlBase}/api/v1/products`
+          );
+          setAllProducts(response.data);
+          console.log("fetch listo");
+        } catch (error) {
+          console.error("Error al obtener todos los productos:", error);
+        }
+      };
+  
+      
+    }, [])
+ 
+   useEffect(() => {
+    console.log(allProducts);
     // Filtra los nombres localmente en base a la query
     const filteredNames = allProducts
       .filter(
