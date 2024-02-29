@@ -1,0 +1,1178 @@
+[
+    {
+    "amount": 1,
+    "product": "azucarera abejita",
+    "costo": "12.50",
+    "sucursal": "departamento",
+    "id_existence": 870
+    },
+    {
+    "amount": 1,
+    "product": "Batidor Inmersion MASTER",
+    "costo": "37.00",
+    "sucursal": "departamento",
+    "id_existence": 822
+    },
+    {
+    "amount": 3,
+    "product": "Batidora Fosterizer con pocillo 1200W",
+    "costo": "95.00",
+    "sucursal": "departamento",
+    "id_existence": 760
+    },
+    {
+    "amount": 13,
+    "product": "Batidora NATIONAL 12v",
+    "costo": "49.20",
+    "sucursal": "departamento",
+    "id_existence": 746
+    },
+    {
+    "amount": 6,
+    "product": "Batidora OSTER 6VEL/250 Watt",
+    "costo": "85.00",
+    "sucursal": "departamento",
+    "id_existence": 1014
+    },
+    {
+    "amount": 1,
+    "product": "Batidora OSTER 7VEL/320 Watts",
+    "costo": "120.00",
+    "sucursal": "departamento",
+    "id_existence": 1121
+    },
+    {
+    "amount": 1,
+    "product": "Batidora VALERIA SC-133",
+    "costo": "26.00",
+    "sucursal": "departamento",
+    "id_existence": 804
+    },
+    {
+    "amount": 1,
+    "product": "Cafetera Electrica OSTER digital",
+    "costo": "175.00",
+    "sucursal": "departamento",
+    "id_existence": 1025
+    },
+    {
+    "amount": 1,
+    "product": "Cafetera Vidrio SHANGYIXIN 700ml",
+    "costo": "9.00",
+    "sucursal": "departamento",
+    "id_existence": 906
+    },
+    {
+    "amount": 10,
+    "product": "Calefactor bossko",
+    "costo": "37.00",
+    "sucursal": "departamento",
+    "id_existence": 759
+    },
+    {
+    "amount": 30,
+    "product": "Calefactor Para Auto ",
+    "costo": "15.00",
+    "sucursal": "departamento",
+    "id_existence": 662
+    },
+    {
+    "amount": 5,
+    "product": "Calefactor Portátil Blanco",
+    "costo": "24.00",
+    "sucursal": "departamento",
+    "id_existence": 762
+    },
+    {
+    "amount": 12,
+    "product": "Calefactor Portátil Negro ",
+    "costo": "26.00",
+    "sucursal": "departamento",
+    "id_existence": 761
+    },
+    {
+    "amount": 1,
+    "product": "Calefactor SHIVA 2 focos",
+    "costo": "37.00",
+    "sucursal": "departamento",
+    "id_existence": 775
+    },
+    {
+    "amount": 2,
+    "product": "coche con canasta",
+    "costo": "55.00",
+    "sucursal": "departamento",
+    "id_existence": 1031
+    },
+    {
+    "amount": 3,
+    "product": "cocina induccion FOSTERIZER",
+    "costo": "113.00",
+    "sucursal": "departamento",
+    "id_existence": 763
+    },
+    {
+    "amount": 1,
+    "product": "Colgador de ropa GRANDE",
+    "costo": "55.00",
+    "sucursal": "departamento",
+    "id_existence": 1035
+    },
+    {
+    "amount": 2,
+    "product": "Colgador Ropa Cajoncito Tela",
+    "costo": "0.00",
+    "sucursal": "departamento",
+    "id_existence": 780
+    },
+    {
+    "amount": 2,
+    "product": "Colgador Ropa Parrillas de Tela",
+    "costo": "30.00",
+    "sucursal": "departamento",
+    "id_existence": 803
+    },
+    {
+    "amount": 1,
+    "product": "Cortadora de Cabello (Patillas) Recargable",
+    "costo": "35.00",
+    "sucursal": "departamento",
+    "id_existence": 825
+    },
+    {
+    "amount": 1,
+    "product": "Cortadora de Cabello WAHL Cut & Detail ",
+    "costo": "122.00",
+    "sucursal": "departamento",
+    "id_existence": 839
+    },
+    {
+    "amount": 1,
+    "product": "Cortadora de Cabello WAHL EasyCut",
+    "costo": "74.00",
+    "sucursal": "departamento",
+    "id_existence": 824
+    },
+    {
+    "amount": 1,
+    "product": "cortadora de pelo watson bateria",
+    "costo": "58.00",
+    "sucursal": "departamento",
+    "id_existence": 838
+    },
+    {
+    "amount": 1,
+    "product": "Cortadora WAHL Color Pro",
+    "costo": "170.00",
+    "sucursal": "departamento",
+    "id_existence": 840
+    },
+    {
+    "amount": 1,
+    "product": "Cortadora WAHL Home Pro Combo",
+    "costo": "88.00",
+    "sucursal": "departamento",
+    "id_existence": 841
+    },
+    {
+    "amount": 1,
+    "product": "Cortina de baño L&Q Economico",
+    "costo": "5.50",
+    "sucursal": "departamento",
+    "id_existence": 813
+    },
+    {
+    "amount": -3,
+    "product": "cuchilla oster 4 aspas",
+    "costo": "14.00",
+    "sucursal": "departamento",
+    "id_existence": 816
+    },
+    {
+    "amount": 1,
+    "product": "escurridor de platos caja amarilla ",
+    "costo": "35.00",
+    "sucursal": "departamento",
+    "id_existence": 794
+    },
+    {
+    "amount": 2,
+    "product": "ESQUINERO DE DUCHA",
+    "costo": "35.00",
+    "sucursal": "departamento",
+    "id_existence": 1032
+    },
+    {
+    "amount": 5,
+    "product": "exprimidor de limón",
+    "costo": "1.50",
+    "sucursal": "departamento",
+    "id_existence": 917
+    },
+    {
+    "amount": 1,
+    "product": "Hervidor COSMOS Vidrio 2L",
+    "costo": "34.00",
+    "sucursal": "departamento",
+    "id_existence": 799
+    },
+    {
+    "amount": 1,
+    "product": "Hervidor COSMOS Vidrio Colores 2L",
+    "costo": "36.00",
+    "sucursal": "departamento",
+    "id_existence": 798
+    },
+    {
+    "amount": 4,
+    "product": "Hervidor Marus Clásico 2L",
+    "costo": "22.00",
+    "sucursal": "departamento",
+    "id_existence": 886
+    },
+    {
+    "amount": 2,
+    "product": "Hervidor Oster 1.7Litros Plastico",
+    "costo": "69.00",
+    "sucursal": "departamento",
+    "id_existence": 1108
+    },
+    {
+    "amount": 3,
+    "product": "Hervidor OSTER Negro 1.7L",
+    "costo": "60.00",
+    "sucursal": "departamento",
+    "id_existence": 766
+    },
+    {
+    "amount": 1,
+    "product": "Hervidor REY 2.5 Litros",
+    "costo": "12.00",
+    "sucursal": "departamento",
+    "id_existence": 887
+    },
+    {
+    "amount": 3,
+    "product": "JEBE OSTER ORIGINAL PACK X 2UNID",
+    "costo": "7.00",
+    "sucursal": "departamento",
+    "id_existence": 904
+    },
+    {
+    "amount": 11,
+    "product": "Jebe Universal Original Grande",
+    "costo": "9.00",
+    "sucursal": "departamento",
+    "id_existence": 905
+    },
+    {
+    "amount": 8,
+    "product": "Jebe Universal Original Mediano",
+    "costo": "6.00",
+    "sucursal": "departamento",
+    "id_existence": 903
+    },
+    {
+    "amount": 1,
+    "product": "Juego cacerola IMPERIAL #14/18",
+    "costo": "40.00",
+    "sucursal": "departamento",
+    "id_existence": 1007
+    },
+    {
+    "amount": 2,
+    "product": "Juego Kekera x 3IMPERIAL",
+    "costo": "22.00",
+    "sucursal": "departamento",
+    "id_existence": 1189
+    },
+    {
+    "amount": 2,
+    "product": "Juego Moldes x 5 IMPERIAL",
+    "costo": "28.00",
+    "sucursal": "departamento",
+    "id_existence": 1190
+    },
+    {
+    "amount": 8,
+    "product": "Juego Olla IMPERIAL bombi #16/22 t/vidrio ",
+    "costo": "64.00",
+    "sucursal": "departamento",
+    "id_existence": 1191
+    },
+    {
+    "amount": 6,
+    "product": "Juego olla x6 IMPERIAL pulido #16/26",
+    "costo": "80.00",
+    "sucursal": "departamento",
+    "id_existence": 1206
+    },
+    {
+    "amount": 2,
+    "product": "Juego ollas FORTALEZA trio #18/22",
+    "costo": "40.00",
+    "sucursal": "departamento",
+    "id_existence": 749
+    },
+    {
+    "amount": 2,
+    "product": "Juego ollas IMPERIAL bruñido #16/26",
+    "costo": "117.00",
+    "sucursal": "departamento",
+    "id_existence": 1128
+    },
+    {
+    "amount": 3,
+    "product": "Juego ollas IMPERIAL bruñido x4 #26/32",
+    "costo": "128.00",
+    "sucursal": "departamento",
+    "id_existence": 1001
+    },
+    {
+    "amount": 5,
+    "product": "Juego ollas IMPERIAL guisera t/vidrio #16/22",
+    "costo": "66.00",
+    "sucursal": "departamento",
+    "id_existence": 1036
+    },
+    {
+    "amount": 4,
+    "product": "Juego ollas IMPERIAL guisera t/vidrio #20/26",
+    "costo": "83.00",
+    "sucursal": "departamento",
+    "id_existence": 1006
+    },
+    {
+    "amount": 4,
+    "product": "Juego ollas IMPERIAL lijado x7 #14/26",
+    "costo": "83.00",
+    "sucursal": "departamento",
+    "id_existence": 751
+    },
+    {
+    "amount": 2,
+    "product": "Juego ollas IMPERIAL perita bruñido #18/24",
+    "costo": "69.00",
+    "sucursal": "departamento",
+    "id_existence": 1003
+    },
+    {
+    "amount": -2,
+    "product": "Juego ollas IMPERIAL trio #18/22",
+    "costo": "51.00",
+    "sucursal": "departamento",
+    "id_existence": 752
+    },
+    {
+    "amount": 6,
+    "product": "Juego ollas x6 IMPERIAL recta #20/30",
+    "costo": "0.00",
+    "sucursal": "departamento",
+    "id_existence": 1207
+    },
+    {
+    "amount": 4,
+    "product": "Juego sarten IMPERIAL pulido #16/#22",
+    "costo": "25.00",
+    "sucursal": "departamento",
+    "id_existence": 1126
+    },
+    {
+    "amount": 12,
+    "product": "Juego sarten IMPERIAL pulido x4",
+    "costo": "41.00",
+    "sucursal": "departamento",
+    "id_existence": 1040
+    },
+    {
+    "amount": 10,
+    "product": "Juego sarten IMPERIAL sarten lijado x6",
+    "costo": "41.00",
+    "sucursal": "departamento",
+    "id_existence": 1125
+    },
+    {
+    "amount": 5,
+    "product": "Juego tetera IMPERIAL x5 #18/26",
+    "costo": "88.00",
+    "sucursal": "departamento",
+    "id_existence": 1000
+    },
+    {
+    "amount": 1,
+    "product": "juego x 4 acero ROMANIA grandes",
+    "costo": "285.00",
+    "sucursal": "departamento",
+    "id_existence": 1013
+    },
+    {
+    "amount": 2,
+    "product": "Juego x 5 Roca SU-UC09A SUPREMA",
+    "costo": "222.00",
+    "sucursal": "departamento",
+    "id_existence": 1150
+    },
+    {
+    "amount": 4,
+    "product": "Juego x 6 Piedra Volcánica BRIKENIA",
+    "costo": "200.00",
+    "sucursal": "departamento",
+    "id_existence": 1105
+    },
+    {
+    "amount": 1,
+    "product": "Juego x 6 Teflon SUPREMA",
+    "costo": "159.00",
+    "sucursal": "departamento",
+    "id_existence": 1037
+    },
+    {
+    "amount": 1,
+    "product": "Licuadora BOSSKO C/Perilla 550 watts",
+    "costo": "112.00",
+    "sucursal": "departamento",
+    "id_existence": 791
+    },
+    {
+    "amount": 1,
+    "product": "Licuadora FINEZZA 1500 watts",
+    "costo": "350.00",
+    "sucursal": "departamento",
+    "id_existence": 786
+    },
+    {
+    "amount": 6,
+    "product": "licuadora Morley vaso vidrio",
+    "costo": "65.00",
+    "sucursal": "departamento",
+    "id_existence": 790
+    },
+    {
+    "amount": 6,
+    "product": "licuadora oster 3V imitacion",
+    "costo": "100.00",
+    "sucursal": "departamento",
+    "id_existence": 795
+    },
+    {
+    "amount": 1,
+    "product": "Licuadora Oster 800watt 6VEL",
+    "costo": "201.05",
+    "sucursal": "departamento",
+    "id_existence": 1113
+    },
+    {
+    "amount": 13,
+    "product": "Licuadora Oster Botones 550 Imit",
+    "costo": "72.00",
+    "sucursal": "departamento",
+    "id_existence": 998
+    },
+    {
+    "amount": 4,
+    "product": "Licuadora Oster Monterrey Imit",
+    "costo": "72.00",
+    "sucursal": "departamento",
+    "id_existence": 999
+    },
+    {
+    "amount": 1,
+    "product": "Licuadora TITANIUM JHUMY",
+    "costo": "155.00",
+    "sucursal": "departamento",
+    "id_existence": 800
+    },
+    {
+    "amount": 25,
+    "product": "Licuadora YIWU 4V Vaso plástico",
+    "costo": "39.00",
+    "sucursal": "departamento",
+    "id_existence": 758
+    },
+    {
+    "amount": -1,
+    "product": "olla a presion 3.5l SWEETZA",
+    "costo": "58.00",
+    "sucursal": "departamento",
+    "id_existence": 1103
+    },
+    {
+    "amount": 1,
+    "product": "Olla a presion acero 5 litros ABHER",
+    "costo": "111.00",
+    "sucursal": "departamento",
+    "id_existence": 765
+    },
+    {
+    "amount": 2,
+    "product": "olla a presión 5L SWEETZA",
+    "costo": "69.00",
+    "sucursal": "departamento",
+    "id_existence": 1098
+    },
+    {
+    "amount": 2,
+    "product": "olla a presión 7L SWEETZA",
+    "costo": "81.30",
+    "sucursal": "departamento",
+    "id_existence": 1034
+    },
+    {
+    "amount": 1,
+    "product": "olla a presión indu 5 litros",
+    "costo": "75.00",
+    "sucursal": "departamento",
+    "id_existence": 842
+    },
+    {
+    "amount": 3,
+    "product": "Olla Aluminio Imperial 12 piezas",
+    "costo": "275.00",
+    "sucursal": "departamento",
+    "id_existence": 986
+    },
+    {
+    "amount": 1,
+    "product": "Olla Espaguetera Luisant",
+    "costo": "125.00",
+    "sucursal": "departamento",
+    "id_existence": 764
+    },
+    {
+    "amount": 1,
+    "product": "Olla Freidora #28",
+    "costo": "28.00",
+    "sucursal": "departamento",
+    "id_existence": 771
+    },
+    {
+    "amount": 3,
+    "product": "Olla Perita Bruñido Imperial #18",
+    "costo": "15.00",
+    "sucursal": "departamento",
+    "id_existence": 1002
+    },
+    {
+    "amount": 2,
+    "product": "Olla TRIO IMPERIAL #18",
+    "costo": "15.00",
+    "sucursal": "departamento",
+    "id_existence": 1004
+    },
+    {
+    "amount": 1,
+    "product": "Organizador Cepillos Doble ",
+    "costo": "9.00",
+    "sucursal": "departamento",
+    "id_existence": 907
+    },
+    {
+    "amount": 1,
+    "product": "organizador de baño",
+    "costo": "50.00",
+    "sucursal": "departamento",
+    "id_existence": 801
+    },
+    {
+    "amount": 6,
+    "product": "Perol Imperial #28 a #40 (4piezas)",
+    "costo": "88.00",
+    "sucursal": "departamento",
+    "id_existence": 987
+    },
+    {
+    "amount": 6,
+    "product": "Plancha NATIONALIZER chica NZ2003",
+    "costo": "26.00",
+    "sucursal": "departamento",
+    "id_existence": 993
+    },
+    {
+    "amount": 9,
+    "product": "Plancha NATIONALIZER NZ2262 ",
+    "costo": "30.13",
+    "sucursal": "departamento",
+    "id_existence": 992
+    },
+    {
+    "amount": 1,
+    "product": "Plancha OSTER 20% mayor cobertura ",
+    "costo": "65.00",
+    "sucursal": "departamento",
+    "id_existence": 1110
+    },
+    {
+    "amount": 3,
+    "product": "Plancha OSTER 30% mayor cobertura ",
+    "costo": "85.00",
+    "sucursal": "departamento",
+    "id_existence": 769
+    },
+    {
+    "amount": 4,
+    "product": "Plancha OSTER 35% LIGERA",
+    "costo": "60.00",
+    "sucursal": "departamento",
+    "id_existence": 767
+    },
+    {
+    "amount": 28,
+    "product": "Reloj Digital Circular 3885N",
+    "costo": "0.00",
+    "sucursal": "departamento",
+    "id_existence": 1180
+    },
+    {
+    "amount": 30,
+    "product": "Reloj Digital Cuadrado 3886N",
+    "costo": "0.00",
+    "sucursal": "departamento",
+    "id_existence": 1179
+    },
+    {
+    "amount": 2,
+    "product": "Rizadora GAMA Innova Spirale",
+    "costo": "68.00",
+    "sucursal": "departamento",
+    "id_existence": 807
+    },
+    {
+    "amount": 1,
+    "product": "Ropero 2C YIWU 105x173 AZULINO",
+    "costo": "42.00",
+    "sucursal": "departamento",
+    "id_existence": 921
+    },
+    {
+    "amount": 4,
+    "product": "Ropero 2C YIWU 105x173 GUINDA",
+    "costo": "42.00",
+    "sucursal": "departamento",
+    "id_existence": 922
+    },
+    {
+    "amount": 1,
+    "product": "Ropero 2C YIWU 105x173 MARRON",
+    "costo": "42.00",
+    "sucursal": "departamento",
+    "id_existence": 924
+    },
+    {
+    "amount": 5,
+    "product": "Ropero 2C YIWU 105x173 NEGRO",
+    "costo": "42.00",
+    "sucursal": "departamento",
+    "id_existence": 923
+    },
+    {
+    "amount": 1,
+    "product": "Ropero Madera C/Zapatera AZUL",
+    "costo": "110.00",
+    "sucursal": "departamento",
+    "id_existence": 989
+    },
+    {
+    "amount": 1,
+    "product": "Ropero Madera C/Zapatera MARRON",
+    "costo": "110.00",
+    "sucursal": "departamento",
+    "id_existence": 779
+    },
+    {
+    "amount": 1,
+    "product": "Sandwichera BOSSKO Big",
+    "costo": "55.00",
+    "sucursal": "departamento",
+    "id_existence": 814
+    },
+    {
+    "amount": 1,
+    "product": "sandwichera oster",
+    "costo": "70.00",
+    "sucursal": "departamento",
+    "id_existence": 1111
+    },
+    {
+    "amount": 12,
+    "product": "Sarten CUCINA MIA #18",
+    "costo": "16.00",
+    "sucursal": "departamento",
+    "id_existence": 895
+    },
+    {
+    "amount": 10,
+    "product": "Sarten CUCINA MIA #20",
+    "costo": "17.00",
+    "sucursal": "departamento",
+    "id_existence": 1074
+    },
+    {
+    "amount": 14,
+    "product": "Sarten CUCINA MIA #22",
+    "costo": "18.00",
+    "sucursal": "departamento",
+    "id_existence": 713
+    },
+    {
+    "amount": 9,
+    "product": "Sarten CUCINA MIA #24",
+    "costo": "19.00",
+    "sucursal": "departamento",
+    "id_existence": 712
+    },
+    {
+    "amount": 11,
+    "product": "Sarten CUCINA MIA #26",
+    "costo": "20.00",
+    "sucursal": "departamento",
+    "id_existence": 711
+    },
+    {
+    "amount": 12,
+    "product": "Sarten CUCINA MIA #28",
+    "costo": "21.00",
+    "sucursal": "departamento",
+    "id_existence": 1075
+    },
+    {
+    "amount": 1,
+    "product": "Sarten FACUSA Argentum #22",
+    "costo": "27.50",
+    "sucursal": "departamento",
+    "id_existence": 913
+    },
+    {
+    "amount": 1,
+    "product": "Sarten FACUSA Argentum #26",
+    "costo": "35.50",
+    "sucursal": "departamento",
+    "id_existence": 914
+    },
+    {
+    "amount": 1,
+    "product": "sarten facusa. 18",
+    "costo": "19.00",
+    "sucursal": "departamento",
+    "id_existence": 893
+    },
+    {
+    "amount": 1,
+    "product": "sarten facusa. 26",
+    "costo": "28.50",
+    "sucursal": "departamento",
+    "id_existence": 916
+    },
+    {
+    "amount": 8,
+    "product": "Sarten GERMANHOF C/T Cerámica #24",
+    "costo": "36.00",
+    "sucursal": "departamento",
+    "id_existence": 920
+    },
+    {
+    "amount": 1,
+    "product": "Sarten GERMANHOF C/T Roca Volcánica #20",
+    "costo": "32.00",
+    "sucursal": "departamento",
+    "id_existence": 784
+    },
+    {
+    "amount": 1,
+    "product": "Sarten GERMANHOF C/T Roca Volcánica #24",
+    "costo": "39.00",
+    "sucursal": "departamento",
+    "id_existence": 785
+    },
+    {
+    "amount": 6,
+    "product": "Sarten Imperial Grande #28 a #40 (4piezas)",
+    "costo": "88.00",
+    "sucursal": "departamento",
+    "id_existence": 988
+    },
+    {
+    "amount": 2,
+    "product": "Sarten RECORD #16 estrella",
+    "costo": "18.50",
+    "sucursal": "departamento",
+    "id_existence": 890
+    },
+    {
+    "amount": 2,
+    "product": "Sarten RECORD #18 estrella",
+    "costo": "19.50",
+    "sucursal": "departamento",
+    "id_existence": 891
+    },
+    {
+    "amount": 6,
+    "product": "Sarten SUPREMA ceramica #24 C/T ",
+    "costo": "32.00",
+    "sucursal": "departamento",
+    "id_existence": 1051
+    },
+    {
+    "amount": 8,
+    "product": "Sarten SUPREMA teflon #22 C/T ",
+    "costo": "30.00",
+    "sucursal": "departamento",
+    "id_existence": 995
+    },
+    {
+    "amount": 3,
+    "product": "Sartén SUPREMA granito #26 C/T",
+    "costo": "40.00",
+    "sucursal": "departamento",
+    "id_existence": 781
+    },
+    {
+    "amount": 7,
+    "product": "Sartén SUPREMA granito #28 C/T",
+    "costo": "46.00",
+    "sucursal": "departamento",
+    "id_existence": 782
+    },
+    {
+    "amount": 1,
+    "product": "Secadora GAMA mistral 2200 watts",
+    "costo": "85.00",
+    "sucursal": "departamento",
+    "id_existence": 809
+    },
+    {
+    "amount": 1,
+    "product": "secadora gw",
+    "costo": "20.00",
+    "sucursal": "departamento",
+    "id_existence": 889
+    },
+    {
+    "amount": 1,
+    "product": "Secadora PHILIPS 1600 watts",
+    "costo": "77.00",
+    "sucursal": "departamento",
+    "id_existence": 808
+    },
+    {
+    "amount": 1,
+    "product": "Secadora SHINON 1800W",
+    "costo": "16.00",
+    "sucursal": "departamento",
+    "id_existence": 810
+    },
+    {
+    "amount": 8,
+    "product": "Set Cucharones Suprema",
+    "costo": "29.00",
+    "sucursal": "departamento",
+    "id_existence": 770
+    },
+    {
+    "amount": 1,
+    "product": "set taza con platillo caja naranja",
+    "costo": "24.00",
+    "sucursal": "departamento",
+    "id_existence": 748
+    },
+    {
+    "amount": 22,
+    "product": "Tabla 25cmx40cmx2cm marus",
+    "costo": "24.00",
+    "sucursal": "departamento",
+    "id_existence": 1019
+    },
+    {
+    "amount": 10,
+    "product": "Tabla 30cmx40cmx2cm marus",
+    "costo": "26.00",
+    "sucursal": "departamento",
+    "id_existence": 1021
+    },
+    {
+    "amount": 9,
+    "product": "Tabla 35cmx50cmx2cm marus",
+    "costo": "35.00",
+    "sucursal": "departamento",
+    "id_existence": 1020
+    },
+    {
+    "amount": 1,
+    "product": "Tabla ABHER 2cmx 40cm x 30cm ",
+    "costo": "29.00",
+    "sucursal": "departamento",
+    "id_existence": 896
+    },
+    {
+    "amount": 2,
+    "product": "Tabla Rayador Cuchillo Con Diseño ",
+    "costo": "11.00",
+    "sucursal": "departamento",
+    "id_existence": 821
+    },
+    {
+    "amount": 2,
+    "product": "Taper de Vidrio Circular 620ml",
+    "costo": "4.00",
+    "sucursal": "departamento",
+    "id_existence": 826
+    },
+    {
+    "amount": 3,
+    "product": "Taper termico 1000ml T/Acero",
+    "costo": "20.00",
+    "sucursal": "departamento",
+    "id_existence": 835
+    },
+    {
+    "amount": 3,
+    "product": "Taper termico 1200ml T/Acero",
+    "costo": "23.00",
+    "sucursal": "departamento",
+    "id_existence": 834
+    },
+    {
+    "amount": 1,
+    "product": "Taper termico 800ml T/Acero",
+    "costo": "19.00",
+    "sucursal": "departamento",
+    "id_existence": 833
+    },
+    {
+    "amount": 6,
+    "product": "taper térmico acero 2200ml",
+    "costo": "27.00",
+    "sucursal": "departamento",
+    "id_existence": 837
+    },
+    {
+    "amount": 4,
+    "product": "taper térmico acero 900ml",
+    "costo": "13.00",
+    "sucursal": "departamento",
+    "id_existence": 836
+    },
+    {
+    "amount": 1,
+    "product": "Taza Acero Inox 1 litro",
+    "costo": "15.00",
+    "sucursal": "departamento",
+    "id_existence": 918
+    },
+    {
+    "amount": 48,
+    "product": "Taza Acero JC 11cm gruesa",
+    "costo": "6.50",
+    "sucursal": "departamento",
+    "id_existence": 919
+    },
+    {
+    "amount": 4,
+    "product": "Taza sublimada 500ml",
+    "costo": "7.50",
+    "sucursal": "departamento",
+    "id_existence": 990
+    },
+    {
+    "amount": 2,
+    "product": "Termo Acero ROMANIA 500ml Antideslizante",
+    "costo": "20.00",
+    "sucursal": "departamento",
+    "id_existence": 832
+    },
+    {
+    "amount": 2,
+    "product": "Termo Acero YIWU C/Seguro ",
+    "costo": "10.00",
+    "sucursal": "departamento",
+    "id_existence": 828
+    },
+    {
+    "amount": 1,
+    "product": "Termo Big Boy 1.8L Taza Gigante",
+    "costo": "27.50",
+    "sucursal": "departamento",
+    "id_existence": 1012
+    },
+    {
+    "amount": 1,
+    "product": "Termo BRIKENIA c/funda 1200ml",
+    "costo": "20.00",
+    "sucursal": "departamento",
+    "id_existence": 806
+    },
+    {
+    "amount": 4,
+    "product": "Termo BRIKENIA c/funda 500ml",
+    "costo": "16.50",
+    "sucursal": "departamento",
+    "id_existence": 805
+    },
+    {
+    "amount": 1,
+    "product": "termo dinos 1 litro",
+    "costo": "14.00",
+    "sucursal": "departamento",
+    "id_existence": 1011
+    },
+    {
+    "amount": 1,
+    "product": "Termo Dinos 1.8 Litros Recto",
+    "costo": "17.00",
+    "sucursal": "departamento",
+    "id_existence": 1010
+    },
+    {
+    "amount": 3,
+    "product": "Termo Dinos 500ml",
+    "costo": "9.00",
+    "sucursal": "departamento",
+    "id_existence": 830
+    },
+    {
+    "amount": 1,
+    "product": "termo escoces cosmos 2 litro",
+    "costo": "23.00",
+    "sucursal": "departamento",
+    "id_existence": 1008
+    },
+    {
+    "amount": 1,
+    "product": "Termo FINEZZA asa jebe 1.2L",
+    "costo": "30.00",
+    "sucursal": "departamento",
+    "id_existence": 911
+    },
+    {
+    "amount": 5,
+    "product": "Termo WIYU Smart Led 500ml",
+    "costo": "13.00",
+    "sucursal": "departamento",
+    "id_existence": 829
+    },
+    {
+    "amount": 20,
+    "product": "tetera 3.8 rosmania ",
+    "costo": "34.00",
+    "sucursal": "departamento",
+    "id_existence": 1099
+    },
+    {
+    "amount": 1,
+    "product": "Tetera ABHER 6.5L pico metal",
+    "costo": "48.50",
+    "sucursal": "departamento",
+    "id_existence": 710
+    },
+    {
+    "amount": 1,
+    "product": "Tetera ADONAY 4L",
+    "costo": "18.00",
+    "sucursal": "departamento",
+    "id_existence": 900
+    },
+    {
+    "amount": 1,
+    "product": "Tetera ADONAY 5L",
+    "costo": "19.00",
+    "sucursal": "departamento",
+    "id_existence": 901
+    },
+    {
+    "amount": 1,
+    "product": "Tetera ADONAY 6L",
+    "costo": "26.00",
+    "sucursal": "departamento",
+    "id_existence": 902
+    },
+    {
+    "amount": 1,
+    "product": "Tetera BRAVO 5L Asa Color Con Linea",
+    "costo": "58.00",
+    "sucursal": "departamento",
+    "id_existence": 797
+    },
+    {
+    "amount": 2,
+    "product": "Tetera COLOUR 3L",
+    "costo": "13.50",
+    "sucursal": "departamento",
+    "id_existence": 883
+    },
+    {
+    "amount": 13,
+    "product": "Tomatodo Poli MARUS 1L",
+    "costo": "13.00",
+    "sucursal": "departamento",
+    "id_existence": 815
+    },
+    {
+    "amount": 18,
+    "product": "Vaso Oster Circular pirex",
+    "costo": "36.00",
+    "sucursal": "departamento",
+    "id_existence": 1018
+    },
+    {
+    "amount": 11,
+    "product": "vaso oster cuadrado pirex",
+    "costo": "30.00",
+    "sucursal": "departamento",
+    "id_existence": 1017
+    },
+    {
+    "amount": 2,
+    "product": "vaso oster cuadrado simple",
+    "costo": "13.50",
+    "sucursal": "departamento",
+    "id_existence": 747
+    },
+    {
+    "amount": 1,
+    "product": "Vaso Oster Plástico (Rectangular)",
+    "costo": "8.00",
+    "sucursal": "departamento",
+    "id_existence": 884
+    },
+    {
+    "amount": 24,
+    "product": "Vaso Oster Plástico Delgado (Rectangular)",
+    "costo": "5.00",
+    "sucursal": "departamento",
+    "id_existence": 776
+    },
+    {
+    "amount": 2,
+    "product": "Vaso Termico COFFE YANG",
+    "costo": "16.00",
+    "sucursal": "departamento",
+    "id_existence": 831
+    },
+    {
+    "amount": 1,
+    "product": "Waflera 2 panes cuadritos",
+    "costo": "58.00",
+    "sucursal": "departamento",
+    "id_existence": 1033
+    },
+    {
+    "amount": 5,
+    "product": "Waflera NATIONALIZER Plástico",
+    "costo": "46.00",
+    "sucursal": "departamento",
+    "id_existence": 768
+    },
+    {
+    "amount": 4,
+    "product": "zapatera 9N YIWU C/verde AZULINO ",
+    "costo": "35.00",
+    "sucursal": "departamento",
+    "id_existence": 925
+    },
+    {
+    "amount": 2,
+    "product": "Zapatera con perchero con codos",
+    "costo": "35.00",
+    "sucursal": "departamento",
+    "id_existence": 802
+    }
+    ]
