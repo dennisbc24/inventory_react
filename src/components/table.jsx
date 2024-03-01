@@ -40,6 +40,22 @@ return(
   
 }
 
+const TableThTest =  ({respJson}) =>{
+  const [llaves, setLlaves] = useState([])
+
+  useEffect(()=>{
+      const data3 = respJson
+      setLlaves(Object.keys(data3[0]))
+      },[])
+
+return(
+  llaves.map((sell)=>{
+  return(<th key={sell} >{sell}</th>)
+}
+  )
+  )
+}
+
 const TableTd2 =  (Adata) =>{ 
 const {dato} = Adata
 
@@ -89,6 +105,33 @@ return(
 
 }
 
+const TableTrTest =  ({respJson }) =>{
+
+  const [fill, setFill] = useState([])
+  useEffect(()=>{
+    const data3 = respJson
+        setFill(data3)
+    .catch(function (e) { console.log(e)})
+  },[])
+  
+return(
+  <>
+  {
+    fill.map((ele)=>{
+
+      
+      return(
+        <tr key={crypto.randomUUID()}>
+        <TableTd2 dato={ele}/>
+      </tr>
+      )
+    })
+  }
+  </>
+)
+
+}
+
 export  function TableGet({url, minWitdh='1051px', token}) {
       return(
       <div className="result">
@@ -107,3 +150,23 @@ export  function TableGet({url, minWitdh='1051px', token}) {
       </div>
  
         )}
+
+export  function TableGet2({respJson, minWitdh='1051px', token}) {
+ let datos  = respJson
+          return(
+          <div className="result">
+     <table className="infoTable" style={{'minWidth':`${minWitdh}`}}>
+            <thead className="table_header">
+              <tr>
+                  {<TableThTest respJson={datos}/> }      
+    
+              </tr>
+            </thead>
+            <tbody className="table_body">
+              <TableTrTest respJson={datos} />
+          
+        </tbody>
+      </table>
+          </div>
+     
+            )}

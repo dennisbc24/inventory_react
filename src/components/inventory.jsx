@@ -2,16 +2,25 @@ import React, { useState } from "react";
 import { SelectSimple, ButtonSave} from "./form/inputSearch";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
-import {  TableGet } from "./table.jsx";
-
+import {  TableGet, TableGet2 } from "./table.jsx";
+import {InventoryService} from "../services/inventory.js"
+const service = new InventoryService()
 export const Inventory = ({urlBase}) => {
   
   const [branch, setBranch] = useState(1);
   const [show, setShow] = useState(false);
+  const [show2, setShow2] = useState(false);
+  const [datos, setDatos] = useState();
+
      
   const handleIdBranch = ({ target: { value } }) => { setBranch(parseInt(value)), setShow(false)};
   const handleButton = () => {setShow(true)}
 
+const handleTest = () =>{
+const check = service.CompareInventories()
+setDatos(check)
+setShow2(true)
+}
   return (
     <>
     <TitleForm text='Inventario por local'></TitleForm>
@@ -29,6 +38,10 @@ export const Inventory = ({urlBase}) => {
     <ButtonSave titulo={"Buscar"} func={handleButton}></ButtonSave>
     {<>{ show ? <TableGet url={`${urlBase}/api/v1/existence/inventary?branch=${branch}`} minWitdh="450px"/> : <></>
     }</>}
+    <ButtonSave titulo={"Prueba"} func={handleTest}></ButtonSave>
+    {<>{ show2 ? <TableGet2 respJson={datos} minWitdh="450px"/> : <></>
+    }</>}
     </>
+    
   );
 };
