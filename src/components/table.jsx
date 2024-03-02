@@ -105,19 +105,12 @@ return(
 
 }
 
-const TableTrTest =  ({respJson }) =>{
-
-  const [fill, setFill] = useState([])
-  useEffect(()=>{
-    const data3 = respJson
-        setFill(data3)
-    .catch(function (e) { console.log(e)})
-  },[])
-  
+const TableTrTest =  (respJson) =>{
+const data = respJson.respJson 
 return(
   <>
   {
-    fill.map((ele)=>{
+    data.map((ele)=>{
 
       
       return(
@@ -151,19 +144,20 @@ export  function TableGet({url, minWitdh='1051px', token}) {
  
         )}
 
-export  function TableGet2({respJson, minWitdh='1051px', token}) {
- let datos  = respJson
+export  function TableGet2({respJson, minWitdh='1051px'}) {
+  
+ const array  = respJson
           return(
           <div className="result">
      <table className="infoTable" style={{'minWidth':`${minWitdh}`}}>
             <thead className="table_header">
               <tr>
-                  {<TableThTest respJson={datos}/> }      
+                  {<TableThTest respJson={array}/> }      
     
               </tr>
             </thead>
             <tbody className="table_body">
-              <TableTrTest respJson={datos} />
+              <TableTrTest respJson={array} />
           
         </tbody>
       </table>

@@ -1,42 +1,71 @@
-import axios from 'axios'
- 
- export class InventoryService{
-    constructor(){}
-    async CompareInventories(){
-        const response1 = await axios.get('http://localhost:3000/api/v1/existence/inventary?branch=1')
-        const response2 = await axios.get('http://localhost:3000/api/v1/existence/inventary?branch=3')
-        const branch1 = response1.data
-        const branch2 = response2.data
-        function compare(json1, json2) {
-        const productosNoCoincidentes = [];
-        const SiCoincidentes = [];
-    
-        for (let producto2 of json2) {
-            let coincide = false;
-    
-            for (let producto1 of json1) {
-                if (producto2.product === producto1.product) {
-                    if (producto1.amount <= 0) {
-                        SiCoincidentes.push({nombre: producto2.product,cantidad: producto2.amount})
-                    }
-                    
-                    coincide = true;
-                    break;
+import axios from "axios";
+
+export class InventoryService {
+  constructor() {}
+
+  async CompareInventories({store, deposit, urlBase }) {
+    const b17 = await axios.get(
+      `${urlBase}/api/v1/existence/inventary?branch=${store}`
+    );
+    const depa = await axios.get(
+      `${urlBase}/api/v1/existence/inventary?branch=${deposit}`
+    );
+    const branch1 = b17.data;
+    const branch2 = depa.data;
+
+    function compare1(json1, json2) {
+        const siCoincidentes = [];
+        for (let product2 of json2) {
+
+           for (let product1 of json1) {
+            if (product2.product === product1.product) {
+               
+                if (product1.amount <= 0 && product2.amount >=1) {
+                    siCoincidentes.push({
+                        nombre: product2.product,
+                        cantidad: product2.amount,
+                    })
                 }
-            }
-    
-            if (!coincide) {
-                productosNoCoincidentes.push({nombre: producto2.product, cantidad: producto2.amount});
-            }
+                
+                break;
+              }
+           }
+            
         }
-    
-        return {productosNoCoincidentes, SiCoincidentes};
-    }
-    const {productosNoCoincidentes, SiCoincidentes} = compare(branch1, branch2)
-    console.log(productosNoCoincidentes, SiCoincidentes);
-    }
         
- }
+        return {siCoincidentes}
+    }
 
+    function compare2(json1, json2) {
+      const productosNoCoincidentes = [];
 
+      for (let producto2 of json2) {
+        let coincide = false;
 
+        for (let producto1 of json1) {
+          if (producto2.product === producto1.product) {
+            coincide = true;
+            break;
+          }
+        }
+
+        if (!coincide) {
+            if (producto2.amount >= 1) {
+                productosNoCoincidentes.push({
+                    nombre: producto2.product,
+                    cantidad: producto2.amount,
+                  });
+            }
+          
+        }
+      }
+
+      return { productosNoCoincidentes };
+    }
+
+    const { siCoincidentes } = compare1(branch1, branch2);
+    const { productosNoCoincidentes } = compare2(branch1, branch2);
+
+    return { siCoincidentes, productosNoCoincidentes };
+  }
+}

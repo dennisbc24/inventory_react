@@ -16,9 +16,14 @@ export const Inventory = ({urlBase}) => {
   const handleIdBranch = ({ target: { value } }) => { setBranch(parseInt(value)), setShow(false)};
   const handleButton = () => {setShow(true)}
 
-const handleTest = () =>{
-const check = service.CompareInventories()
-setDatos(check)
+const handleTest = async () =>{
+const check =  await service.CompareInventories({store:1,deposit:4, urlBase})
+const res1 = check.siCoincidentes
+const res2 = check.productosNoCoincidentes
+const rest3 = res1.concat(res2)
+setDatos(rest3.sort((a,b)=>{
+  return a.nombre.localeCompare(b.nombre, 'en')
+}))
 setShow2(true)
 }
   return (

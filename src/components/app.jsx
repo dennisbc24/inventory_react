@@ -22,8 +22,8 @@ import {ProtectedRoute} from './ProtectedRoute.jsx'
 
 import "./theme.css";
 
-//const home = "https://inventario.elwayardo.com";
-const home = 'http://localhost:3000'
+const home = "https://inventario.elwayardo.com";
+//const home = 'http://localhost:3000'
 
 export function App(){
     const [user, setUser] = useState(null)
@@ -44,11 +44,9 @@ useEffect(()=>{
 
 }, [])
 
-useEffect(()=>{
-    user ? setToken(user.token) : console.log('no hay token');
-   
-},[user])
-    return(<>  
+
+    return(
+    <>  
     <Routes>
 
     <Route path='/' element={
