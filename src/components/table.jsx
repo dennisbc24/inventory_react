@@ -105,8 +105,9 @@ return(
 
 }
 
-const TableTrTest =  (respJson) =>{
-const data = respJson.respJson 
+const TableTrTest =  ({respJson}) =>{
+  
+const data = respJson 
 return(
   <>
   {

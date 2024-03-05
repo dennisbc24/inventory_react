@@ -23,7 +23,6 @@ export function SelectSimple({children,titulo,func}) {
         <div className='selectSimple'> 
         <h3>{titulo}</h3>
         <select name="listSelect" onChange={func}>
-            
             {children}
         </select>
         </div>

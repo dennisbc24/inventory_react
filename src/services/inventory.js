@@ -3,7 +3,7 @@ import axios from "axios";
 export class InventoryService {
   constructor() {}
 
-  async CompareInventories({store, deposit, urlBase }) {
+  async CompareInventories({store, deposit, urlBase, baseCount }) {
     const b17 = await axios.get(
       `${urlBase}/api/v1/existence/inventary?branch=${store}`
     );
@@ -20,10 +20,11 @@ export class InventoryService {
            for (let product1 of json1) {
             if (product2.product === product1.product) {
                
-                if (product1.amount <= 0 && product2.amount >=1) {
+                if (product1.amount <= baseCount && product2.amount >=1) {
                     siCoincidentes.push({
                         nombre: product2.product,
-                        cantidad: product2.amount,
+                        [product2.sucursal]: product2.amount,
+                        origen: product1.amount
                     })
                 }
                 
@@ -53,8 +54,9 @@ export class InventoryService {
             if (producto2.amount >= 1) {
                 productosNoCoincidentes.push({
                     nombre: producto2.product,
-                    cantidad: producto2.amount,
-                  });
+                    [producto2.sucursal]: producto2.amount,
+                    origen: 0
+                                });
             }
           
         }
@@ -66,6 +68,13 @@ export class InventoryService {
     const { siCoincidentes } = compare1(branch1, branch2);
     const { productosNoCoincidentes } = compare2(branch1, branch2);
 
-    return { siCoincidentes, productosNoCoincidentes };
+
+    const joinArrays = siCoincidentes.concat(productosNoCoincidentes)
+    const sortArray = joinArrays.sort((a,b)=>{
+      return a.nombre.localeCompare(b.nombre, 'en')
+    })
+
+
+    return { sortArray };
   }
 }
