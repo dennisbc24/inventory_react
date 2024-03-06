@@ -44,11 +44,9 @@ useEffect(()=>{
 
 }, [])
 
-useEffect(()=>{
-    user ? setToken(user.token) : console.log('no hay token');
-   
-},[user])
-    return(<>  
+
+    return(
+    <>  
     <Routes>
 
     <Route path='/' element={

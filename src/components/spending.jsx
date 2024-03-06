@@ -10,14 +10,14 @@ export const SendExpense = ({urlBase}) => {
     const [concept, setConcept] = useState('');
     const [date, setDate] = useState('');
     const [amount, setAmount] = useState(0);
-    const [user, setUser] = useState('');
+    const [user, setUser] = useState();
     const [type, setType] = useState('false');
 
 
     const handleConcept = ({ target: { value } }) => { setConcept(value)};
     const handleMount = ({ target: { value } }) => { setAmount(value)}
     const handleDate = ({ target: { value } }) => { setDate(value)}
-    const handleUser = ({ target: { value } }) => { setUser(parseInt(value))}
+    const handleUser = ({ target: { value } }) => { setUser(value)}
     const handleType = ({ target: { value } }) => { setType(value)}
 
     const handleButton = () => {
