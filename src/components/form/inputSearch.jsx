@@ -12,7 +12,7 @@ export function InputSimple({titulo,tipo,func, valor}) {
     return(
         <div className='inputSimple'>
             <h3>{titulo}</h3>
-        <input type={tipo} onChange={func} value={valor}/>
+        <input type={tipo} onChange={func} value={valor} className='only_input'/>
         </div>
        
     )  
@@ -22,7 +22,7 @@ export function SelectSimple({children,titulo,func}) {
     return(
         <div className='selectSimple'> 
         <h3>{titulo}</h3>
-        <select name="listSelect" onChange={func}>
+        <select name="listSelect" onChange={func} className='only_select'>
             {children}
         </select>
         </div>

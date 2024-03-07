@@ -12,11 +12,11 @@
 
 .button_save{
 
-    background-color: var(--persian-blue-400);
-    color: var(--persian-blue-950);
+    background-color: var(--persian-blue-700);
+    color: var(--persian-blue-50);
     border-radius: 0.5rem;
     cursor: pointer;
-    border: solid var(--persian-blue-400) 0.1px;
+    border: solid var(--persian-blue-700) 0.1px;
     
     padding: 7px;
 }

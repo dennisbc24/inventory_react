@@ -111,7 +111,7 @@ export const SelesForm = ({urlBase}) => {
   return (
     <>
     <TitleForm text='Registrar Venta'></TitleForm>
-      <input type="text"  value={query} onChange={handleChange} placeholder="Buscar..." />
+      <input type="text" className="only_input"  value={query} onChange={handleChange} placeholder="Buscar..." />
       <ul className="suggestions_lu">   {suggestions.map((suggestion, index) => (
           <li key={index} onClick={handleClick}>
             {suggestion}

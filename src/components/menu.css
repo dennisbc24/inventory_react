@@ -54,9 +54,6 @@ header .caja_pestañas{
     padding: 3% 0%;
     position: fixed;
 	height: auto;
-   
-	background-color: #051d51;
-    
     top: 38px;
 	transition: .5s;
 }

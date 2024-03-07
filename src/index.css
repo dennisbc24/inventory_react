@@ -8,13 +8,12 @@ html {
 
 body{
     margin: 0;
-    background-color: #27272a;
+    background-color: var(--persian-blue-50);
 }
 
 a {
     text-decoration: none;
-    
-	cursor: pointer;
+    cursor: pointer;
 }
 
 li{

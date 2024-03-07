@@ -4,22 +4,23 @@
 	--color-fourth: #484C4D;
 	--dark-text: white;
 	--ligth-text: white;
-  --persian-blue-50: #f3fcf1;
-  --persian-blue-100: #e1fade;
-  --persian-blue-200:#c6f3bf ;
-  --persian-blue-300: #99e78e;
-  --persian-blue-400: #3fbc2f;
-  --persian-blue-500: #3fbc2f;
-  --persian-blue-600: #2e9821;
-  --persian-blue-700: #27781d;
-  --persian-blue-800: #235f1c;
-  --persian-blue-900: #1e4e19;
-  --persian-blue-950: #0a2b08;
+  --persian-blue-50: #f0f5fe;
+  --persian-blue-100: #dde8fc;
+  --persian-blue-200:#c2d7fb ;
+  --persian-blue-300: #98bff8;
+  --persian-blue-400: #689df2;
+  --persian-blue-500: #447aed;
+  --persian-blue-600: #2f5ce1;
+  --persian-blue-700: #284bd7;
+  --persian-blue-800: #253ca8;
+  --persian-blue-900: #233785;
+  --persian-blue-950: #1a2451;
   
 }
 
 h3{
-  color: var(--persian-blue-50);
+  color: black
+  ;
 }
 
 .divForm{

@@ -4,9 +4,14 @@
 }
 
 .table_body{
-    color: var(--persian-blue-100) ;
+    color: var(--persian-blue-800) ;
+    font-weight: 500;
 }
 
 td{
     padding-left: 8px;
+}
+tr:nth-child(even){
+    color: var(--persian-blue-950);
+    background-color: var(--persian-blue-300);
 }

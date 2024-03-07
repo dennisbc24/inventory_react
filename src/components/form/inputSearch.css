@@ -5,9 +5,12 @@
     gap: 10px;
     align-items: baseline;
     height: 25px;
-    color: var(--ligth-text);
+    color: black;
 }
-
+.only_select, .only_input{
+    border-radius: 5px;
+    border: solid var(--persian-blue-400) 2px;
+}
 .dropDown{
     background-color: var(--persian-blue-900);
     color: white;
