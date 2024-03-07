@@ -25,6 +25,7 @@ const handleLogin =  async (e) => {
         )
     } catch (error) {
         console.error(error);
+        alert(error)
     }
     
 }
