@@ -47,6 +47,7 @@ background: linear-gradient(90deg, var(--persian-blue-600) 0%, var(--persian-blu
 	margin: 0px 10px;
 }
 header .caja_pestañas{
+	width: 50vw;
 	border-radius: 0 0 0 8px;
 	display: flex;
     flex-direction: column;
@@ -69,12 +70,17 @@ header .caja_pestañas .pestaña .pestana_a{
 
 
 .dropDown{
+	margin-left: -10px;
 	display: flex;
     flex-direction: column;
-    align-items: flex-start;
-	
+	align-items: flex-start;
+	width: 50vw;
 }
 
 .dropDownClose{
 	display: none;
+}
+
+.dropDown_a{
+	width: 50vw;
 }
