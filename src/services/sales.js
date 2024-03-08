@@ -40,7 +40,7 @@ export class SalesService {
         const urlWithQuery =`${urlApi}?id=${id}`
           const deleteSale = await axios.delete(urlWithQuery)
   
-          console.log('borrado');
+          console.log(deleteSale.data);
           
         } catch (error) {
           console.error("Error al borrar:", error);
