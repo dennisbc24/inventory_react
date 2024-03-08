@@ -88,8 +88,8 @@ export function Menu() {
          <EnlaceLi name='Eliminar' link='/deleteSale'/>
       </Pestana>
       <Pestana titulo='Productos'>
-         <EnlaceLi name='Nuevo' link='/newProduct'/>
-         <EnlaceLi name='Actualizar' link='/updateProduct'/>
+         <EnlaceLi name='Crear Producto' link='/newProduct'/>
+         <EnlaceLi name='Actualizar Producto' link='/updateProduct'/>
          {/* <EnlaceLi name='Borrar'/> */}
       </Pestana>
       <Pestana titulo='Stock'>
