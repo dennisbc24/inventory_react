@@ -49,8 +49,7 @@ export const SelesForm = ({urlBase}) => {
    useEffect(() => {
     // Filtra los nombres localmente en base a la query
     const filteredNames = allProducts
-      .filter(
-        (product) =>
+      .filter((product) =>
           product.name.toLowerCase().includes(query.toLowerCase()) &&
           query !== ""
       )
@@ -68,7 +67,6 @@ export const SelesForm = ({urlBase}) => {
           </span>
         );
       });
-
     setSuggestions(filteredNames);
   }, [query, allProducts]);
 
