@@ -12,7 +12,7 @@ export class SalesService {
               amount: count,
               p_total: total,
               p_unit: parseInt(PUnit),
-              revenue: parseInt(revenue),
+              revenue: revenue,
               customer: dataCustomer,
               fk_id_product: product.id_product,
               fk_id_user: idUser,

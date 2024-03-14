@@ -77,7 +77,7 @@ export const SelesForm = ({urlBase}) => {
   }, [count, total]);
 
   useEffect(() => {
-    setRevenue((PUnit - cost) * count);
+    setRevenue(((PUnit - cost) * count).toFixed(2));
   }, [PUnit]);
 
   const handleCount = ({ target: { value } }) => { setCount(parseInt(value))};

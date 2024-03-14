@@ -9,7 +9,7 @@ export class ProductService {
             const sendData = await axios.post(urlUpload,{
               fk_user: idUser,
               fk_branch:idBranch,
-              supplier:supplierProduct,
+              fk_supplier:supplierProduct,
               amount: count,
               name:nameProduct,
               cost: costProduct,
@@ -17,10 +17,12 @@ export class ProductService {
               list_price: parseInt(pMayor),
             })
     
-            console.log('product created successfully');
+            return 'product created successfully'
             
           } catch (error) {
+            
             console.error("Error creating product:", error);
+            return error
           }
     }
     /* async delete(urlBase, body) {

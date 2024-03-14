@@ -21,15 +21,17 @@ export const NewProduct = ({urlBase}) => {
   const handleCount = ({ target: { value } }) => { setCount(parseInt(value))};
   const handleName = ({ target: { value } }) => { setNameProduct(value)};
   const handleCost = ({ target: { value } }) => { SetCostProduct(parseInt(value))};
-  const handleSupplier = ({ target: { value } }) => {SetSupplierProduct(value)};
+  const handleSupplier = ({ target: { value } }) => {SetSupplierProduct(parseInt(value))};
   const handlePUnit = (e) => {setPUnit(e.target.value)}
   const handlePMayor = (e) =>{setPMayor(e.target.value)}
   const handleIdUser = (e) =>{  setIdUser(parseInt(e.target.value))}
   const handleIdBranch = (e) =>{  setIdBranch(parseInt(e.target.value))}
+
   const handleButton = async () => {
     const body = {idUser,idBranch,supplierProduct,count,nameProduct,costProduct,PUnit,pMayor}
     const petition =  service.create(urlBase, body)
-   };
+   }
+
   return (
     <>
     <TitleForm text='Crear Nuevo Producto'></TitleForm>
@@ -51,7 +53,7 @@ export const NewProduct = ({urlBase}) => {
         <InputSimple titulo="Cantidad" tipo="number" func={handleCount}></InputSimple>
         <InputSimple titulo="Nombre" tipo="text" func={handleName}></InputSimple>
         <InputSimple titulo="Costo" tipo="number" func={handleCost}></InputSimple>
-        <InputSimple titulo="Proveedor" tipo="text" func={handleSupplier}   ></InputSimple>
+        <InputSimple titulo="Proveedor" tipo="number" func={handleSupplier}   ></InputSimple>
         <InputSimple titulo="Precio Unitario" tipo="number" func={handlePUnit}></InputSimple>
         <InputSimple titulo="Precio por Mayor" tipo="number" func={handlePMayor}></InputSimple>
         
