@@ -8,10 +8,22 @@ import {ProductService} from "../services/product.js"
 
 const service = new ProductService()
 
-const SearchInput = ({urlApi}) => {
+const SearchInput = ({urlApi, funcSet}) => {
   const [data, setData] = useState()
-  const [entry, setEntry] = useState()
   const [suggestions, setSuggestions] = useState([])
+  const [query, setQuery] = useState('')
+
+  
+  function selectLi({target: {textContent}}) {
+    data.forEach(element => {
+      if (element.name === textContent) {
+        funcSet(element)
+        setSuggestions([])  
+        setQuery('') 
+     }
+    })
+    
+  }
 
 async function compare(query){
   const filteredNames = await data.filter(
@@ -35,6 +47,7 @@ async function compare(query){
     setSuggestions(filteredNames)
 
 }
+
  async function configData (urlApi){
     const response = await axios.get(urlApi)
     setData(response.data)
@@ -46,23 +59,15 @@ async function compare(query){
  
 
   function searching({target : {value}}) {
-      //setEntry(valor)
+      setQuery(value)
       compare(value)
       
   }
   return (
     <>
-    <select>
-    {/* {data.map((ele, index) => (
-    <option key={index}>
-      {ele}
-   </option>
-  ))
-  } */}
-    </select>
-    <input type="text" onChange={searching}></input>
+    <input type="text" onChange={searching} value={query} className="onlyInput"></input>
   <ul className="suggestions_lu">   {suggestions.map((suggestion, index) => (
-    <li key={index}>
+    <li key={index} onClick={selectLi}>
       {suggestion}
    </li>
   ))}
@@ -77,12 +82,13 @@ export const NewProduct = ({urlBase}) => {
   const [nameProduct, setNameProduct] = useState('');
   const [count, setCount] = useState(0);
   const [costProduct, SetCostProduct] = useState(0);
-  const [supplierProduct, SetSupplierProduct] = useState('');
   const [pMayor, setPMayor] = useState(0);
   const [PUnit, setPUnit] = useState(0);
   const [idUser, setIdUser] = useState(1);
   const [idBranch, setIdBranch] = useState(1);
+  const [proveedor, setProveedor] = useState();
 
+  
   const handleCount = ({ target: { value } }) => { setCount(parseInt(value))};
   const handleName = ({ target: { value } }) => { setNameProduct(value)};
   const handleCost = ({ target: { value } }) => { SetCostProduct(parseInt(value))};
@@ -92,8 +98,10 @@ export const NewProduct = ({urlBase}) => {
   const handleIdUser = (e) =>{  setIdUser(parseInt(e.target.value))}
   const handleIdBranch = (e) =>{  setIdBranch(parseInt(e.target.value))}
 
+
+  
   const handleButton = async () => {
-    const body = {idUser,idBranch,supplierProduct,count,nameProduct,costProduct,PUnit,pMayor}
+    const body = {idUser,idBranch,proveedor,count,nameProduct,costProduct,PUnit,pMayor}
     const petition =  service.create(urlBase, body)
    }
 
@@ -119,8 +127,7 @@ export const NewProduct = ({urlBase}) => {
         <InputSimple titulo="Nombre" tipo="text" func={handleName}></InputSimple>
         <InputSimple titulo="Costo" tipo="number" func={handleCost}></InputSimple>
         <InputSimple titulo="Proveedor" tipo="number" func={handleSupplier}   ></InputSimple>
-        <SearchInput urlApi={'http://localhost:3000/api/v1/suppliers'}/>
-        
+        <SearchInput urlApi={`${urlBase}/api/v1/suppliers`} funcSet={setProveedor}/>
         <InputSimple titulo="Precio Unitario" tipo="number" func={handlePUnit}></InputSimple>
         <InputSimple titulo="Precio por Mayor" tipo="number" func={handlePMayor}></InputSimple>
         
