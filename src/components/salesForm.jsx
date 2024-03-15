@@ -13,7 +13,7 @@ export const SelesForm = ({urlBase}) => {
  // Array con todos los productos
   const [suggestions, setSuggestions] = useState([]);
   const [product, setProduct] = useState([]);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   const [cost, setCost] = useState(0);
   const [total, setTotal] = useState(0);
   const [revenue, setRevenue] = useState(0);
@@ -38,7 +38,7 @@ export const SelesForm = ({urlBase}) => {
           );
           setAllProducts(response.data);
           console.log("fetch listo");
-        } catch (error) {
+        } catch (error) { 
           console.error("Error al obtener todos los productos:", error);
         }
       };
@@ -134,11 +134,11 @@ export const SelesForm = ({urlBase}) => {
           <option value="3">Miguel</option>
         </SelectSimple>
 
-        <InputSimple titulo="Cantidad" tipo="number" func={handleCount} ></InputSimple>
+        <InputSimple titulo="Cantidad" tipo="number" func={handleCount} callToAction="Cuantos?"></InputSimple>
         <ParrafoInput titulo="Precio Unitario" parrafo={PUnit}></ParrafoInput>
-        <InputSimple titulo="Total" tipo="number" func={handleTotal}></InputSimple>
+        <InputSimple titulo="Total S/." tipo="number" func={handleTotal} callToAction="Total Venta"></InputSimple>
 
-        <InputSimple titulo="Cliente" tipo="text" func={changeCostumer}></InputSimple>
+        <InputSimple titulo="Cliente" tipo="text" func={changeCostumer} callToAction="Cliente"></InputSimple>
 
         <ParrafoInput titulo="Costo" parrafo={cost}></ParrafoInput>
         <ParrafoInput titulo="Ganancia" parrafo={revenue}></ParrafoInput>

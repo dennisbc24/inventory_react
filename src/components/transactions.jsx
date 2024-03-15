@@ -145,7 +145,7 @@ export const TransactionsForm = ({urlBase}) => {
           <option value="3">Miguel</option>
         </SelectSimple>
 
-        <InputSimple titulo="Cantidad"  tipo="number" func={handleCount}></InputSimple>
+        <InputSimple titulo="Cantidad"  tipo="number" func={handleCount} callToAction="Cuantos?"></InputSimple>
         
       </div>
       <ButtonSave titulo={"Guardar"} func={handleButton}/>

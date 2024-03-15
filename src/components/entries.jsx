@@ -12,10 +12,6 @@ const urlApiProducts = `${urlBase}/api/v1/products`;
 
   const [query, setQuery] = useState("");
   const [allProducts, setAllProducts] = useState([]); // Array con todos los productos
-  const [allSuppliers, setAllSuppliers] = useState([]); // Array con todos los suppliers
-  const [querySuppliers, setQuerySuppliers] = useState(""); // Array con todos los suppliers
-  const [supplier, setSupplier] = useState([]);
-  const [suggestionsSupplier, setSuggestionsSupplier] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const [product, setProduct] = useState([]);
   const [count, setCount] = useState(0);
@@ -38,19 +34,7 @@ const urlApiProducts = `${urlBase}/api/v1/products`;
     fetchAllProducts();
   }, []);
 
-  useEffect(() => {
-    // Simula la carga de todos los productos al inicio
-    const fetchAllSuppliers = async () => {
-      try {
-        const response = await axios.get(urlSuppliers);
-        setAllSuppliers(response.data);
-      } catch (error) {
-        console.error("Error al obtener todos los suppliers:", error);
-      }
-    };
-
-    fetchAllSuppliers();
-  }, []);
+ 
 
   useEffect(() => {
     // Filtra los nombres localmente en base a la query
@@ -78,29 +62,6 @@ const urlApiProducts = `${urlBase}/api/v1/products`;
     setSuggestions(filteredNames);
   }, [query, allProducts]);
 
-  useEffect(() => {
-    // Filtra los nombres localmente en base a la querySuppliers
-    const filteredNamesSuppliers = allSuppliers
-      .filter((elem) => elem.name.toLowerCase().includes(querySuppliers.toLowerCase()) && querySuppliers !== "" )
-      .map((elem) => {
-        // Resalta las letras coincidentes
-        const index = elem.name.toLowerCase().indexOf(querySuppliers.toLowerCase());
-        const start = elem.name.substring(0, index);
-        const match = elem.name.substring(index, index + querySuppliers.length);
-        const end = elem.name.substring(index + querySuppliers.length);
-        return (
-          <span key={elem.id_supplier}>
-            {start}
-            <strong>{match}</strong>
-            {end}
-          </span>
-        );
-      });
-
-      setSuggestionsSupplier(filteredNamesSuppliers);
-  }, [querySuppliers, allSuppliers]);
-
-
   const handleCount = ({ target: { value } }) => { setCount(parseInt(value))};
   const handleChangeProducts = (e) => {setQuery(e.target.value), setShow(false)}
   const handleChangeSuppliers = (e) => {setQuerySuppliers(e.target.value)}
@@ -120,18 +81,8 @@ const urlApiProducts = `${urlBase}/api/v1/products`;
         }
       });
     };
-    const handleSearchSuppliers = (event) => { 
-        const textoLi = event.target.textContent
-          allSuppliers.forEach((elem) => {
-            if (elem.name == textoLi) {
-              setSuggestionsSupplier([]);
-              setSupplier(elem);
-              setQuerySuppliers('')
-            }
-          });
-        };
-
-  const handleButton = () => {
+    
+const handleButton = () => {
       
     const sendVending = async () => {
       try {
@@ -139,9 +90,7 @@ const urlApiProducts = `${urlBase}/api/v1/products`;
             pointB: idBranch,
             amount: count,
             fk_user:idUser,
-            fk_supplier:supplier.id_supplier,
-            fk_product: idProduct ,
-            /* string_supplier: newSupplier.value */
+            fk_product: idProduct
         })
         
         console.log('guardado');
@@ -165,17 +114,10 @@ const urlApiProducts = `${urlBase}/api/v1/products`;
          </li>
         ))}
       </ul>
-      <input type="text"  value={querySuppliers} onChange={handleChangeSuppliers} placeholder="Buscar proveedor..." />
-      <ul className="suggestions_lu">   {suggestionsSupplier.map((suggestion, index) => (
-          <li key={index} onClick={handleSearchSuppliers}>
-            {suggestion}
-         </li>
-        ))}
-      </ul>
+      
 
       <div className="divForm">
         <ParrafoInput titulo="Producto" parrafo={product.name}></ParrafoInput>
-        <ParrafoInput titulo="Proveedor" parrafo={supplier.name}></ParrafoInput>
         <SelectSimple titulo="Sucursal"func={handleIdBranch}>
           <option value="1">B17</option>
           <option value="3">Departamento</option>
@@ -189,7 +131,7 @@ const urlApiProducts = `${urlBase}/api/v1/products`;
           <option value="2">Luz</option>
           <option value="3">Miguel</option>
         </SelectSimple>
-        <InputSimple titulo="Cantidad" tipo="number" func={handleCount} ></InputSimple>
+        <InputSimple titulo="Cantidad" tipo="number" func={handleCount} callToAction="Cuantos ingresan?"></InputSimple>
       </div>
       <ButtonSave titulo={"Guardar"} func={handleButton}/>
       

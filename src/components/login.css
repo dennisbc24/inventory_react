@@ -12,9 +12,9 @@ justify-content: center;
     gap: 10px;
 }
 
-input{
+/* input{
     width: -webkit-fill-available;
-}
+} */
 
 .button_save{
     margin-top: 25px;
