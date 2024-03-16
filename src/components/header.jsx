@@ -88,20 +88,20 @@ export function Menu() {
          <EnlaceLi name='Eliminar' link='/deleteSale'/>
       </Pestana>
       <Pestana titulo='Productos'>
-         <EnlaceLi name='Crear Producto' link='/newProduct'/>
-         <EnlaceLi name='Actualizar Producto' link='/updateProduct'/>
+         <EnlaceLi name='Crear' link='/newProduct'/>
+         <EnlaceLi name='Editar' link='/updateProduct'/>
          {/* <EnlaceLi name='Borrar'/> */}
       </Pestana>
       <Pestana titulo='Stock'>
-         <EnlaceLi name='Ingreso' link='/entries'/>
+         <EnlaceLi name='Ingresos' link='/entries'/>
          <EnlaceLi name='Inventario'link='/inventory'/>
          <EnlaceLi name='Transacciones' link='/transactions'/>
          <EnlaceLi name='Buscar' link='/inventorySearch'/>
-         <EnlaceLi name='Actualizar Stock' link='/existenceCount'/>
+         <EnlaceLi name='Editar' link='/existenceCount'/>
          {/* <EnlaceLi name='Borrar'/> */}
       </Pestana>
       <Pestana titulo='Otros'>
-         <EnlaceLi name='Registrar Gasto' link='/expense'/>
+         <EnlaceLi name='Registrar' link='/expense'/>
          <EnlaceLi name='Buscar Gasto' link='/searchSpends'/>
          {/* <EnlaceLi name='Resumen'/> */}
          {/* <EnlaceLi name='Buscar Resumen' link='/summaries'/> */}

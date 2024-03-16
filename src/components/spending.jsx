@@ -10,7 +10,7 @@ export const SendExpense = ({urlBase}) => {
     const [concept, setConcept] = useState('');
     const [date, setDate] = useState('');
     const [amount, setAmount] = useState(0);
-    const [user, setUser] = useState();
+    const [user, setUser] = useState('B17');
     const [type, setType] = useState('false');
 
 
@@ -54,7 +54,7 @@ export const SendExpense = ({urlBase}) => {
           <SelectSimple titulo="Usuario" func={handleUser}>
               <option value="B17">B17</option>
               <option value="luz">Luz Marina</option>
-              <option value="miguel">Miguel Angel</option>
+              <option value="miguel">Miguel Ángel</option>
             </SelectSimple>
             <SelectSimple titulo="Tipo"func={handleType}>
               <option value="false">Inversion</option>
