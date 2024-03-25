@@ -79,7 +79,7 @@ export const SelesForm = ({urlBase}) => {
   }, [PUnit]);
 
   const handleCount = ({ target: { value } }) => { setCount(parseInt(value))};
-  const handleTotal = ({ target: { value } }) => {setTotal(parseInt(value))};
+  const handleTotal = ({ target: { value } }) => {setTotal(parseFloat(value))};
   const handleChange = (e) => {setQuery(e.target.value), setShow(false), SetShowSales(false)}
   const handleDate = (e) =>{setDateSell(e.target.value)}
   const handleIdUser = (e) =>{  setIdUser(parseInt(e.target.value))}
