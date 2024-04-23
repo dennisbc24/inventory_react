@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 import {MainMenu} from './menuDespelgable.jsx'
 import { Route, Routes } from "react-router-dom";
@@ -22,12 +22,12 @@ import {ProtectedRoute} from './ProtectedRoute.jsx'
 
 import "./theme.css";
 
-//const home = "https://inventario.elwayardo.com";
-const home = 'http://localhost:3000'
+const home = "https://inventario.elwayardo.com";
+//const home = 'http://localhost:3000'
 
 export function App(){
     const [user, setUser] = useState(null)
-    const [token, setToken] = useState()
+    const [token] = useState()
 
     const login = (user) =>{setUser(user)}
     const logout = () => {

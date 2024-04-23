@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import {useState } from "react";
 import {  InputSimple, ButtonSave, ParrafoInput, SearchInput} from "./form/inputSearch";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {  InputSimple,  SelectSimple, ButtonSave} from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
