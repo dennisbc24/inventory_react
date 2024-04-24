@@ -19,11 +19,13 @@ import {InventorySearchForm} from "./inventory_search_form.jsx";
 import {UpdateExistenceCount} from "./updateExistenceCount.jsx";
 import {Login} from "./login.jsx";
 import {ProtectedRoute} from './ProtectedRoute.jsx'
+import {Monthly} from './searchs/sumSalesMonthly.jsx'
+
 
 import "./theme.css";
 
-const home = "https://inventario.elwayardo.com";
-//const home = 'http://localhost:3000'
+//const home = "https://inventario.elwayardo.com";
+const home = 'http://localhost:3000'
 
 export function App(){
     const [user, setUser] = useState(null)
@@ -73,6 +75,9 @@ useEffect(()=>{
             <Route path='/summaries' element={<SearchSummary urlBase={home}/>}/>
             <Route path='/inventorySearch' element={<InventorySearchForm urlBase={home}/>}/>
             <Route path='/existenceCount' element={<UpdateExistenceCount urlBase={home}/>}/>
+            <Route path='/sumSalesMonthly' element={<Monthly urlBase={home}/>}/>
+
+            
         </Route>
     
     </Routes>

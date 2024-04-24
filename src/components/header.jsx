@@ -86,6 +86,8 @@ export function Menu() {
          <EnlaceLi name='Registrar' link='/putSale'/>
          <EnlaceLi name='Buscar Venta' link='/searchSales'/>
          <EnlaceLi name='Eliminar' link='/deleteSale'/>
+         <EnlaceLi name='Suma Mensual' link='/sumSalesMonthly'/>
+
       </Pestana>
       <Pestana titulo='Productos'>
          <EnlaceLi name='Crear' link='/newProduct'/>

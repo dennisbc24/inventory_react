@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {  ButtonSave, InputSimple} from "./form/inputSearch";
-import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import {  TableGet } from "./table.jsx";
