@@ -31,7 +31,7 @@ export const NewProduct = ({urlBase}) => {
       <div className="divForm">
         <InputSimple titulo="Nombre" tipo="text" func={handleName} callToAction="Escribe un nombre único"></InputSimple>
         <ParrafoInput titulo={'Proveedor'} parrafo={proveedor.name}/>
-        <SearchInput urlApi={`${urlBase}/api/v1/suppliers`} funcSet={setProveedor}/>
+        <SearchInput urlApi={`${urlBase}/api/v1/suppliers`} funcSet={setProveedor} place="Buscar Proveedor"/>
         
         <InputSimple titulo="Costo S/." tipo="number" func={handleCost}></InputSimple>
         <InputSimple titulo="P. Unit S/." tipo="number" func={handlePUnit}></InputSimple>
