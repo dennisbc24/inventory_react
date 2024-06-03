@@ -45,9 +45,15 @@ export class SalesService {
         } catch (error) {
           console.error("Error al borrar:", error);
         }
-      
-    
-      
+      }
+    async getSumMonthly(urlBase,id_product){
+      const urlApi = `${urlBase}/api/v1/ventas/salesMonthly?fk_id_product=${id_product}`
+      try {
+        const response = await axios.get(urlApi)
+        return response.data
+      } catch (error) {
+        console.error(error);
+      }
     }
 
 }

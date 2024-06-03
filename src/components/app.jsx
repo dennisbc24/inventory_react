@@ -25,8 +25,8 @@ import {Monthly} from './searchs/sumSalesMonthly.jsx'
 import "./theme.css";
 import { TableGet } from './table.jsx';
 
-//const home = "https://inventario.elwayardo.com";
-const home = 'http://localhost:3000'
+const home = "https://inventario.elwayardo.com";
+//const home = 'http://localhost:3000'
 
 export function App(){
     const [user, setUser] = useState(null)

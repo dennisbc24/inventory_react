@@ -49,7 +49,7 @@ export function ButtonSave({titulo,func }) {
     )  
 }
 
-export const SearchInput = ({urlApi, funcSet, minWitdh='200px'}) => {
+export const SearchInput = ({urlApi, funcSet, minWitdh='200px', place='Buscar'}) => {
     const [data, setData] = useState()
     const [suggestions, setSuggestions] = useState([])
     const [query, setQuery] = useState('')
@@ -107,7 +107,7 @@ export const SearchInput = ({urlApi, funcSet, minWitdh='200px'}) => {
     return (
       <>
       
-      <input className="big_input_search" type="text" onChange={searching} value={query} placeholder="Buscar el proveedor" style={{'minWitdh':`${minWitdh}`}}></input>
+      <input className="big_input_search" type="text" onChange={searching} value={query} placeholder={place} style={{'minWitdh':`${minWitdh}`}}></input>
         <ul className="suggestions_lu">   {suggestions.map((suggestion, index) => (
         <li key={index} onClick={selectLi}>
         {suggestion}
