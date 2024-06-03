@@ -139,6 +139,7 @@ export const SelesForm = ({urlBase}) => {
         <InputSimple titulo="Total S/." tipo="number" func={handleTotal} callToAction="Total Venta"></InputSimple>
 
         <InputSimple titulo="Cliente" tipo="text" func={changeCostumer} callToAction="Cliente"></InputSimple>
+        <ParrafoInput titulo="Actualizado" parrafo={product.updated}></ParrafoInput>
 
         <ParrafoInput titulo="Costo" parrafo={cost}></ParrafoInput>
         <ParrafoInput titulo="Ganancia" parrafo={revenue}></ParrafoInput>

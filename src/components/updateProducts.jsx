@@ -106,8 +106,10 @@ export const UpdateProductForm = ({urlBase}) => {
             list_price: p_sugerido,
             lowest_price: p_xmayor,
         })
-
-        console.log('modificado');
+        alert(sendData.data);
+        console.log(sendData);
+        
+        
         
       } catch (error) {
         console.error("Error al obtener todos los productos:", error);
@@ -115,7 +117,7 @@ export const UpdateProductForm = ({urlBase}) => {
     };
  
     sendVending()
-    
+    setShow(false)
     
   };
   return (
@@ -129,6 +131,7 @@ export const UpdateProductForm = ({urlBase}) => {
         ))}
       </ul>
 {<>{show ? <div className="divForm">
+        <ParrafoInput titulo="Actualizado" parrafo={product.updated}></ParrafoInput>
         <InputSimple titulo='Nombre' tipo='text' valor={name} func={handleName}></InputSimple>
         <InputSimple titulo='Costo' tipo='text' valor={cost} func={handleCost}></InputSimple>
         <InputSimple titulo='Precio Sugerido' tipo='number' valor={p_sugerido} func={handle_p_sugerido}></InputSimple>

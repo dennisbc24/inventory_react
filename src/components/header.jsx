@@ -90,6 +90,8 @@ export function Menu() {
 
       </Pestana>
       <Pestana titulo='Productos'>
+        
+        <EnlaceLi name='Ver' link='/products'/>
          <EnlaceLi name='Crear' link='/newProduct'/>
          <EnlaceLi name='Editar' link='/updateProduct'/>
          {/* <EnlaceLi name='Borrar'/> */}
