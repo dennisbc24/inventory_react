@@ -23,6 +23,8 @@ import {Monthly} from './searchs/sumSalesMonthly.jsx'
 
 
 import "./theme.css";
+
+
 import { TableGet } from './table.jsx';
 
 const home = "https://inventario.elwayardo.com";
@@ -77,7 +79,7 @@ useEffect(()=>{
             <Route path='/inventorySearch' element={<InventorySearchForm urlBase={home}/>}/>
             <Route path='/existenceCount' element={<UpdateExistenceCount urlBase={home}/>}/>
             <Route path='/sumSalesMonthly' element={<Monthly urlBase={home}/>}/>
-            <Route path='/products' element={<TableGet url={`${home}/api/v1/products`} minWitdh="800px"/>}/>
+            <Route path='/products' element={<TableGet url={`${home}/api/v1/products`} minWitdh="900px"/>}/>
 
 
             
