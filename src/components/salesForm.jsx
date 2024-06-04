@@ -93,7 +93,7 @@ export const SelesForm = ({urlBase}) => {
           setProduct(elem);
           setCost(elem.cost);
           setQuery('')
-          setShow('true')
+          setShow(true)
           SetTextButton('Guardar')
         }
       });
