@@ -4,6 +4,7 @@ import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import { TableGet } from "./table.jsx";
+import { PopUpWindow } from "./form/popupwindow.jsx";
 
 export const UpdateExistenceCount = ({urlBase}) => {
   const [query, setQuery] = useState("");
@@ -95,7 +96,6 @@ export const UpdateExistenceCount = ({urlBase}) => {
           count
         })
         alert(sendData.data);
-        console.log('stock actualizado');
         
       } catch (error) {
         console.error("Error al obtener todos los productos:", error);
@@ -137,6 +137,8 @@ export const UpdateExistenceCount = ({urlBase}) => {
         
       </div> : <></>
       }</>}
+      
+      <PopUpWindow text={'ventana emergente'}></PopUpWindow>
       <ButtonSave titulo={"Actualizar"} func={handleButton}/>
       
       
