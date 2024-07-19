@@ -4,6 +4,7 @@ import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import { TableGet } from "./table.jsx";
 import {ProductService} from "../services/product.js"
+import { Upload_Img } from "./inputs/upload_img.jsx";
 
 const service = new ProductService()
 
@@ -29,6 +30,7 @@ export const NewProduct = ({urlBase}) => {
     <>
     <TitleForm text='Crear Nuevo Producto'></TitleForm>
       <div className="divForm">
+        <Upload_Img></Upload_Img>
         <InputSimple titulo="Nombre" tipo="text" func={handleName} callToAction="Escribe un nombre único"></InputSimple>
         <ParrafoInput titulo={'Proveedor'} parrafo={proveedor.name}/>
         <SearchInput urlApi={`${urlBase}/api/v1/suppliers`} funcSet={setProveedor} place="Buscar Proveedor"/>
