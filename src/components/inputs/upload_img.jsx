@@ -1,7 +1,7 @@
 
 
 
-import axios from 'axios';
+import axios, { formToJSON } from 'axios';
 import { useState } from 'react';
 
 
@@ -36,16 +36,16 @@ export const UploadPhoto = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
+    console.log(photo);
     formData.append('photo', photo);
+    console.log(data);
     formData.append('name', data.name);
     formData.append('description', data.description);
+    
 
     try {
-      const response = await axios.post('https://your-backend-url.com/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      console.log(formData);
+      const response = await axios.post('http://localhost:3000/api/v1/products/files', formData);
       console.log('Response:', response.data);
     } catch (error) {
       console.error('Error uploading the file:', error);
@@ -53,7 +53,7 @@ export const UploadPhoto = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} >
       <div>
         <label htmlFor="photo">Photo:</label>
         <input type="file" id="photo" onChange={handlePhotoChange} />
