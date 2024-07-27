@@ -4,14 +4,15 @@
 import axios, { formToJSON } from 'axios';
 import { useState } from 'react';
 
+const uploadFile = (formDataParam) => {
 
-/* export const Upload_Img = () => {
-return(
-<>
-    <input type="file" name="" id="" />
-</>
-)
-} */
+  fetch('http://localhost:3000/api/v1/products/files',{
+      method:'POST',
+      body:formDataParam
+  })
+
+};
+
 
 
 export const UploadPhoto = () => {
@@ -44,19 +45,19 @@ export const UploadPhoto = () => {
     
 
     try {
-      console.log(formData);
-      const response = await axios.post('http://localhost:3000/api/v1/products/files', formData);
-      console.log('Response:', response.data);
+      console.log(formData.getAll('photo'));
+      const response = await uploadFile(formData)
+      //console.log('Response:', response.data);
     } catch (error) {
       console.error('Error uploading the file:', error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} >
+    <form onSubmit={handleSubmit} encType='multipart/form-data'>
       <div>
-        <label htmlFor="photo">Photo:</label>
-        <input type="file" id="photo" onChange={handlePhotoChange} />
+        <label htmlFor="file">Photo:</label>
+        <input type="file" id="file" name="foto" onChange={handlePhotoChange} />
       </div>
       <div>
         <label htmlFor="name">Name:</label>
