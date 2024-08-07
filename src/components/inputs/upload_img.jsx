@@ -1,7 +1,4 @@
-
-
-
-import axios, { formToJSON } from 'axios';
+import axios from 'axios';
 import { useState } from 'react';
 
 const uploadFile = (formDataParam) => {
@@ -46,8 +43,10 @@ export const UploadPhoto = () => {
 
     try {
       console.log(formData.getAll('photo'));
-      const response = await uploadFile(formData)
-      //console.log('Response:', response.data);
+      const response = await axios.post('http://localhost:3000/api/v1/products/files', formData, {
+        
+      });
+      console.log('Response:', response.data);
     } catch (error) {
       console.error('Error uploading the file:', error);
     }
