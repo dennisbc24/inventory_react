@@ -8,11 +8,11 @@ export function InputSearch() {
     )  
 }
 
-export function InputSimple({titulo,tipo,func, valor, callToAction=''}) {
+export function InputSimple({titulo,tipo,func, valor, callToAction='', nombre}) {
     return(
         <div className='inputSimple'>
             <h3>{titulo}</h3>
-        <input type={tipo} onChange={func} value={valor} className='only_input' placeholder={callToAction}/>
+        <input type={tipo} onChange={func} value={valor} name={nombre} className='only_input' placeholder={callToAction}/>
         </div>
        
     )  
