@@ -20,14 +20,15 @@ export const NewProduct = ({urlBase}) => {
   const [data, setData] = useState({
     name: '',
     cost: '',
-    unit: '',
-    total: ''
+    lowest_price: '',
+    list_price: '',
+    fk_supplier: proveedor.id_supplier
   });
 
-  const handleName = ({ target: { value } }) => { setNameProduct(value)};
+  /* const handleName = ({ target: { value } }) => { setNameProduct(value)};
   const handleCost = ({ target: { value } }) => { SetCostProduct(parseInt(value))};
   const handlePUnit = (e) => {setPUnit(e.target.value)}
-  const handlePMayor = (e) =>{setPMayor(e.target.value)}
+  const handlePMayor = (e) =>{setPMayor(e.target.value)} */
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -56,6 +57,8 @@ export const NewProduct = ({urlBase}) => {
     formData.append('cost', data.cost);
     formData.append('unit', data.unit);
     formData.append('total', data.total);
+    formData.append('fk_supplier', data.fk_supplier);
+
     formData.append('photo', photo);
 
     
