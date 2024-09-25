@@ -9,12 +9,13 @@ export const UpdateProductForm = ({urlBase}) => {
   const [allProducts, setAllProducts] = useState([]); // Array con todos los productos
   const [suggestions, setSuggestions] = useState([]);
   const [product, setProduct] = useState([]);
-  const [cost, setCost] = useState(0);
-  const [name, setName] = useState('')
-  const [p_sugerido, setP_sugerido] = useState('')
-  const [p_xmayor, setP_pxmayor] = useState('')
   const [id_product, setId_Product] = useState('')
   const [show, setShow] = useState(false);
+  const [sugested_price, setSugested_price] = useState('')
+  const [wholesale_price, setWholesale_price] = useState('')
+  const [name, setName] = useState('')
+  const [cost, setCost] = useState(0)
+  const [photo, setPhoto] = useState(null);
 
   useEffect(() => {
     // Simula la carga de todos los productos al inicio
@@ -60,31 +61,71 @@ export const UpdateProductForm = ({urlBase}) => {
     setSuggestions(filteredNames);
   }, [query, allProducts]);
 
+ 
 
-  const handleCost = (e) => setCost(e.target.value)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('cost', cost);
+    formData.append('sugested_price', sugested_price);
+    formData.append('wholesale_price', wholesale_price);
+    formData.append('photo', photo);
+
+    formData.append('photo', photo);
+    console.log(formData);
+
+    try {
+          
+      const urlPatch = `${urlBase}/api/v1/products/${id_product}`
+      const sendData = await axios.patch(urlPatch, formData)
+      alert(sendData.data);
+      console.log(sendData);
+      
+      
+      
+    } catch (error) {
+      console.error("Error al obtener todos los productos:", error);
+    }
+
+
+    try {
+      //console.log(formData.getAll('photo'));
+      const response = await axios.post('http://localhost:3000/api/v1/products', formData, {
+        
+      });
+      console.log('Response:', response.data);
+    } catch (error) {
+      console.error('Error uploading the file:', error);
+    }
+  };
+
   const handleChange = (e) => {setQuery(e.target.value)}
-  const handleName =(e) => setName(e.target.value)
-  const handle_p_sugerido =(e) => setP_sugerido(e.target.value)
-  const handle_p_xmayor =(e) => setP_pxmayor(e.target.value)
+  
+  const handleCost = (e) => setCost(parseFloat(e.target.value))
+  const handleName = (e) => setName(e.target.value)
+  const handleSuggestedPrice = (e) => setSugested_price(e.target.value)
+  const handleWholeSalePrice = (e) => setWholesale_price(e.target.value)
+
 
   const handleClick = (event) => { 
     const textoLi = event.target.textContent
       allProducts.forEach((elem) => {
         if (elem.name == textoLi) {
+
           setSuggestions([]);
           setProduct(elem);
-          setCost(elem.cost);
+         setCost(elem.cost);
           setQuery('')
-          setName(elem.name)
+         setName(elem.name)
           if (elem.list_price==null) {
-            setP_sugerido(0)
+            setSugested_price(0)
           } else {
-            setP_sugerido(elem.list_price)
+            setSugested_price(elem.list_price)
           }
           if (elem.lowest_price==null) {
-            setP_pxmayor(0)
+            setWholesale_price(0)
           } else {
-            setP_pxmayor(elem.lowest_price)
+            setWholesale_price(elem.lowest_price)
           }
           
           setId_Product(elem.id_product)
@@ -93,33 +134,10 @@ export const UpdateProductForm = ({urlBase}) => {
       });
     };
 
-
-  const handleButton = () => {
-      
-    const sendVending = async () => {
-        try {
-          
-        const urlPatch = `${urlBase}/api/v1/products/${id_product}`
-        const sendData = await axios.patch(urlPatch,{
-            name: name,
-            cost: cost,
-            list_price: p_sugerido,
-            lowest_price: p_xmayor,
-        })
-        alert(sendData.data);
-        console.log(sendData);
-        
-        
-        
-      } catch (error) {
-        console.error("Error al obtener todos los productos:", error);
-      }
-    };
- 
-    sendVending()
-    setShow(false)
-    
-  };
+   const handleInputFileChange = (e) => {
+       setPhoto(e.target.files[0]);
+     };
+   
   return (
     <>
     <TitleForm text='Actualizar Producto'></TitleForm>
@@ -130,19 +148,21 @@ export const UpdateProductForm = ({urlBase}) => {
          </li>
         ))}
       </ul>
-{<>{show ? <div className="divForm">
-        <ParrafoInput titulo="Actualizado" parrafo={product.updated}></ParrafoInput>
-        <InputSimple titulo='Nombre' tipo='text' valor={name} func={handleName}></InputSimple>
-        <InputSimple titulo='Costo' tipo='text' valor={cost} func={handleCost}></InputSimple>
-        <InputSimple titulo='Precio Sugerido' tipo='number' valor={p_sugerido} func={handle_p_sugerido}></InputSimple>
-        <InputSimple titulo='Precio por mayor' tipo='number' valor={p_xmayor} func={handle_p_xmayor}></InputSimple>
-        <ParrafoInput titulo="Codigo" parrafo={id_product}></ParrafoInput>
-        <ParrafoInput titulo="Proveedor" parrafo={product.supplier}></ParrafoInput>
-        <ParrafoInput titulo="Creado" parrafo={product.created}></ParrafoInput>
-        
-      </div> : <></>
+{<>{show ? <form onSubmit={handleSubmit} encType='multipart/form-data'>
+          <ParrafoInput titulo="Actualizado" parrafo={product.updated}></ParrafoInput>
+        <InputSimple titulo='Nombre' tipo='text' valor={name} func={handleName} nombre='name'></InputSimple>
+        <InputSimple titulo='Costo' tipo='text' valor={cost} func={handleCost} nombre='cost'></InputSimple>
+        <InputSimple titulo='Precio Sugerido' tipo='number' valor={sugested_price} func={handleSuggestedPrice} nombre='sugested_price'></InputSimple>
+        <InputSimple titulo='Precio por mayor' tipo='number' valor={wholesale_price} func={handleWholeSalePrice} nombre='wholesale_price'></InputSimple>
+        <InputSimple titulo="Subir Imagen" tipo="file" func={handleInputFileChange} nombre='image_product'></InputSimple>
+          <ParrafoInput titulo="Codigo" parrafo={id_product}></ParrafoInput>
+          <ParrafoInput titulo="Proveedor" parrafo={product.supplier}></ParrafoInput>
+          <ParrafoInput titulo="Creado" parrafo={product.created}></ParrafoInput>
+
+        <button type="submit">Upload</button>
+
+      </form> : <></>
       }</>}
-      <ButtonSave titulo={"Actualizar"} func={handleButton}/>
       
       
       

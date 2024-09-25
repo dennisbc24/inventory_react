@@ -58,7 +58,6 @@ export const NewProduct = ({urlBase}) => {
     formData.append('unit', data.unit);
     formData.append('total', data.total);
     formData.append('fk_supplier', data.fk_supplier);
-
     formData.append('photo', photo);
 
     
@@ -67,9 +66,7 @@ export const NewProduct = ({urlBase}) => {
 
     try {
       //console.log(formData.getAll('photo'));
-      const response = await axios.post('http://localhost:3000/api/v1/products', formData, {
-        
-      });
+      const response = await axios.post('http://localhost:3000/api/v1/products', formData, {});
       console.log('Response:', response.data);
     } catch (error) {
       console.error('Error uploading the file:', error);
@@ -91,11 +88,10 @@ export const NewProduct = ({urlBase}) => {
       <InputSimple titulo="Nombre" tipo="text" func={handleInputChange} nombre='name' callToAction="Escribe un nombre único"></InputSimple>
       <InputSimple titulo="Costo S/." tipo="number" func={handleInputNumberChange} nombre='cost'></InputSimple>
       <InputSimple titulo="P. Unit S/." tipo="number" func={handleInputNumberChange} nombre='unit'></InputSimple>
-      <InputSimple titulo="Cargar Archivo" tipo="file" func={handleInputFileChange} nombre='unit'></InputSimple>
-
+      <InputSimple titulo="Cargar Archivo" tipo="file" func={handleInputFileChange} nombre='photo'></InputSimple>
       <InputSimple titulo="P. Mayor S/." tipo="number" func={handleInputNumberChange} nombre='total'></InputSimple>
       <ParrafoInput titulo={'Proveedor'} parrafo={proveedor.name}/>
-      <button type="submit">Upload</button>
+      <button type="submit">Crear</button>
     </form>
     <TitleForm text='Crear Nuevo Producto'></TitleForm>
       <div className="divForm">
