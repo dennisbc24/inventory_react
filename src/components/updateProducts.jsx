@@ -61,7 +61,6 @@ export const UpdateProductForm = ({urlBase}) => {
     setSuggestions(filteredNames);
   }, [query, allProducts]);
 
- 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -69,8 +68,30 @@ export const UpdateProductForm = ({urlBase}) => {
     formData.append('cost', cost);
     formData.append('sugested_price', sugested_price);
     formData.append('wholesale_price', wholesale_price);
-    formData.append('photo', photo);
-
+    formData.append('name', name);
+    formData.append('nameFile', name.replaceAll(' ','+' ));
+    let nameFile2 = ''
+let nameFile = name.replaceAll(' ','+' )
+        console.log(nameFile, '75');
+        
+    switch (true) {
+      case nameFile.endsWith('.png'):
+        nameFile2 = `products/image-${nameFile}.png`
+        break;
+        case nameFile.endsWith('.jpg'):
+        nameFile2 = `products/image-${nameFile}.jpg`
+        break;
+        case nameFile.endsWith('.jpeg'):
+        nameFile2 = `products/image-${nameFile}.jpeg`
+        break;
+    
+      default:
+        nameFile2 = `products/image-${nameFile}.jpg`
+        break;
+    }
+        
+ 
+    
     formData.append('photo', photo);
     console.log(formData);
 
@@ -158,6 +179,8 @@ export const UpdateProductForm = ({urlBase}) => {
           <ParrafoInput titulo="Codigo" parrafo={id_product}></ParrafoInput>
           <ParrafoInput titulo="Proveedor" parrafo={product.supplier}></ParrafoInput>
           <ParrafoInput titulo="Creado" parrafo={product.created}></ParrafoInput>
+
+          <img src="https://caja-for-many-products-dennis.s3.sa-east-1.amazonaws.com/LicuadoraOSTER700watt3VEL.jpeg" alt="" srcset="" />
 
         <button type="submit">Upload</button>
 
