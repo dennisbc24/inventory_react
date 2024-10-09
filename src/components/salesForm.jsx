@@ -4,7 +4,6 @@ import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import { TableGet } from "./table.jsx";
-
 import { SalesService } from "../services/sales.js";
 const saleService = new SalesService()
 
@@ -25,17 +24,14 @@ export const SelesForm = ({urlBase}) => {
   const [show, setShow] = useState(false)
   const [showSales, SetShowSales] = useState(true)
   const [textButton, SetTextButton] = useState('Guardar')
- const [allProducts, setAllProducts] = useState([]);
-
- 
+  const [allProducts, setAllProducts] = useState([]);
 
       useEffect(() => {
       // Simula la carga de todos los productos al inicio
       const fetchAllProducts = async () => {
         try {
           const response = await axios.get(
-            `${urlBase}/api/v1/products`
-          );
+            `${urlBase}/api/v1/products`);
           setAllProducts(response.data);
           console.log("fetch listo");
         } catch (error) { 
@@ -144,6 +140,11 @@ export const SelesForm = ({urlBase}) => {
         <ParrafoInput titulo="Costo" parrafo={cost}></ParrafoInput>
         <ParrafoInput titulo="Ganancia" parrafo={revenue}></ParrafoInput>
         <ParrafoInput titulo="Creado" parrafo={product.created}></ParrafoInput>
+        {/* <ParrafoInput titulo="urlLink" parrafo={product.url_image}></ParrafoInput> */}
+
+        
+        <img src={product.url_image}></img>
+        
       </div>
       
       <ButtonSave titulo={textButton} func={handleButton}/>

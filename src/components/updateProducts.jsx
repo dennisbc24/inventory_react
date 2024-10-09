@@ -70,58 +70,48 @@ export const UpdateProductForm = ({urlBase}) => {
     formData.append('wholesale_price', wholesale_price);
     formData.append('name', name);
     formData.append('nameFile', name.replaceAll(' ','+' ));
-    let nameFile2 = ''
-let nameFile = name.replaceAll(' ','+' )
-        console.log(nameFile, '75');
+
+
+//     let nameFile2 = ''
+// let nameFile = name.replaceAll(' ','+' )
         
-    switch (true) {
-      case nameFile.endsWith('.png'):
-        nameFile2 = `products/image-${nameFile}.png`
-        break;
-        case nameFile.endsWith('.jpg'):
-        nameFile2 = `products/image-${nameFile}.jpg`
-        break;
-        case nameFile.endsWith('.jpeg'):
-        nameFile2 = `products/image-${nameFile}.jpeg`
-        break;
+        
+//     switch (true) {
+//       case nameFile.endsWith('.png'):
+//         nameFile2 = `products/image-${nameFile}.png`
+//         break;
+//         case nameFile.endsWith('.jpg'):
+//         nameFile2 = `products/image-${nameFile}.jpg`
+//         break;
+//         case nameFile.endsWith('.jpeg'):
+//         nameFile2 = `products/image-${nameFile}.jpeg`
+//         break;
     
-      default:
-        nameFile2 = `products/image-${nameFile}.jpg`
-        break;
-    }
+//       default:
+//         nameFile2 = `products/image-${nameFile}.jpg`
+//         break;
+//     }
         
  
     
     formData.append('photo', photo);
-    console.log(formData);
 
+    console.log(formData);
+    
     try {
           
-      const urlPatch = `${urlBase}/api/v1/products/${id_product}`
+      const urlPatch = `http://localhost:3000/api/v1/products/${id_product}`
+      console.log(urlPatch);
+      
       const sendData = await axios.patch(urlPatch, formData)
       alert(sendData.data);
-      console.log(sendData);
-      
-      
       
     } catch (error) {
-      console.error("Error al obtener todos los productos:", error);
-    }
-
-
-    try {
-      //console.log(formData.getAll('photo'));
-      const response = await axios.post('http://localhost:3000/api/v1/products', formData, {
-        
-      });
-      console.log('Response:', response.data);
-    } catch (error) {
-      console.error('Error uploading the file:', error);
+      console.error("Error al hacer el patch:", error);
     }
   };
 
   const handleChange = (e) => {setQuery(e.target.value)}
-  
   const handleCost = (e) => setCost(parseFloat(e.target.value))
   const handleName = (e) => setName(e.target.value)
   const handleSuggestedPrice = (e) => setSugested_price(e.target.value)
@@ -179,8 +169,6 @@ let nameFile = name.replaceAll(' ','+' )
           <ParrafoInput titulo="Codigo" parrafo={id_product}></ParrafoInput>
           <ParrafoInput titulo="Proveedor" parrafo={product.supplier}></ParrafoInput>
           <ParrafoInput titulo="Creado" parrafo={product.created}></ParrafoInput>
-
-          <img src="https://caja-for-many-products-dennis.s3.sa-east-1.amazonaws.com/LicuadoraOSTER700watt3VEL.jpeg" alt="" srcset="" />
 
         <button type="submit">Upload</button>
 

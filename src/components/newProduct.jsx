@@ -1,68 +1,46 @@
-import {useState } from "react";
+import {useEffect, useState } from "react";
 import {  InputSimple, ButtonSave, ParrafoInput, SearchInput} from "./form/inputSearch";
 import "./salesForm.css";
 import axios from 'axios';
 import { TitleForm } from "./form/titleForm.jsx";
 import { TableGet } from "./table.jsx";
 import {ProductService} from "../services/product.js"
-import { UploadPhoto } from "./inputs/upload_img.jsx";
+//import { UploadPhoto } from "./inputs/upload_img.jsx";
 
 const service = new ProductService()
 
 export const NewProduct = ({urlBase}) => {
-  const [nameProduct, setNameProduct] = useState('');
-  const [costProduct, SetCostProduct] = useState(0);
-  const [pMayor, setPMayor] = useState(0);
-  const [PUnit, setPUnit] = useState(0);
+  const [name, setName] = useState('');
+  const [cost, setCost] = useState(0);
+  const [lowest_price, setLowest_price] = useState(0);
+  const [list_price, setList_price] = useState(0);
   const [proveedor, setProveedor] = useState([{name:'',id_supplier:0}]);
 
   const [photo, setPhoto] = useState(null);
-  const [data, setData] = useState({
-    name: '',
-    cost: '',
-    lowest_price: '',
-    list_price: '',
-    fk_supplier: proveedor.id_supplier
-  });
+ 
+  const handleName = ({ target: { value } }) => { setName(value)};
+  const handleCost = ({ target: { value } }) => { setCost(parseInt(value))};
+  const handlePUnit = ({ target: { value } }) => { setList_price(parseInt(value))};
+  const handlePMayor = ({ target: { value } }) => { setLowest_price(parseInt(value))};
 
-  /* const handleName = ({ target: { value } }) => { setNameProduct(value)};
-  const handleCost = ({ target: { value } }) => { SetCostProduct(parseInt(value))};
-  const handlePUnit = (e) => {setPUnit(e.target.value)}
-  const handlePMayor = (e) =>{setPMayor(e.target.value)} */
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setData({
-      ...data,
-      [name]: value
-    });
-  };
   const handleInputFileChange = (e) => {
     setPhoto(e.target.files[0]);
   };
-  const handleInputNumberChange = (e) => {
-    const { name, value } = e.target;
-    setData({
-      ...data,
-      [name]: parseInt(value)
-    });
-  };
+ 
   const handleSubmit2 = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     // console.log(photo);
     // formData.append('photo', photo);
-    console.log(data);
-    formData.append('name', data.name);
-    formData.append('cost', data.cost);
-    formData.append('unit', data.unit);
-    formData.append('total', data.total);
-    formData.append('fk_supplier', data.fk_supplier);
+    
+    formData.append('name', name);
+    formData.append('cost', cost);
+    formData.append('unit', list_price);
+    formData.append('total', lowest_price);
+    formData.append('fk_supplier', proveedor.id_supplier);
     formData.append('photo', photo);
 
-    
-
-    console.log(formData);
 
     try {
       //console.log(formData.getAll('photo'));
@@ -75,21 +53,16 @@ export const NewProduct = ({urlBase}) => {
 
 
 
-  const handleButton = async () => {
-    const body = {proveedor,nameProduct,costProduct,PUnit,pMayor}
-    const petition =  service.create(urlBase, body)
-   }
-
   return (
     <>
     <form onSubmit={handleSubmit2} encType='multipart/form-data'>
     <SearchInput urlApi={`${urlBase}/api/v1/suppliers`} funcSet={setProveedor} place="Buscar Proveedor"/>
        
-      <InputSimple titulo="Nombre" tipo="text" func={handleInputChange} nombre='name' callToAction="Escribe un nombre único"></InputSimple>
-      <InputSimple titulo="Costo S/." tipo="number" func={handleInputNumberChange} nombre='cost'></InputSimple>
-      <InputSimple titulo="P. Unit S/." tipo="number" func={handleInputNumberChange} nombre='unit'></InputSimple>
+      <InputSimple titulo="Nombre" tipo="text" func={handleName} nombre='name' callToAction="Escribe un nombre único"></InputSimple>
+      <InputSimple titulo="Costo S/." tipo="number" func={handleCost} nombre='cost'></InputSimple>
+      <InputSimple titulo="P. Unit S/." tipo="number" func={handlePUnit} nombre='unit'></InputSimple>
       <InputSimple titulo="Cargar Archivo" tipo="file" func={handleInputFileChange} nombre='photo'></InputSimple>
-      <InputSimple titulo="P. Mayor S/." tipo="number" func={handleInputNumberChange} nombre='total'></InputSimple>
+      <InputSimple titulo="P. Mayor S/." tipo="number" func={handlePMayor} nombre='total'></InputSimple>
       <ParrafoInput titulo={'Proveedor'} parrafo={proveedor.name}/>
       <button type="submit">Crear</button>
     </form>
