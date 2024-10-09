@@ -100,7 +100,7 @@ export const UpdateProductForm = ({urlBase}) => {
     
     try {
           
-      const urlPatch = `http://localhost:3000/api/v1/products/${id_product}`
+      const urlPatch = `${urlBase}/api/v1/products/${id_product}`
       console.log(urlPatch);
       
       const sendData = await axios.patch(urlPatch, formData)
