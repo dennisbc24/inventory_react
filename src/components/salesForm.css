@@ -24,3 +24,14 @@
 .suggestions_lu{
     background-color: var(--persian-blue-200);
 }
+
+.product_image{
+    width: 305px;
+    margin: 0;
+}
+.title_product{
+    text-transform: capitalize;
+    font-size: 20px;
+    margin: 2px;
+    
+}

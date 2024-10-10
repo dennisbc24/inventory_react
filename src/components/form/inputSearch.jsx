@@ -30,9 +30,9 @@ export function SelectSimple({children,titulo,func}) {
     )  
 }
 
-export function ParrafoInput({titulo, parrafo}) {
+export function ParrafoInput({titulo, parrafo, clase='parrafoForm'}) {
     return(
-        <div className='parrafoForm'>
+        <div className={clase}>
         <h3>{titulo}</h3>
         <p>{parrafo}</p>
         </div>

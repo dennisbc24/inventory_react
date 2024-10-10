@@ -114,7 +114,8 @@ export const SelesForm = ({urlBase}) => {
       </ul>
 
       <div className="divForm">
-        <ParrafoInput titulo="Producto" parrafo={product.name}></ParrafoInput>
+        <ParrafoInput clase='title_product' titulo={product.name}></ParrafoInput>
+        <img className="product_image" src={product.url_image}></img>
         <InputSimple titulo="Fecha" tipo="date" func={handleDate}></InputSimple>
         <SelectSimple titulo="Sucursal"func={handleIdBranch}>
           <option value="1">B17</option>
@@ -143,7 +144,7 @@ export const SelesForm = ({urlBase}) => {
         {/* <ParrafoInput titulo="urlLink" parrafo={product.url_image}></ParrafoInput> */}
 
         
-        <img src={product.url_image}></img>
+        
         
       </div>
       
