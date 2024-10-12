@@ -33,6 +33,7 @@ export const NewProduct = ({urlBase}) => {
     const formData = new FormData();
     // console.log(photo);
     // formData.append('photo', photo);
+    console.log(name,cost, list_price, lowest_price, proveedor.id_supplier, photo);
     
     formData.append('name', name);
     formData.append('cost', cost);
@@ -44,7 +45,10 @@ export const NewProduct = ({urlBase}) => {
 
     try {
       //console.log(formData.getAll('photo'));
-      const response = await axios.post('http://localhost:3000/api/v1/products', formData, {});
+      const urlPost = `${urlBase}/api/v1/products/`
+      console.log(urlPost);
+      
+      const response = await axios.post(urlPost, formData, {});
       console.log('Response:', response.data);
     } catch (error) {
       console.error('Error uploading the file:', error);
@@ -80,3 +84,4 @@ export const NewProduct = ({urlBase}) => {
     </>
   );
 };
+
