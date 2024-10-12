@@ -162,7 +162,7 @@ export const UpdateProductForm = ({urlBase}) => {
 {<>{show ? <form onSubmit={handleSubmit} encType='multipart/form-data'>
           <ParrafoInput titulo="Actualizado" parrafo={product.updated}></ParrafoInput>
         <InputSimple titulo='Nombre' tipo='text' valor={name} func={handleName} nombre='name'></InputSimple>
-        <InputSimple titulo='Costo' tipo='text' valor={cost} func={handleCost} nombre='cost'></InputSimple>
+        <InputSimple titulo='Costo' tipo='number' valor={cost} func={handleCost} nombre='cost'></InputSimple>
         <InputSimple titulo='Precio Sugerido' tipo='number' valor={sugested_price} func={handleSuggestedPrice} nombre='sugested_price'></InputSimple>
         <InputSimple titulo='Precio por mayor' tipo='number' valor={wholesale_price} func={handleWholeSalePrice} nombre='wholesale_price'></InputSimple>
         <InputSimple titulo="Subir Imagen" tipo="file" func={handleInputFileChange} nombre='image_product'></InputSimple>
