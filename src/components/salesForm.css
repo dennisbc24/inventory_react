@@ -28,6 +28,11 @@
 .product_image{
     width: 305px;
     margin: 0;
+    -webkit-box-shadow: 10px 10px 31px -4px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 31px -4px rgba(0,0,0,0.75);
+box-shadow: 10px 10px 31px -4px rgba(0,0,0,0.75);
+border-radius: 8px;
+
 }
 .title_product{
     text-transform: capitalize;
