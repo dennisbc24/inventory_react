@@ -1,11 +1,11 @@
 
 .parrafoForm, .selectSimple, .inputSimple{
     display: flex;
-    flex-direction: row;
-    gap: 10px;
-    align-items: baseline;
+    flex-direction:column;
+    align-items: center;
     height: 25px;
-    color: black;
+    color: white;
+    margin-bottom: 40px;
 }
 .only_select, .only_input{
     border-radius: 5px;

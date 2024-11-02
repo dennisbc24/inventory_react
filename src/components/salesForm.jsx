@@ -114,9 +114,14 @@ export const SelesForm = ({urlBase}) => {
       </ul>
 
       <div className="divForm">
-        <ParrafoInput clase='title_product' titulo={product.name}></ParrafoInput>
-        <img className="product_image" src={product.url_image}></img>
+        
+        <div className="inputs_form">
         <InputSimple titulo="Fecha" tipo="date" func={handleDate}></InputSimple>
+        
+        
+        </div>
+        <div className="inputs_form">
+        <InputSimple titulo="Sr(a)" tipo="text" func={changeCostumer} callToAction="Cliente"></InputSimple>
         <SelectSimple titulo="Sucursal"func={handleIdBranch}>
           <option value="1">B17</option>
           <option value="3">Departamento</option>
@@ -130,20 +135,30 @@ export const SelesForm = ({urlBase}) => {
           <option value="2">Luz</option>
           <option value="3">Miguel</option>
         </SelectSimple>
+        </div>
+        <div className="inputs_form">
+        <img className="product_image" src={product.url_image}></img>
 
-        <InputSimple titulo="Cantidad" tipo="number" func={handleCount} callToAction="Cuantos?"></InputSimple>
-        <ParrafoInput titulo="Precio Unitario" parrafo={PUnit}></ParrafoInput>
-        <InputSimple titulo="Total S/." tipo="number" func={handleTotal} callToAction="Total Venta"></InputSimple>
+        <InputSimple titulo="Cantidad" tipo="number" func={handleCount} callToAction="Cuantos?" widthInput='35px'></InputSimple>
 
-        <InputSimple titulo="Cliente" tipo="text" func={changeCostumer} callToAction="Cliente"></InputSimple>
+        <ParrafoInput clase='title_product' titulo='Descripción' parrafo={product.name}></ParrafoInput>
+
+        <ParrafoInput titulo="Precio Unitario" parrafo={`S/. ${PUnit}`}></ParrafoInput>
+        <InputSimple titulo="Total S/." tipo="number" func={handleTotal} callToAction="Total Venta" widthInput="50px"></InputSimple>
+
+        </div>
+        
+        <div>
         <ParrafoInput titulo="Actualizado" parrafo={product.updated}></ParrafoInput>
 
-        <ParrafoInput titulo="Costo" parrafo={cost}></ParrafoInput>
-        <ParrafoInput titulo="Ganancia" parrafo={revenue}></ParrafoInput>
-        <ParrafoInput titulo="Creado" parrafo={product.created}></ParrafoInput>
-        {/* <ParrafoInput titulo="urlLink" parrafo={product.url_image}></ParrafoInput> */}
+<ParrafoInput titulo="Costo" parrafo={cost}></ParrafoInput>
+<ParrafoInput titulo="Ganancia" parrafo={revenue}></ParrafoInput>
+<ParrafoInput titulo="Creado" parrafo={product.created}></ParrafoInput>
+{/* <ParrafoInput titulo="urlLink" parrafo={product.url_image}></ParrafoInput> */}
 
-        
+        </div>
+
+     
         
         
       </div>
