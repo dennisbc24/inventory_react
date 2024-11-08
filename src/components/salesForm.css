@@ -26,17 +26,17 @@
 }
 
 .product_image{
-    width: 305px;
+    width: 100px;
     margin: 0;
-    -webkit-box-shadow: 10px 10px 31px -4px rgba(0,0,0,0.75);
+    /* -webkit-box-shadow: 10px 10px 31px -4px rgba(0,0,0,0.75);
 -moz-box-shadow: 10px 10px 31px -4px rgba(0,0,0,0.75);
-box-shadow: 10px 10px 31px -4px rgba(0,0,0,0.75);
+box-shadow: 10px 10px 31px -4px rgba(0,0,0,0.75); */
 border-radius: 8px;
 
 }
 .title_product{
     text-transform: capitalize;
-    font-size: 20px;
+    /* font-size: 20px; */
     margin: 2px;
     
 }
@@ -45,4 +45,14 @@ border-radius: 8px;
     flex-wrap: wrap;
    
     gap: 10px;
+}
+tr{
+    background-color: white;
+}
+
+.selectedProductTable {
+    width: auto;
+    overflow-x: scroll;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
 }

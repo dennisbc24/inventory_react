@@ -114,11 +114,8 @@ export const SelesForm = ({urlBase}) => {
       </ul>
 
       <div className="divForm">
-        
         <div className="inputs_form">
         <InputSimple titulo="Fecha" tipo="date" func={handleDate}></InputSimple>
-        
-        
         </div>
         <div className="inputs_form">
         <InputSimple titulo="Sr(a)" tipo="text" func={changeCostumer} callToAction="Cliente"></InputSimple>
@@ -136,33 +133,42 @@ export const SelesForm = ({urlBase}) => {
           <option value="3">Miguel</option>
         </SelectSimple>
         </div>
-        <div className="inputs_form">
-        <img className="product_image" src={product.url_image}></img>
-
-        <InputSimple titulo="Cantidad" tipo="number" func={handleCount} callToAction="Cuantos?" widthInput='35px'></InputSimple>
-
-        <ParrafoInput clase='title_product' titulo='Descripción' parrafo={product.name}></ParrafoInput>
-
-        <ParrafoInput titulo="Precio Unitario" parrafo={`S/. ${PUnit}`}></ParrafoInput>
-        <InputSimple titulo="Total S/." tipo="number" func={handleTotal} callToAction="Total Venta" widthInput="50px"></InputSimple>
-
-        </div>
-        
-        <div>
-        <ParrafoInput titulo="Actualizado" parrafo={product.updated}></ParrafoInput>
-
-<ParrafoInput titulo="Costo" parrafo={cost}></ParrafoInput>
-<ParrafoInput titulo="Ganancia" parrafo={revenue}></ParrafoInput>
-<ParrafoInput titulo="Creado" parrafo={product.created}></ParrafoInput>
-{/* <ParrafoInput titulo="urlLink" parrafo={product.url_image}></ParrafoInput> */}
-
-        </div>
-
-     
-        
-        
+         
       </div>
-      
+      <div className="result">
+          <table className="infoTable">
+            <thead>
+              <tr>
+                <th>Foto</th>
+                
+                <th>Cant</th>
+                
+                <th>P.U.</th>
+                <th>P.T.</th>
+                <th>Articulo</th>
+                <th>Costo</th>
+                <th>Ganancia</th>
+                <th>Actualizado</th>
+                <th>Creado</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style={{'width':'105px'}}><img className="product_image" src={product.url_image} ></img></td>
+                <td ><input type="number" onChange={handleCount} style={{'width':'30px'}} /></td>
+                <td><p>{`S/.${(PUnit).toFixed(2)}`}</p></td>
+                <td ><input type="number" onChange={handleTotal} style={{'width':'30px'}}  /></td>
+                <td><p style={{'width':'35px'}}>{product.name} </p></td>
+                <td><p>{cost}</p></td>
+                <td><p>{revenue}</p></td>
+                <td><p>{(product.updated).slice(0,10)}</p></td>
+                <td><p>{(product.created.slice(0,10))}</p></td>
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
       <ButtonSave titulo={textButton} func={handleButton}/>
       <h3>Stock</h3>
       {<>{ show ? <TableGet url={`${urlBase}/api/v1/existence?product=${product.id_product}`}/> : <></>
