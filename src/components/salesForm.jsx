@@ -162,8 +162,8 @@ export const SelesForm = ({urlBase}) => {
                 <td><p style={{'width':'35px'}}>{product.name} </p></td>
                 <td><p>{cost}</p></td>
                 <td><p>{revenue}</p></td>
-                <td><p>{(product.updated).slice(0,10)}</p></td>
-                <td><p>{(product.created.slice(0,10))}</p></td>
+                <td><p>{(product.updated)}</p></td>
+                <td><p>{(product.created)}</p></td>
               </tr>
               
             </tbody>
