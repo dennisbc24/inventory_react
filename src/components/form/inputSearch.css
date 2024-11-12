@@ -36,3 +36,14 @@
     border-radius: 5px;
     margin-bottom: -40px;
 }
+
+.button_save{
+
+    background-color: var(--persian-blue-700);
+    color: var(--persian-blue-50);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    border: solid var(--persian-blue-700) 0.1px;
+    
+    padding: 7px;
+}

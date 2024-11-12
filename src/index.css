@@ -19,3 +19,10 @@ a {
 li{
     list-style: none;
 }
+
+.registrationDate:invalid {
+    background-color: #ff2222;
+}
+.only_input:invalid {
+    background-color: red;
+}

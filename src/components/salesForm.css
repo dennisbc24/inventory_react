@@ -6,20 +6,11 @@
 }
 
 .infoTable{
-    min-width: 1050px;
+    min-width: 700px;
 }
 
 
-.button_save{
 
-    background-color: var(--persian-blue-700);
-    color: var(--persian-blue-50);
-    border-radius: 0.5rem;
-    cursor: pointer;
-    border: solid var(--persian-blue-700) 0.1px;
-    
-    padding: 7px;
-}
 
 .suggestions_lu{
     background-color: var(--persian-blue-200);
@@ -43,16 +34,60 @@ border-radius: 8px;
 .inputs_form{
     display: flex;
     flex-wrap: wrap;
-   
     gap: 10px;
 }
 tr{
     background-color: white;
 }
 
+
+
 .selectedProductTable {
     width: auto;
     overflow-x: scroll;
     overscroll-behavior-x: contain;
     scroll-snap-type: x proximity;
+}
+
+.dataSell{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 7px;
+    align-items: center;
+    height: 30px;
+    margin: 9px 0
+}
+
+.dataSell input{
+    height: 23px;
+    border-radius: 5px;
+    border: 1px solid rgb(146, 134, 134);
+}
+
+
+.td_result{
+    text-align: center;
+}
+
+.td_description{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.td_modif{
+    text-align: center;
+  
+}
+
+.saveSell{
+    background-color: #40EA22;
+   
+    border-radius: 0.5rem;
+    cursor: pointer;
+    border: solid #40EA22;
+    
+    padding: 7px;
 }
