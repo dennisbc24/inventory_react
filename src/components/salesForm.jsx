@@ -80,6 +80,8 @@ export const SelesForm = ({urlBase}) => {
   useEffect(() => {
     const value = ((PUnit - cost) * count).toFixed(2)
     setRevenue(value)
+
+    // no funciona aun
     if (value < 0) {
       setTableColor('red')
     }
@@ -157,10 +159,26 @@ export const SelesForm = ({urlBase}) => {
 
 
   const handleButton = () => {
-    const body = {dateSell, count, total,PUnit, revenue, dataCustomer, product, idUser, idBranch}
-      const upload = saleService.register(urlBase, body)
-      SetShowSales(true)
-    };
+
+if (dateSell != '' && revenue > 0 &&  count > 0 && product.name != undefined) {
+  const body = {dateSell, count, total,PUnit, revenue, dataCustomer, product, idUser, idBranch}
+    const upload = saleService.register(urlBase, body)
+    SetShowSales(true)
+    alert('Felicidades...Venta Registrada!')
+} else {
+   if (dateSell ==='') {
+     alert('No hay una fecha seleccionada!')
+   }
+  if (revenue < 0) {
+    alert('Esta venta es a perdida, por lo cual no se puede registrar!')
+  }if (count < 0) {
+    alert('Cantidad debe ser mayor que cero')
+  }if (product.name === undefined) {
+    alert('la selección del producto es incorrecta')
+  }
+  
+}
+};
 
   return (
     <>

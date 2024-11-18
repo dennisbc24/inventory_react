@@ -4,7 +4,7 @@ import axios from "axios";
 import "./salesForm.css";
 import { TitleForm} from "./form/titleForm.jsx";
 import { TableGet } from "./table.jsx";
-
+import noImagen from "./img/no_imagen.png";
 export const EntriesForm = ({urlBase}) => {
   const urlEntries = `${urlBase}/api/v1/entries`;
 const urlSuppliers = `${urlBase}/api/v1/suppliers`;
@@ -126,6 +126,8 @@ const handleButton = () => {
           <option value="5">Los Nogales</option>
           <option value="6">Los Incas</option>
         </SelectSimple>
+        <img className="product_image" src={product.url_image ? product.url_image : noImagen} ></img>
+
         <SelectSimple titulo="Usuario" func={handleIdUser}>
           <option value="1">Dennis</option>
           <option value="2">Luz</option>

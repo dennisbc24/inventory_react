@@ -3,7 +3,7 @@ import {  InputSimple,  ParrafoInput, ButtonSave} from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
-
+import noImagen from "./img/no_imagen.png";
 export const UpdateProductForm = ({urlBase}) => {
   const [query, setQuery] = useState("");
   const [allProducts, setAllProducts] = useState([]); // Array con todos los productos
@@ -161,7 +161,10 @@ export const UpdateProductForm = ({urlBase}) => {
       </ul>
 {<>{show ? <form onSubmit={handleSubmit} encType='multipart/form-data'>
           <ParrafoInput titulo="Actualizado" parrafo={product.updated}></ParrafoInput>
+          <img className="product_image" src={product.url_image ? product.url_image : noImagen} ></img>
+
         <InputSimple titulo='Nombre' tipo='text' valor={name} func={handleName} nombre='name'></InputSimple>
+        
         <InputSimple titulo='Costo' tipo='number' valor={cost} func={handleCost} nombre='cost'></InputSimple>
         <InputSimple titulo='Precio Sugerido' tipo='number' valor={sugested_price} func={handleSuggestedPrice} nombre='sugested_price'></InputSimple>
         <InputSimple titulo='Precio por mayor' tipo='number' valor={wholesale_price} func={handleWholeSalePrice} nombre='wholesale_price'></InputSimple>

@@ -121,6 +121,7 @@ export const UpdateExistenceCount = ({urlBase}) => {
      <TableGet url={`${urlBase}/api/v1/existence?product=${product.id_product}`}/> : <></>
     
 <ParrafoInput titulo="Nombre" parrafo={name}></ParrafoInput>
+
 <ParrafoInput titulo="Codigo" parrafo={id_product}></ParrafoInput>
         <SelectSimple titulo="Sucursal" func={handleIdBranch}>
           <option value="1">B17</option>
@@ -130,7 +131,8 @@ export const UpdateExistenceCount = ({urlBase}) => {
           <option value="5">Los Nogales</option>
           <option value="6">Los Incas</option>
         </SelectSimple>
-       
+        <img className="product_image" src={product.url_image ? product.url_image : noImagen} ></img>
+
         <InputSimple titulo='Cantidad' func={handleCount}/>
         <ParrafoInput titulo="Costo" parrafo={cost}></ParrafoInput>
         <ParrafoInput titulo="Creado" parrafo={product.created}></ParrafoInput>
@@ -138,7 +140,7 @@ export const UpdateExistenceCount = ({urlBase}) => {
       </div> : <></>
       }</>}
       
-      <PopUpWindow text={'ventana emergente'}></PopUpWindow>
+      {/* <PopUpWindow text={'ventana emergente'}></PopUpWindow> */}
       <ButtonSave titulo={"Actualizar"} func={handleButton}/>
       
       

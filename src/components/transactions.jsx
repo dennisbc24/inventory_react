@@ -4,7 +4,7 @@ import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import { TableGet } from "./table.jsx";
-
+import noImagen from "./img/no_imagen.png";
 export const TransactionsForm = ({urlBase}) => {
   const urlTransactions = `${urlBase}/api/v1/transactions`;
   const [query, setQuery] = useState("");
@@ -123,6 +123,7 @@ export const TransactionsForm = ({urlBase}) => {
       <div className="divForm">
         <ParrafoInput titulo="Producto" parrafo={product.name}></ParrafoInput>
         <InputSimple titulo="Fecha" tipo="date" func={handleDate}></InputSimple>
+        <img className="product_image" src={product.url_image ? product.url_image : noImagen} ></img>
         <SelectSimple titulo="Origen"func={handleIdBranchA}>
           <option value="1">B17</option>
           <option value="3">Departamento</option>
