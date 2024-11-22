@@ -50,6 +50,7 @@ export const NewProduct = ({urlBase}) => {
       
       const response = await axios.post(urlPost, formData, {});
       console.log('Response:', response.data);
+      alert(`Producto con el nomnbre ${name} ha sido creado`)
     } catch (error) {
       console.error('Error uploading the file:', error);
     }

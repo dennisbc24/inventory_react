@@ -94,7 +94,7 @@ const handleButton = () => {
         })
         
         console.log('guardado');
-        
+        alert('Ingreso de mercaderia registrado')
       } catch (error) {
         console.error("Error al guardar Entry :", error);
       }

@@ -32,7 +32,7 @@ export const SendExpense = ({urlBase}) => {
       })
 
       console.log('exito');
-      
+      alert('Gasto registrado con éxito')
     } catch (error) {
       console.error("Error de solicitud:", error);
     }

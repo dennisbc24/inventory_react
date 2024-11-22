@@ -2,9 +2,13 @@ import  { useState, useEffect } from "react";
 import {  InputSimple,  SelectSimple,  ParrafoInput, ButtonSave} from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
+import "./css/transactions.css";
+
 import { TitleForm } from "./form/titleForm.jsx";
 import { TableGet } from "./table.jsx";
 import noImagen from "./img/no_imagen.png";
+import entregaImagen from "./icons/entrega.png";
+
 export const TransactionsForm = ({urlBase}) => {
   const urlTransactions = `${urlBase}/api/v1/transactions`;
   const [query, setQuery] = useState("");
@@ -98,6 +102,7 @@ export const TransactionsForm = ({urlBase}) => {
 
        
         console.log('guardado con exito');
+        alert('Traslado registrado con exito')
         
       } catch (error) {
         console.error("Error al hacer petición:", error);
@@ -112,19 +117,31 @@ export const TransactionsForm = ({urlBase}) => {
   return (
     <>
     <TitleForm text='Traslado de Mercaderia'></TitleForm>
-      <input type="text"  value={query} onChange={handleChange} placeholder="Buscar..." />
+      
+
+      <div className="divForm">
+      <input type="text"  value={query} onChange={handleChange} placeholder="Buscar producto..." />
       <ul className="suggestions_lu">   {suggestions.map((suggestion, index) => (
           <li key={index} onClick={handleClick}>
             {suggestion}
          </li>
         ))}
       </ul>
-
-      <div className="divForm">
-        <ParrafoInput titulo="Producto" parrafo={product.name}></ParrafoInput>
-        <InputSimple titulo="Fecha" tipo="date" func={handleDate}></InputSimple>
+        <p>{product.name}</p>
+        <input type="date" name="fecha"  onChange={handleDate}  />
+        
         <img className="product_image" src={product.url_image ? product.url_image : noImagen} ></img>
-        <SelectSimple titulo="Origen"func={handleIdBranchA}>
+        <div className="small_box_transaction">
+        <SelectSimple titulo="Desde"func={handleIdBranchA}>
+          <option value="1">B17</option>
+          <option value="3">Departamento</option>
+          <option value="7">Tambopata</option>
+          <option value="4" selected>Deposito</option>
+          <option value="5">Los Nogales</option>
+          <option value="6">Los Incas</option>
+        </SelectSimple>
+        <img src={entregaImagen} alt="delivery car image" />
+        <SelectSimple titulo="Hacia"func={handleIdBranchB}>
           <option value="1">B17</option>
           <option value="3">Departamento</option>
           <option value="7">Tambopata</option>
@@ -132,21 +149,17 @@ export const TransactionsForm = ({urlBase}) => {
           <option value="5">Los Nogales</option>
           <option value="6">Los Incas</option>
         </SelectSimple>
-        <SelectSimple titulo="Destino"func={handleIdBranchB}>
-          <option value="1">B17</option>
-          <option value="3">Departamento</option>
-          <option value="7">Tambopata</option>
-          <option value="4">Deposito</option>
-          <option value="5">Los Nogales</option>
-          <option value="6">Los Incas</option>
-        </SelectSimple>
+        </div>
+        <div className="small_box_transaction">
         <SelectSimple titulo="Usuario" func={handleIdUser}>
           <option value="1">Dennis</option>
           <option value="2">Luz</option>
           <option value="3">Miguel</option>
         </SelectSimple>
 
-        <InputSimple titulo="Cantidad"  tipo="number" func={handleCount} callToAction="Cuantos?"></InputSimple>
+        <InputSimple titulo="Cantidad"  tipo="number" func={handleCount} callToAction="Cuantos?" widthInput="70px"></InputSimple>
+        
+        </div>
         
       </div>
       <ButtonSave titulo={"Guardar"} func={handleButton}/>

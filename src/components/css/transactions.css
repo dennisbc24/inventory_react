@@ -1,0 +1,6 @@
+.small_box_transaction{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    min-width: 350px;
+}
