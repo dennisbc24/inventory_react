@@ -4,6 +4,8 @@ import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import { TableGet } from "./table.jsx";
+import noImagen from "./img/no_imagen.png";
+
 import { PopUpWindow } from "./form/popupwindow.jsx";
 
 export const UpdateExistenceCount = ({urlBase}) => {

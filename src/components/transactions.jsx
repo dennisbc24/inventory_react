@@ -136,7 +136,7 @@ export const TransactionsForm = ({urlBase}) => {
           <option value="1">B17</option>
           <option value="3">Departamento</option>
           <option value="7">Tambopata</option>
-          <option value="4" selected>Deposito</option>
+          <option value="4">Deposito</option>
           <option value="5">Los Nogales</option>
           <option value="6">Los Incas</option>
         </SelectSimple>
