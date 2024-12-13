@@ -1,5 +1,4 @@
 :root{
-	
 	--color-third: white;
 	--color-fourth: #484C4D;
 	--dark-text: white;
@@ -14,13 +13,9 @@
   --persian-blue-700: #284bd7;
   --persian-blue-800: #253ca8;
   --persian-blue-900: #233785;
-  --persian-blue-950: #1a2451;
-  
+  --persian-blue-950: #1a2451;  
 }
 
-h3{
-  color: white;
-}
 
 .divForm{
   display: flex;

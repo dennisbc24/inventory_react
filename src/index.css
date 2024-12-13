@@ -8,7 +8,7 @@ html {
 
 body{
     margin: 0;
-    background-color: var(--persian-blue-600);
+    /* background-color: var(--persian-blue-600); */
 }
 
 a {
@@ -20,9 +20,3 @@ li{
     list-style: none;
 }
 
-.registrationDate:invalid {
-    background-color: #ff2222;
-}
-.only_input:invalid {
-    background-color: red;
-}
