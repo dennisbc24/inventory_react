@@ -104,9 +104,9 @@ export const SelesForm = ({ urlBase }) => {
   const handleChange = (e) => { setQuery(e.target.value), setShow(false), SetShowSales(false) }
   const handleDate = (e) => { setDateSell(e.target.value) }
 
-  // const handleIdUser = (e) => {
-  //   const value = parseInt(e.target.value)
-  //   setIdUser(value)
+   const handleIdUser = (e) => {
+     const value = parseInt(e.target.value)
+    setIdUser(value)
   //   if (value === 1) {
   //     SetSelectColorUser('green')
   //   }
@@ -116,11 +116,11 @@ export const SelesForm = ({ urlBase }) => {
   //   if (value === 3) {
   //     SetSelectColorUser('yellow')
   //   }
-  // }
+   }
 
-  // const handleIdBranch = (e) => {
-  //   const value = parseInt(e.target.value)
-  //   setIdBranch(value)
+  const handleIdBranch = (e) => {
+     const value = parseInt(e.target.value)
+     setIdBranch(value)
   //   if (value === 1) {
   //     SetSelectColorBranch('#009688')
   //   }
@@ -139,7 +139,7 @@ export const SelesForm = ({ urlBase }) => {
   //   if (value === 6) {
   //     SetSelectColorBranch('#c061d1')
   //   }
-  // }
+   }
 
 
   const changeCostumer = (e) => { setDataCustomer(e.target.value) }
@@ -232,7 +232,7 @@ export const SelesForm = ({ urlBase }) => {
           </div>
       <div className="selectSimple">
             <h3>Usuario</h3>
-            <select  name="listSelect" className='only_select'>
+            <select  name="listSelect" className='only_select' onChange={handleIdUser}>
               <option value="1">Dennis</option>
               <option value="2">Luz</option>
               <option value="3">Miguel</option>
@@ -240,7 +240,7 @@ export const SelesForm = ({ urlBase }) => {
           </div>     
           <div className="selectSimple">
             <h3>Sucursal</h3>
-            <select  name="listSelect"  className='only_select'>
+            <select  name="listSelect"  className='only_select' onChange={handleIdBranch}>
               <option value="1">B17</option>
               <option value="3">Departamento</option>
               <option value="4">Deposito</option>

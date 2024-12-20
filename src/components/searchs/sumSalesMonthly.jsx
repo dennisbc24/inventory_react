@@ -2,7 +2,7 @@ import "../salesForm.css";
 import { TitleForm } from "../form/titleForm.jsx";
 import {  ButtonSave, InputSimple, SearchInput} from "../form/inputSearch";
 import { useEffect, useState } from "react";
-import { TableGet, TableGet2 } from "../table.jsx";
+import { TableGet2 } from "../table.jsx";
 import { SalesService } from "../../services/sales.js";
 const saleService = new SalesService()
 

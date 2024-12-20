@@ -77,4 +77,18 @@ export class InventoryService {
 
     return { sortArray };
   }
+
+  async registerTransaction(urlBase, {branchA,branchB,count,idUser,dateTrans,id_product}){
+    const urlTransactions = `${urlBase}/api/v1/transactions`;
+
+
+    const sendData = await axios.post(urlTransactions,{
+      pointA: branchA,
+      pointB: branchB,
+      amount: count,
+      fk_user:idUser,
+      date: dateTrans,
+      fk_product: id_product
+  })
+  }
 }

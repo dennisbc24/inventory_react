@@ -3,7 +3,8 @@ import {  InputSimple,  SelectSimple,  ParrafoInput, ButtonSave} from "./form/in
 import axios from "axios";
 import "./salesForm.css";
 import "./css/transactions.css";
-
+import { InventoryService } from "../services/inventory.js";
+const inventoryService = new InventoryService()
 import { TitleForm } from "./form/titleForm.jsx";
 import { TableGet } from "./table.jsx";
 import noImagen from "./img/no_imagen.png";
@@ -16,8 +17,7 @@ export const TransactionsForm = ({urlBase}) => {
   const [suggestions, setSuggestions] = useState([]);
   const [product, setProduct] = useState([]);
   const [count, setCount] = useState(0);
-  const [idUser, setIdUser] = useState(1);
-
+  const [idUser, setIdUser] = useState(27);
   const [dateTrans, setDateTrans] = useState('');
   const [branchA, setBranchA] = useState(1);
   const [branchB, setBranchB] = useState(1);
@@ -87,30 +87,29 @@ export const TransactionsForm = ({urlBase}) => {
 
 
   const handleButton = () => {
-          
-    const sendVending = async () => {
-      try {
+    if (dateTrans != '' && branchA !== branchB && count > 0 && product.id_product != undefined ){
+      const sendVending = async () => {
+        const id_product = product.id_product
+        const makeTransaction = inventoryService.registerTransaction(urlBase,{branchA,branchB,count,idUser,dateTrans,id_product})
+          alert('Traslado registrado con exito') 
+      };
+   
+      sendVending()
+      setShow(true)
 
-        const sendData = await axios.post(urlTransactions,{
-            pointA: branchA,
-            pointB: branchB,
-            amount: count,
-            fk_user:idUser,
-            date: dateTrans,
-            fk_product: product.id_product
-        })
+    } else {
+if (dateTrans == '' ) {
+  alert('Debes seleccionar una fecha')
+}if (branchA === branchB) {
+  alert('El origen y el destino es el mismo')
+}if (count < 1) {
+  alert('la cantidad es menor de 1')
+}if (product.id_product === undefined) {
+  alert('selecciona un producto')
+}
+    }
 
-       
-        console.log('guardado con exito');
-        alert('Traslado registrado con exito')
-        
-      } catch (error) {
-        console.error("Error al hacer petición:", error);
-      }
-    };
- 
-    sendVending()
-    setShow(true)
+    
     
     
   };

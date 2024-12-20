@@ -55,6 +55,15 @@ export class SalesService {
         console.error(error);
       }
     }
+    async getByProduct(urlBase, id_product) {
+      const urlApi = `${urlBase}/api/v1/ventas/saleByProduct?fk_id_product=${id_product}`
+      try {
+        const response = await axios.get(urlApi)
+        return response.data
+      } catch (error) {
+        console.error(error);
+      }
+    }
 
 }
 
