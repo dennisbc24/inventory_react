@@ -133,3 +133,16 @@ font-size: smaller;
 h3{
     font-size: smaller;
 }
+.search_sale_select{
+    border-radius: 5px;
+    
+}
+.search_sale_select{
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+}
+.search_sale_select select{
+    border-radius: 5px;
+    height: 20px;
+}

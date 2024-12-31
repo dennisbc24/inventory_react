@@ -2,7 +2,7 @@ import  { useState, useEffect } from "react";
 import {  ButtonSave, InputSimple, SearchInput} from "./form/inputSearch";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
-import {  TableGet2 } from "./table.jsx";
+import {  TableGet2, TableGet } from "./table.jsx";
 
 import { SalesService } from "../services/sales.js";
 const saleService = new SalesService()
@@ -33,7 +33,6 @@ const SearchByProduct=({urlBase})=>{
   
     return (
       <>
-      <TitleForm text='Buscar Ventas'></TitleForm>
       <p>{product.name}</p>
       <div className="divForm">
       <SearchInput urlApi={`${urlBase}/api/v1/products`} funcSet={setProduct} place="Buscar Producto"/>
@@ -80,11 +79,14 @@ return(
 
 
 <>
-    <TitleForm text='Buscar Ventas Por:'></TitleForm>
-    <select onChange={handleOption}>
+<div className="search_sale_select">
+<TitleForm text='Buscar Ventas Por:'></TitleForm>
+    <select onChange={handleOption} >
       <option value="1">Fecha</option>
       <option value="2">Producto</option>
     </select>
+</div>
+    
     {option === 1 && <SearchByDate url={urlBase} />}
     {option === 2 && <SearchByProduct urlBase={urlBase}/>}
 

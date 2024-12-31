@@ -17,7 +17,7 @@ export const TransactionsForm = ({urlBase}) => {
   const [suggestions, setSuggestions] = useState([]);
   const [product, setProduct] = useState([]);
   const [count, setCount] = useState(0);
-  const [idUser, setIdUser] = useState(27);
+  const [idUser, setIdUser] = useState(1);
   const [dateTrans, setDateTrans] = useState('');
   const [branchA, setBranchA] = useState(1);
   const [branchB, setBranchB] = useState(1);
@@ -70,7 +70,7 @@ export const TransactionsForm = ({urlBase}) => {
   const handleCount = ({ target: { value } }) => { setCount(parseInt(value))};
   const handleChange = (e) => {setQuery(e.target.value), setShow(false), setShowStock(false)}
   const handleDate = (e) =>{setDateTrans(e.target.value)}
-  const handleIdUser = (e) =>{  setIdUser(e.target.value)}
+  const handleIdUser = (e) =>{  setIdUser(parseInt(e.target.value))}
   const handleIdBranchA = (e) =>{  setBranchA(parseInt(e.target.value))}
   const handleIdBranchB = (e) =>{  setBranchB(parseInt(e.target.value))}
   const handleClick = (event) => { 

@@ -6,7 +6,9 @@ import { ButtonSave} from "./form/inputSearch";
 
 import {SelesForm} from "./salesForm.jsx";
 import {NewProduct} from "./newProduct.jsx";
+import {Box} from "./box.jsx";
 import {SendExpense} from "./spending.jsx";
+
 import {EntriesForm} from "./entries.jsx";
 import {SearchSale} from "./searchSale.jsx";
 import {DeleteSale} from "./deleteSale.jsx";
@@ -21,9 +23,7 @@ import {Login} from "./login.jsx";
 import {ProtectedRoute} from './ProtectedRoute.jsx'
 import {Monthly} from './searchs/sumSalesMonthly.jsx'
 
-
 import "./theme.css";
-
 
 import { TableGet } from './table.jsx';
 
@@ -68,6 +68,8 @@ useEffect(()=>{
             <Route path='/newProduct' element={<NewProduct urlBase={home}/>}/>
             <Route path='/deleteSale' element={<DeleteSale urlBase={home}/>}/>
             <Route path='/expense' element={<SendExpense urlBase={home}/>}/>
+            <Route path='/box' element={<Box urlBase={home}/>}/>
+
             <Route path='/putSale' element={<SelesForm urlBase={home}/>}/>
             <Route path='/entries' element={<EntriesForm urlBase={home}/>}/>
             <Route path='/searchSales' element={<SearchSale urlBase={home}/>}/>

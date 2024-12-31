@@ -107,6 +107,7 @@ export function Menu() {
       <Pestana titulo='Otros'>
          <EnlaceLi name='Registrar' link='/expense'/>
          <EnlaceLi name='Buscar Gasto' link='/searchSpends'/>
+         <EnlaceLi name='Caja' link='/box'/>
          {/* <EnlaceLi name='Resumen'/> */}
          {/* <EnlaceLi name='Buscar Resumen' link='/summaries'/> */}
       </Pestana>
