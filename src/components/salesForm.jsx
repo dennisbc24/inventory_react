@@ -107,38 +107,13 @@ export const SelesForm = ({ urlBase }) => {
    const handleIdUser = (e) => {
      const value = parseInt(e.target.value)
     setIdUser(value)
-  //   if (value === 1) {
-  //     SetSelectColorUser('green')
-  //   }
-  //   if (value === 2) {
-  //     SetSelectColorUser('orangered')
-  //   }
-  //   if (value === 3) {
-  //     SetSelectColorUser('yellow')
-  //   }
+
    }
 
   const handleIdBranch = (e) => {
      const value = parseInt(e.target.value)
      setIdBranch(value)
-  //   if (value === 1) {
-  //     SetSelectColorBranch('#009688')
-  //   }
-  //   if (value === 3) {
-  //     SetSelectColorBranch('#ff9800')
-  //   }
-  //   if (value === 4) {
-  //     SetSelectColorBranch('#795548')
-  //   }
-  //   if (value === 7) {
-  //     SetSelectColorBranch('#673ab7')
-  //   }
-  //   if (value === 5) {
-  //     SetSelectColorBranch('#4d589a')
-  //   }
-  //   if (value === 6) {
-  //     SetSelectColorBranch('#c061d1')
-  //   }
+  
    }
 
 
@@ -193,17 +168,10 @@ export const SelesForm = ({ urlBase }) => {
 
       <div className="divForm">
         <div className="inputs_form">
-          
-
-
         </div>
         <div className="inputs_form">
-
-          
-          
-        </div>
-
       </div>
+  </div>
 
       <div className="descriptionSell">
       <div className="image_box">
@@ -267,59 +235,7 @@ export const SelesForm = ({ urlBase }) => {
         <p>Actualizado:</p>
         <p>{(product.updated ? (product.updated.slice(0, 10)) : product.updated)}</p>
         </div>  
-      {/* <div className="result">
-        <table className="infoTable" >
-          <thead>
-            <tr>
-              <th>Foto</th>
-              <th>Datos</th>
-              <th>Articulo</th>
-              <th>Resultado</th>
-              <th>F. Modif</th>
-
-            </tr>
-          </thead>
-          <tbody >
-            <tr style={{ backgroundColor: tableColor }}>
-              <td style={{ 'width': '105px' }}><img className="product_image" src={product.url_image ? product.url_image : noImagen} ></img></td>
-              <td style={{ 'width': '110px' }}>
-                <div className="dataSell">
-                  <h4>Cant</h4>
-                  <input type="number" onChange={handleCount} style={{ 'width': '45px' }} />
-                </div>
-                <div className="dataSell">
-                  <h4>P.U.</h4>
-                  <p>{`S/.${(PUnit).toFixed(2)}`}</p>
-                </div>
-                <div className="dataSell">
-                  <h4>P.T.</h4>
-                  <input type="number" onChange={handleTotal} style={{ 'width': '45px' }} />
-                </div>
-
-              </td>
-
-              <td className="td_description" style={{ 'width': '100px' }} >
-                <p style={{ 'width': '35px' }}>{product.name} </p>
-              </td>
-              <td className="td_result" style={{ 'width': '150px' }} >
-
-                <h4>Costo</h4>
-                <p>{`S/.${cost}`}</p>
-                <h4>Ganancia</h4>
-                <p>{`S/.${revenue}`}</p>
-              </td>
-
-              <td className="td_modif" style={{ 'width': '150px' }} >
-                <h4>Actualizado:</h4>
-                <p>{(product.updated ? (product.updated.slice(0, 10)) : product.updated)}</p>
-                <h4>Creado:</h4>
-                <p>{(product.created ? product.created.slice(0, 10) : product.created)}</p></td>
-
-            </tr>
-
-          </tbody>
-        </table>
-      </div> */}
+      
       <button onClick={handleButton} className="saveSell">Guardar</button>
 
       <h3>Stock</h3>
