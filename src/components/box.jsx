@@ -80,7 +80,23 @@ const MoneyTransactions = (urlBase) => {
 }
 
 const NewTransation = (urlBase) => {
-  
+  const [userA, setUserA] = useState(1)
+  const [userB, setUserB] = useState(1)
+ const urlPost = 'jkghk'
+  const handleCLic = async () => {
+    const saveTransaction = await axios.post(urlPost, {
+      userA,
+      userB
+    })
+  }
+  const handleUserA = (e) => {
+    const value = parseInt(e.target.value)
+    setUserA(value)
+  }
+  const handleUserB = (e) => {
+    const value = parseInt(e.target.value)
+    setUserB(value)
+  }
   return(
     <>
     <TitleForm text='Nueva Transferencia'></TitleForm>
@@ -90,19 +106,19 @@ const NewTransation = (urlBase) => {
 
     </div>
     <div>
-    <select >
+    <select onChange={handleUserA}>
       <option value="1">Dennis</option>
       <option value="2">Luz Marina</option>
       <option value="3">Miguel</option>
     </select>
-    <select>
+    <select onChange={handleUserB}>
       <option value="1">Dennis</option>
       <option value="2">Luz Marina</option>
       <option value="3">Miguel</option>
     </select>
     </div>
     
-    <button >Registrar</button>
+    <button onClick={handleCLic}>Registrar</button>
     </>
     
   )
@@ -202,8 +218,3 @@ export const Box = ({urlBase}) => {
         </>
       );
 }
-
-
-
-//http://localhost:3000/api/v1/ventas/lastSales?user=1
-//http://localhost:3000/api/v1/box/lastSpends?user=1
