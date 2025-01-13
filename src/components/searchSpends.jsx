@@ -32,7 +32,7 @@ const SpendsByUser = ({urlBase}) => {
 
 
     const newArray = dataSalesTemp.map(item => ({
-      concept: item.producto,
+      concept: `Venta: ${item.producto}`,
       date: item.date,
       amount: item.p_total
     }))
