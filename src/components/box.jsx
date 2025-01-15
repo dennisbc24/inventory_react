@@ -34,8 +34,8 @@ return(
   <>
   <TitleForm text='Deudas'></TitleForm>
   {show ?
-      
-        <table>
+      <>
+      <table>
         <thead>
             <tr>
                 <th>Importe</th>
@@ -64,7 +64,33 @@ return(
             </tr>
         </tfoot>
     </table>
-     
+          <div>
+            <div>
+              <h3>Elige el monto a pagar</h3>
+            <select>
+              {debtList.map(ele=>{return(
+                <option key={self.crypto.randomUUID()}>
+                  {ele.currency === 'dolar' ? `$${ele.debt}` :`S/.${ele.debt}`}
+                </option>
+              )})}
+            </select>
+            </div>
+            
+            <div>
+            <h3>usuario</h3>
+            <select>
+              <option value="1">Dennis</option>
+              <option value="2">Luz Marina</option>
+              <option value="3">Miguel Angel</option>
+
+            </select>
+            </div>
+            
+          </div>
+
+      </>
+        
+    
    : <></>}
   
   </>
@@ -79,15 +105,35 @@ const MoneyTransactions = (urlBase) => {
   )
 }
 
-const NewTransation = (urlBase) => {
+const PayDebt = (urlBase) => {
+  
+  return(
+    <>
+      <TitleForm text='Pagar una deuda'></TitleForm>
+      
+    </>
+    
+  )
+}
+
+const NewTransation = ({urlBase}) => {
   const [userA, setUserA] = useState(1)
   const [userB, setUserB] = useState(1)
- const urlPost = 'jkghk'
+  const [concept, setConcept] = useState(1)
+  const [amount, setAmount] = useState(1)
+
+ const urlPost = `${urlBase}/api/v1/box/newTrans`
+
   const handleCLic = async () => {
+    console.log(urlPost);
+    
     const saveTransaction = await axios.post(urlPost, {
       userA,
-      userB
+      userB,
+      concept:`TRD ${concept}`,
+      amount
     })
+    alert("Registro guardado con éxito!")
   }
   const handleUserA = (e) => {
     const value = parseInt(e.target.value)
@@ -97,25 +143,40 @@ const NewTransation = (urlBase) => {
     const value = parseInt(e.target.value)
     setUserB(value)
   }
+  const handleConcept = (e) => {
+    const value = e.target.value
+    setConcept(value)
+  }
+  const handleAmount = (e) => {
+    const value = e.target.value
+    setAmount(value)
+  }
   return(
     <>
     <TitleForm text='Nueva Transferencia'></TitleForm>
-    <input type="number" placeholder="Monto"/>
+    <input type="number" placeholder="Monto" onChange={handleAmount}/>
     <div>
-    <h3>Description</h3><input type="text" placeholder="Motivo"/>
+    <h3>Description</h3><input type="text" placeholder="Motivo" onChange={handleConcept}/>
 
     </div>
     <div>
-    <select onChange={handleUserA}>
+      <div>
+        <h3>De: </h3>
+      <select onChange={handleUserA}>
       <option value="1">Dennis</option>
       <option value="2">Luz Marina</option>
       <option value="3">Miguel</option>
     </select>
+      </div>
+    <div>
+      <h3>Hacia: </h3>
     <select onChange={handleUserB}>
       <option value="1">Dennis</option>
       <option value="2">Luz Marina</option>
       <option value="3">Miguel</option>
     </select>
+    </div>
+    
     </div>
     
     <button onClick={handleCLic}>Registrar</button>
@@ -125,23 +186,26 @@ const NewTransation = (urlBase) => {
 }
 
 
-
-
 const BoxByUser = ({urlBase}) => {
-const urlBox = `${urlBase}/api/v1/box/byUser?id=`
     const [box1, setBox1] = useState(0);
     const [box2, setBox2] = useState(0);
     const [box3, setBox3] = useState(0);
+    const urlToCash = `${urlBase}/api/v1/users/getCash?id=`
 
 useEffect(()=>{
 const fetchBox = async () => {
   try {
-    const response1 = await axios.get(`${urlBox}1`)
-    setBox1(response1.data.toFixed(2))
-    const response2 = await axios.get(`${urlBox}2`)
-    setBox2(response2.data.toFixed(2))
-    const response3 = await axios.get(`${urlBox}3`)
-    setBox3(response3.data.toFixed(2))
+    const requestCash = await axios.get(urlToCash)
+
+
+
+    const response1 = await axios.get(`${urlToCash}1`)
+    setBox1(response1.data[0].cash)
+    const response2 = await axios.get(`${urlToCash}2`)
+    setBox2(response2.data[0].cash)
+    const response3 = await axios.get(`${urlToCash}3`)
+    setBox3(response3.data[0].cash)
+    
   } catch (e) {
     console.error('Error al solicitar información',e);
     
@@ -168,7 +232,6 @@ const CreateDebt = ({urlBase}) => {
  const handleCLic = async ()=>{
     const body = { debt, expiration_date, description, currency, fk_user }
     const sendData = await boxService.register(urlBase, body)
-    console.log(sendData);
     
  }
  
@@ -206,6 +269,7 @@ export const Box = ({urlBase}) => {
         <option value="3">Nueva Deuda</option>
         <option value="4">Transferencias</option>
         <option value="5">Nueva Transacción</option>
+        <option value="6">Pagar Deuda</option>
 
       </select>
       {option === 1 && <BoxByUser urlBase={urlBase}/>}
@@ -213,6 +277,7 @@ export const Box = ({urlBase}) => {
       {option === 3 && <CreateDebt urlBase={urlBase}/>}
       {option === 4 && <MoneyTransactions urlBase={urlBase}/>}
       {option === 5 && <NewTransation urlBase={urlBase}/>}
+      {option === 6 && <PayDebt urlBase={urlBase}/>}
 
       
         </>

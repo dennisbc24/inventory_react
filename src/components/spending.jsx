@@ -10,14 +10,14 @@ export const SendExpense = ({urlBase}) => {
     const [concept, setConcept] = useState('');
     const [date, setDate] = useState('');
     const [amount, setAmount] = useState(0);
-    const [user, setUser] = useState('B17');
-    const [type, setType] = useState('false');
+    const [user, setUser] = useState(1);
+    const [type, setType] = useState('true');
 
 
     const handleConcept = ({ target: { value } }) => { setConcept(value)};
     const handleMount = ({ target: { value } }) => { setAmount(value)}
     const handleDate = ({ target: { value } }) => { setDate(value)}
-    const handleUser = ({ target: { value } }) => { setUser(value)}
+    const handleUser = ({ target: { value } }) => { setUser(parseInt(value))}
     const handleType = ({ target: { value } }) => { setType(value)}
 
     const handleButton = () => {
@@ -27,10 +27,10 @@ export const SendExpense = ({urlBase}) => {
         concept: concept,
         amount: parseInt(amount),
         date: date,
-        branch: user,
+        user: user,
         bill: type
       })
-
+      
       console.log('exito');
       alert('Gasto registrado con éxito')
     } catch (error) {
@@ -45,20 +45,21 @@ export const SendExpense = ({urlBase}) => {
 
     return (
         <>
-        <TitleForm text='Registrar Gasto'></TitleForm>
+        <TitleForm text='Salidas de dinero'></TitleForm>
           
           <div className="divForm">
-          <InputSimple titulo="Concepto" tipo="text" func={handleConcept} callToAction="Para qué fue?"></InputSimple>
           <InputSimple titulo="Monto" tipo="number" func={handleMount} callToAction="Cuánto fue?"></InputSimple>
+          <InputSimple titulo="Concepto" tipo="text" func={handleConcept} callToAction="Para qué fue?"></InputSimple>
           <InputSimple titulo="Fecha" tipo="date" func={handleDate}></InputSimple>
           <SelectSimple titulo="Usuario" func={handleUser}>
-              <option value="B17">B17</option>
-              <option value="luz">Luz Marina</option>
-              <option value="miguel">Miguel Ángel</option>
+              <option value="1">Dennis</option>
+              <option value="2">Luz Marina</option>
+              <option value="3">Miguel Ángel</option>
             </SelectSimple>
             <SelectSimple titulo="Tipo"func={handleType}>
-              <option value="false">Inversion</option>
-              <option value="true">Egreso</option>
+              <option value="true">Gasto</option>
+              <option value="false">Mercadería</option>
+              
             </SelectSimple>
           </div>
           <ButtonSave titulo={"Guardar"} func={handleButton}/>
