@@ -9,8 +9,46 @@ const boxService = new BoxService()
 export const Debs = ({urlBase})=>{
   const [debtList, setDebtList] = useState([])
   const [show, setShow] = useState(false)
-const urlBox = `${urlBase}/api/v1/box/debts`
+  const [amount, setAmount] = useState(0)
+  const [user, setUser] = useState(0)
+  const [idDebt, setIdDebt] = useState(0)
+  const [concept, setConcept] = useState('')
+  const [total, setTotal] = useState(0)
+  const [change, setChange] = useState('')
 
+const urlBox = `${urlBase}/api/v1/box/debts`
+const urlPayDebt = `${urlBase}/api/v1/box/payDebt`
+
+
+const handleCLic = async () => {
+  const body = {idDebt, user, total, concept }
+  const sendData = await axios.post(urlPayDebt, body)
+  alert("data sent")
+
+}
+
+const handleDebt = (e) => {
+  const value = e.target.value;
+  
+  debtList.forEach((elem) => {
+    if (elem.id_debts == value) {
+      setChange(elem.currency)
+      setAmount(elem.debt);
+      setIdDebt(elem.id_debts);
+      if(elem.currency==="sol"){
+        setTotal(elem.debt)
+        setConcept(elem.description);
+
+      }else{
+        setTotal(0)
+        setConcept(`${elem.description}: $${elem.debt}`);
+      }
+    }
+    
+  });
+
+
+}
 
 useEffect(()=>{
   const getDebts= async () => {
@@ -29,7 +67,17 @@ setShow(true)
   getDebts()
 
 },[])
+const handleUser = (e) => {
+const value = parseInt(e.target.value)
+setUser(value)
+}
 
+const handleChangeType = (e) => {
+const value = e.target.value
+const product = value * amount
+setTotal(product.toFixed(2))
+
+}
 return(
   <>
   <TitleForm text='Deudas'></TitleForm>
@@ -65,27 +113,48 @@ return(
         </tfoot>
     </table>
           <div>
-            <div>
-              <h3>Elige el monto a pagar</h3>
-            <select>
-              {debtList.map(ele=>{return(
-                <option key={self.crypto.randomUUID()}>
-                  {ele.currency === 'dolar' ? `$${ele.debt}` :`S/.${ele.debt}`}
-                </option>
-              )})}
-            </select>
-            </div>
-            
-            <div>
+          <div>
             <h3>usuario</h3>
-            <select>
+            <select onChange={handleUser} value={user} placeholder="">
+              <option value="">Seleccione una opción</option>
               <option value="1">Dennis</option>
               <option value="2">Luz Marina</option>
               <option value="3">Miguel Angel</option>
 
             </select>
             </div>
+            <div>
+              {
+                user!=0 ? <div>
+                <h3>Elige el monto a pagar</h3>
+              <select onChange={handleDebt}>
+              <option value="" >Seleccione una opción</option>
+                {debtList.map(ele=>{return(
+                  ele.paid === false ?                <option key={ele.id_debts} value={ele.id_debts}> {ele.currency === 'dolar' ? `$${ele.debt}` :`S/.${ele.debt}`}</option>
+                  :<></> 
+                )})}
+              </select>
+                </div> 
+                :
+                <></>
+              }
+              
+              
+            {change === 'dolar' ? <div>
+            <h3>Tipo de cambio: </h3>
+            <input type="number" onChange={handleChangeType}/>
+            </div> : <></> }
             
+              
+            </div>
+            <div>
+              
+              <h3>Total</h3>
+              <p>{`S/.${total}`}</p>
+            </div>
+
+            
+            <button onClick={handleCLic}>Pagar</button>
           </div>
 
       </>
@@ -196,9 +265,6 @@ useEffect(()=>{
 const fetchBox = async () => {
   try {
     const requestCash = await axios.get(urlToCash)
-
-
-
     const response1 = await axios.get(`${urlToCash}1`)
     setBox1(response1.data[0].cash)
     const response2 = await axios.get(`${urlToCash}2`)
@@ -226,14 +292,13 @@ const CreateDebt = ({urlBase}) => {
   const [debt, setDebt] = useState(1)
   const [expiration_date, setExpDate] = useState('')
   const [description, setDescrption] = useState('')
-  const [currency, setCurrency] = useState('')
+  const [currency, setCurrency] = useState('sol')
   const [fk_user, setFkUser] = useState(1)
 
  const handleCLic = async ()=>{
     const body = { debt, expiration_date, description, currency, fk_user }
     const sendData = await boxService.register(urlBase, body)
-    
- }
+}
  
 const handleDebt = ({ target: { value } }) => { setDebt(value) };
 const handleDate = ({ target: { value } }) => { setExpDate(value) };
