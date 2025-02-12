@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { SelectSimple, ButtonSave} from "./form/inputSearch";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
@@ -11,7 +11,7 @@ export const Inventory = ({urlBase}) => {
   const [branch2, setBranch2] = useState(4);
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
-  const [datos, setDatos] = useState();
+  const [datos, setDatos] = useState(undefined);
   const [review, setReview] = useState(1);
   const [baseCount, setBaseCount] = useState(0);
 
@@ -24,7 +24,18 @@ export const Inventory = ({urlBase}) => {
   const handleButton = () => {setShow(true), setShow2(false)}
   const handleReview = ({target: {value}}) => {setReview(parseInt(value)), setShow2(false), setShow(false)}
   
-
+  useEffect(()=>{
+    const getData = async () => {
+  try {
+    const data = await axios.get(`${urlBase}/api/v1/existence/inventary?branch=${branch}`)
+  setDatos(data.data)
+  setShow(true)
+  } catch (error) {
+    console.error(error);
+  }
+    }
+    getData()
+      },[])
 const handleTest = async () =>{
   const {sortArray} =  await service.CompareInventories({store:branch,deposit:branch2, urlBase, baseCount})
   setDatos(sortArray)
@@ -79,10 +90,14 @@ const handleTest = async () =>{
         )}
              
     </>
-        {<>{ show ? <TableGet url={`${urlBase}/api/v1/existence/inventary?branch=${branch}`} minWitdh="450px"/> : <></>
-    }</>}
-        {<>{ show2 ? <TableGet2 respJson={datos} minWitdh="450px"/> : <></>
-    }</>}
+    {<>{ show ? <TableGet url={`${urlBase}/api/v1/existence/inventary?branch=${branch}`} minWitdh="450px"/> : <></>}</>}
+    {/* {<> {show ? { datos.map( item => {
+          return (<div>
+              <p>{item.name}</p>
+            </div> );
+        })}
+      : <></>}</>} */}
+        {<>{ show2 ? <TableGet2 respJson={datos} minWitdh="450px"/> : <></>}</>}
     </>
     
   );

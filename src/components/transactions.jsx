@@ -127,10 +127,12 @@ if (dateTrans == '' ) {
         ))}
       </ul>
         <p>{product.name}</p>
-        <input type="date" name="fecha"  onChange={handleDate}  />
         
         <img className="product_image" src={product.url_image ? product.url_image : noImagen} ></img>
+        <input type="date" name="fecha"  onChange={handleDate}  />
+
         <div className="small_box_transaction">
+
         <SelectSimple titulo="Desde"func={handleIdBranchA}>
           <option value="1">B17</option>
           <option value="3">Departamento</option>

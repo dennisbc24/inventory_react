@@ -5,8 +5,10 @@ import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import { TableGet } from "./table.jsx";
 import { SalesService } from "../services/sales.js";
+import { PopUpWindow } from "../../src/components/form/popupwindow.jsx";
 import noImagen from "./img/no_imagen.png";
 const saleService = new SalesService()
+
 
 export const SelesForm = ({ urlBase }) => {
   const [query, setQuery] = useState("");
@@ -26,8 +28,6 @@ export const SelesForm = ({ urlBase }) => {
   const [showSales, SetShowSales] = useState(true)
   const [textButton, SetTextButton] = useState('Guardar')
   const [allProducts, setAllProducts] = useState([]);
- // const [selectColorUser, SetSelectColorUser] = useState('green');
- // const [selectColorBranch, SetSelectColorBranch] = useState('#009688');
   const [tableColor, setTableColor] = useState('white');
 
 
@@ -178,6 +178,7 @@ export const SelesForm = ({ urlBase }) => {
       <img className="product_image" src={product.url_image ? product.url_image : noImagen} ></img>
 
       </div>
+      <PopUpWindow text='Venta Registrada'></PopUpWindow>
       <div>
       
         <p>{product.name} </p>

@@ -167,10 +167,71 @@ return(
 )
 }
 
+
+const Formulario = () => {
+  const [formData, setFormData] = useState({ email: "" });
+  const [errors, setErrors] = useState({});
+
+  const handleChange1 = (e) => {
+    
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    
+  };
+
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.email.includes("@")) {
+      newErrors.email = "El correo debe ser válido.";
+    }    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+
+    e.preventDefault();
+    
+    console.log(Object.entries(errors));
+
+    if (validate()) {
+      alert("Formulario enviado con éxito");
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        {Object.keys(errors).length > 0 && (
+          <div style={{ color: "red" }}>
+            <ul>
+              {Object.entries(errors).map(([field, message], index) => (
+                <li key={index}>{message}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <label>Email:</label>
+        <input type="email" name="email" value={formData.email} onChange={handleChange1}/>
+        {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
+      </div>
+      <button type="submit">Enviar</button>
+    </form>
+  );
+};
+
+
 const MoneyTransactions = (urlBase) => {
   
   return(
+    <>
     <TitleForm text='Transferencias de dinero'></TitleForm>
+    <Formulario></Formulario>
+    </>
+    
+
+
+
+
   )
 }
 

@@ -69,7 +69,6 @@ useEffect(()=>{
             <Route path='/deleteSale' element={<DeleteSale urlBase={home}/>}/>
             <Route path='/expense' element={<SendExpense urlBase={home}/>}/>
             <Route path='/box' element={<Box urlBase={home}/>}/>
-
             <Route path='/putSale' element={<SelesForm urlBase={home}/>}/>
             <Route path='/entries' element={<EntriesForm urlBase={home}/>}/>
             <Route path='/searchSales' element={<SearchSale urlBase={home}/>}/>
@@ -82,7 +81,6 @@ useEffect(()=>{
             <Route path='/existenceCount' element={<UpdateExistenceCount urlBase={home}/>}/>
             <Route path='/sumSalesMonthly' element={<Monthly urlBase={home}/>}/>
             <Route path='/products' element={<TableGet url={`${home}/api/v1/products`} minWitdh="900px"/>}/>
-
 
             
         </Route>

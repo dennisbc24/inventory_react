@@ -4,6 +4,8 @@ import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import noImagen from "./img/no_imagen.png";
+import imageCompression from "browser-image-compression";
+
 export const UpdateProductForm = ({urlBase}) => {
   const [query, setQuery] = useState("");
   const [allProducts, setAllProducts] = useState([]); // Array con todos los productos
@@ -70,28 +72,7 @@ export const UpdateProductForm = ({urlBase}) => {
     formData.append('wholesale_price', wholesale_price);
     formData.append('name', name);
     formData.append('nameFile', name.replaceAll(' ','+' ));
-
-
-//     let nameFile2 = ''
-// let nameFile = name.replaceAll(' ','+' )
-        
-        
-//     switch (true) {
-//       case nameFile.endsWith('.png'):
-//         nameFile2 = `products/image-${nameFile}.png`
-//         break;
-//         case nameFile.endsWith('.jpg'):
-//         nameFile2 = `products/image-${nameFile}.jpg`
-//         break;
-//         case nameFile.endsWith('.jpeg'):
-//         nameFile2 = `products/image-${nameFile}.jpeg`
-//         break;
-    
-//       default:
-//         nameFile2 = `products/image-${nameFile}.jpg`
-//         break;
-//     }
-        
+   
  
     
     formData.append('photo', photo);
@@ -104,6 +85,8 @@ export const UpdateProductForm = ({urlBase}) => {
       console.log(urlPatch);
       
       const sendData = await axios.patch(urlPatch, formData)
+      console.log(sendData);
+      
       alert(sendData.data);
       
     } catch (error) {
@@ -145,8 +128,24 @@ export const UpdateProductForm = ({urlBase}) => {
       });
     };
 
-   const handleInputFileChange = (e) => {
-       setPhoto(e.target.files[0]);
+   const handleInputFileChange = async (e) => {
+      const img = e.target.files[0];
+       if (img) {
+         const options = {
+           maxSizeMB: 1, // Tamaño máximo en MB
+           maxWidthOrHeight: 600, // Máximo en píxeles
+           useWebWorker: true,
+         };
+         try {
+           const compressedFile = await imageCompression(img, options);
+           setPhoto(compressedFile);
+         } catch (error) {
+          console.error("Error al comprimir la imagen", error);
+       }
+       }
+
+
+      //setPhoto(img);  
      };
    
   return (

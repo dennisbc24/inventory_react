@@ -16,7 +16,6 @@
   --persian-blue-950: #1a2451;  
 }
 
-
 .divForm{
   display: flex;
   flex-direction: column;
@@ -25,4 +24,5 @@
   padding-left: 10px;
   margin-bottom: 15px;
 }
+
 

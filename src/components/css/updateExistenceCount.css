@@ -1,0 +1,156 @@
+.result{
+    width: auto;
+    overflow-x: scroll;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+}
+
+.infoTable{
+    min-width: 700px;
+}
+
+
+
+
+.suggestions_lu{
+    background-color: var(--persian-blue-200);
+}
+.image_box{
+    width:  150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 11px;
+}
+.product_image{
+    width: 100%;
+    height: auto;
+    margin: 0;
+    object-fit: contain;
+    /* -webkit-box-shadow: 10px 10px 31px -4px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 31px -4px rgba(0,0,0,0.75);
+box-shadow: 10px 10px 31px -4px rgba(0,0,0,0.75); */
+border-radius: 8px;
+
+}
+.title_product{
+    text-transform: capitalize;
+    /* font-size: 20px; */
+    margin: 2px;
+    
+}
+.inputs_form{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+tr{
+    background-color: white;
+}
+
+
+
+.selectedProductTable {
+    width: auto;
+    overflow-x: scroll;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+}
+
+.dataSell{
+    display: flex;
+    flex-direction: row;
+    
+    gap: 7px;
+    align-items: center;
+    height: 30px;
+    margin: 9px 0
+}
+
+.dataSell input{
+    height: 23px;
+    border-radius: 5px;
+    border: 1px solid rgb(146, 134, 134);
+}
+.selectsBox{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 35px;
+   
+}
+
+.selectsBox .only_select{
+font-size: smaller;
+}
+.unitPrice{
+    color: var(--color-fourth);
+}
+
+.td_result{
+    text-align: center;
+}
+
+.td_description{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.td_modif{
+    text-align: center;
+  
+}
+
+.saveSell{
+    background-color: #40EA22;
+   
+    border-radius: 0.5rem;
+    cursor: pointer;
+    border: solid #40EA22;
+    
+    padding: 7px;
+}
+.descriptionSell{
+    display: flex;
+}
+.registrationDate {
+    height: 10px;
+}
+.registrationDate:invalid {
+    background-color: #8f8686;
+}
+.only_input:invalid {
+    background-color: #8f8686;
+}
+
+.summarySell{
+   display: flex; 
+   justify-content: space-between;
+   margin: 0 30px;
+   height: 15px;
+}
+h3{
+    font-size: smaller;
+}
+.search_sale_select{
+    border-radius: 5px;
+    
+}
+.search_sale_select{
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+}
+.search_sale_select select{
+    border-radius: 5px;
+    height: 20px;
+}
+.divFormTwo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding-left: 10px;
+    margin-bottom: 15px;
+  }

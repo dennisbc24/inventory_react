@@ -1,0 +1,25 @@
+.title_popupwindow{
+    color: red;
+}
+.popup_frame{
+    align-items: center;
+    flex-direction: column;
+    visibility: hidden;
+    padding: 10px;
+    border-radius: 10px;
+    width: 77%;
+    margin: 10%;
+    display: flex;
+    position: fixed;
+    inset: 0;
+    justify-content: center;
+    background-color: rgb(37 40 55);
+}
+.pop_up_button{
+    position: fixed;
+}
+.popup_frame img{
+    width: 50%;
+    height: 50%;
+    border-radius: 10px;
+}

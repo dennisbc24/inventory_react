@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
 import {  InputSimple,  ParrafoInput, ButtonSave, SelectSimple} from "./form/inputSearch";
 import axios from "axios";
-import "./salesForm.css";
+import "./css/updateExistenceCount.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import { TableGet } from "./table.jsx";
 import noImagen from "./img/no_imagen.png";
-
-import { PopUpWindow } from "./form/popupwindow.jsx";
 
 export const UpdateExistenceCount = ({urlBase}) => {
   const [query, setQuery] = useState("");
@@ -17,9 +15,9 @@ export const UpdateExistenceCount = ({urlBase}) => {
   const [name, setName] = useState('')
   const [id_product, setId_Product] = useState('')
   const [show, setShow] = useState(false);
-  const [idBranch, setIdBranch] = useState(1);
-  
+  const [idBranch, setIdBranch] = useState(0);
   const [count, setCount] = useState(0);
+  const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
     // Simula la carga de todos los productos al inicio
@@ -36,6 +34,8 @@ export const UpdateExistenceCount = ({urlBase}) => {
 
     fetchAllProducts();
   }, []);
+
+// 
 
   useEffect(() => {
     // Filtra los nombres localmente en base a la query
@@ -65,8 +65,12 @@ export const UpdateExistenceCount = ({urlBase}) => {
 
   const handleChange = (e) => {setQuery(e.target.value), setShow(false)}
   const handleIdBranch = (e) =>{  setIdBranch(parseInt(e.target.value))}
-  const handleCount = (e) =>{  setCount(parseInt(e.target.value))}
-
+  const handleCount = (e) =>{  
+    
+    setCount(parseInt(e.target.value))
+    setDisabled(false)
+  }
+    
 
   const handleClick = (event) => { 
     const textoLi = event.target.textContent
@@ -77,8 +81,6 @@ export const UpdateExistenceCount = ({urlBase}) => {
           setCost(elem.cost);
           setQuery('')
           setName(elem.name)
-          
-          
           setId_Product(elem.id_product)
           setShow('true')
         }
@@ -90,7 +92,6 @@ export const UpdateExistenceCount = ({urlBase}) => {
       
     const sendVending = async () => {
         try {
-          
         const urlPatch = `${urlBase}/api/v1/existence/count`
         const sendData = await axios.patch(urlPatch,{
           id_product,
@@ -106,11 +107,13 @@ export const UpdateExistenceCount = ({urlBase}) => {
  
     sendVending()
     setShow(false)
+    setDisabled(true)
+    setIdBranch(0)
     
   };
   return (
     <>
-    <TitleForm text='Actualizar Stock'></TitleForm>
+      <TitleForm text='Actualizar Stock'></TitleForm>
       <input type="text"  value={query} onChange={handleChange} placeholder="Buscar Producto..." />
       <ul className="suggestions_lu">   {suggestions.map((suggestion, index) => (
           <li key={index} onClick={handleClick}>
@@ -118,32 +121,40 @@ export const UpdateExistenceCount = ({urlBase}) => {
          </li>
         ))}
       </ul>
-{<>{show ? <div className="divForm">
-<h3>Stock</h3>
-     <TableGet url={`${urlBase}/api/v1/existence?product=${product.id_product}`}/> : <></>
-    
-<ParrafoInput titulo="Nombre" parrafo={name}></ParrafoInput>
-
-<ParrafoInput titulo="Codigo" parrafo={id_product}></ParrafoInput>
-        <SelectSimple titulo="Sucursal" func={handleIdBranch}>
-          <option value="1">B17</option>
-          <option value="3">Departamento</option>
-          <option value="7">Tambopata</option>
-          <option value="4">Deposito</option>
-          <option value="5">Los Nogales</option>
-          <option value="6">Los Incas</option>
+      <h3>Stock</h3>
+      {show ? <TableGet url={`${urlBase}/api/v1/existence?product=${product.id_product}`}/> : <></>}
+{<>{show ? 
+    <div className="divFormTwo">
+      <section className="form">
+          <ParrafoInput titulo="Codigo" parrafo={id_product}></ParrafoInput>
+          <SelectSimple titulo="Sucursal" func={handleIdBranch}>
+              <option value={idBranch}>Elige un local</option>
+              <option value="1">B17</option>
+              <option value="3">Departamento</option>
+              <option value="7">Tambopata</option>
+              <option value="4">Deposito</option>
+              <option value="5">Los Nogales</option>
+              <option value="6">Los Incas</option>
         </SelectSimple>
-        <img className="product_image" src={product.url_image ? product.url_image : noImagen} ></img>
-
-        <InputSimple titulo='Cantidad' func={handleCount}/>
+         {idBranch !== 0 ? <InputSimple tipo={'number'} titulo='Cantidad' func={handleCount}/> : <></>}   
+        
         <ParrafoInput titulo="Costo" parrafo={cost}></ParrafoInput>
         <ParrafoInput titulo="Creado" parrafo={product.created}></ParrafoInput>
         
+      </section>
+      <section>
+      <ParrafoInput titulo="Nombre" parrafo={name}></ParrafoInput>
+
+        <img className="product_image" src={product.url_image ? 
+              product.url_image : 
+              noImagen} ></img>
+      </section>
       </div> : <></>
       }</>}
       
       {/* <PopUpWindow text={'ventana emergente'}></PopUpWindow> */}
-      <ButtonSave titulo={"Actualizar"} func={handleButton}/>
+      
+      <button onClick={handleButton} disabled={disabled}>Actualizar</button>
       
       
       
