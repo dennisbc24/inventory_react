@@ -1,9 +1,10 @@
 import "./menu.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import close from "./icons/close.png";
 import menu from "./icons/menu.png";
 import repartidor from "./icons/repartidor.png";
+import { ContextUser } from "../context/userContext";
 
 export function Pestana({ children, titulo }) {
   const [vista, setVista] = useState("close");
@@ -34,6 +35,7 @@ export function EnlaceLi({ name, link = "#", func }) {
 }
 
 export function Menu() {
+  const {usuario} = useContext(ContextUser)
   const [check, setCheck] = useState(true);
   const [cerrar, setCerrar] = useState('-100%')
 
@@ -83,31 +85,30 @@ export function Menu() {
 
       <ul style={{right:`${cerrar}`}} className="caja_pestañas" onClick={change2}>
       <Pestana titulo='Ventas'>
-         <EnlaceLi name='Registrar' link='/putSale'/>
-         <EnlaceLi name='Buscar Venta' link='/searchSales'/>
-         <EnlaceLi name='Eliminar' link='/deleteSale'/>
-         <EnlaceLi name='Suma Mensual' link='/sumSalesMonthly'/>
-
+        {usuario.role === 'admin' || usuario.role === 'seller' ? <EnlaceLi name='Registrar' link='/putSale'/> : null}
+        { usuario.role === 'admin' || usuario.role === 'viewer' ? <EnlaceLi name='Buscar Venta' link='/searchSales'/> : null}
+        { usuario.role === 'admin' ? <EnlaceLi name ='Eliminar' link='/deleteSale'/> : null}
+        { usuario.role === 'admin' || usuario.role === 'viewer' ? <EnlaceLi name='Suma Mensual' link='/sumSalesMonthly'/> : null}
       </Pestana>
+
       <Pestana titulo='Productos'>
-        
-        <EnlaceLi name='Ver' link='/products'/>
-         <EnlaceLi name='Crear' link='/newProduct'/>
-         <EnlaceLi name='Editar' link='/updateProduct'/>
-         {/* <EnlaceLi name='Borrar'/> */}
+          { usuario.role === 'admin' || usuario.role === 'viewer' ? <EnlaceLi name='Ver' link='/products'/> : null}
+          { usuario.role === 'admin' ? <EnlaceLi name='Crear' link='/newProduct'/> : null}
+          { usuario.role === 'admin' ? <EnlaceLi name='Editar' link='/updateProduct'/> : null}
+           {/* <EnlaceLi name='Borrar'/> */}
       </Pestana>
       <Pestana titulo='Stock'>
-         <EnlaceLi name='Ingresos' link='/entries'/>
-         <EnlaceLi name='Inventario'link='/inventory'/>
-         <EnlaceLi name='Transacciones' link='/transactions'/>
-         <EnlaceLi name='Buscar' link='/inventorySearch'/>
-         <EnlaceLi name='Editar' link='/existenceCount'/>
-         {/* <EnlaceLi name='Borrar'/> */}
+        { usuario.role === 'admin' ? <EnlaceLi name='Ingresos' link='/entries'/> : null}
+        { usuario.role === 'admin' || usuario.role === 'viewer' ? <EnlaceLi name='Inventario'link='/inventory'/> : null}
+        { usuario.role === 'admin' || usuario.role === 'seller' ? <EnlaceLi name='Transacciones' link='/transactions'/> : null}
+        { usuario.role === 'admin' || usuario.role === 'viewer' ? <EnlaceLi name='Buscar' link='/inventorySearch'/> : null} 
+        { usuario.role === 'admin' ? <EnlaceLi name='Editar' link='/existenceCount'/> : null} 
+        {/* <EnlaceLi name='Borrar'/> */}
       </Pestana>
       <Pestana titulo='Otros'>
-         <EnlaceLi name='Registrar' link='/expense'/>
-         <EnlaceLi name='Buscar Gasto' link='/searchSpends'/>
-         <EnlaceLi name='Caja' link='/box'/>
+        { usuario.role === 'admin' || usuario.role === 'seller' ? <EnlaceLi name='Gastos' link='/expense'/> : null}
+        { usuario.role === 'admin' || usuario.role === 'viewer' ? <EnlaceLi name='Buscar Gasto' link='/searchSpends'/> : null}
+        { usuario.role === 'admin' ? <EnlaceLi name='Caja' link='/box'/> : null}
          {/* <EnlaceLi name='Resumen'/> */}
          {/* <EnlaceLi name='Buscar Resumen' link='/summaries'/> */}
       </Pestana>

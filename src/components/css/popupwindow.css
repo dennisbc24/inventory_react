@@ -1,10 +1,10 @@
 .title_popupwindow{
-    color: red;
-}
+    font-size: 1.5em;
+    font-weight: bold;
+    }
 .popup_frame{
     align-items: center;
     flex-direction: column;
-    visibility: hidden;
     padding: 10px;
     border-radius: 10px;
     width: 77%;
@@ -12,14 +12,26 @@
     display: flex;
     position: fixed;
     inset: 0;
-    justify-content: center;
-    background-color: rgb(37 40 55);
+    background-color: rgb(251, 251, 251);
+    box-shadow: 7px 9px 41px 6px rgba(0,0,0,0.75);
+    gap: 10px;
 }
-.pop_up_button{
-    position: fixed;
-}
+
 .popup_frame img{
+    box-shadow: 7px 9px 41px 6px rgba(0,0,0,0.75);
+
     width: 50%;
-    height: 50%;
     border-radius: 10px;
+}
+
+.popup_frame button{
+    background-color: #40EA22;
+    font-weight: bold;
+    font-size-adjust: initial;
+    padding: 5px;
+    border-radius: 10px;
+}
+.popup_frame .closeButton{
+    background-color: rgb(190, 189, 189);
+    align-self:flex-end;
 }

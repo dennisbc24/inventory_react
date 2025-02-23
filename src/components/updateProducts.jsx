@@ -72,18 +72,13 @@ export const UpdateProductForm = ({urlBase}) => {
     formData.append('wholesale_price', wholesale_price);
     formData.append('name', name);
     formData.append('nameFile', name.replaceAll(' ','+' ));
-   
- 
-    
     formData.append('photo', photo);
-
     console.log(formData);
     
     try {
           
       const urlPatch = `${urlBase}/api/v1/products/${id_product}`
       console.log(urlPatch);
-      
       const sendData = await axios.patch(urlPatch, formData)
       console.log(sendData);
       
@@ -133,7 +128,7 @@ export const UpdateProductForm = ({urlBase}) => {
        if (img) {
          const options = {
            maxSizeMB: 1, // Tamaño máximo en MB
-           maxWidthOrHeight: 600, // Máximo en píxeles
+           maxWidthOrHeight: 700, // Máximo en píxeles
            useWebWorker: true,
          };
          try {

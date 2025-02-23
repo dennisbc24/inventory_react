@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { SelectSimple, ButtonSave} from "./form/inputSearch";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
+import axios from "axios";
+
 import {  TableGet, TableGet2 } from "./table.jsx";
 import {InventoryService} from "../services/inventory.js"
 const service = new InventoryService()

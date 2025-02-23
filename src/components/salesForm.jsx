@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { InputSimple, SelectSimple, ParrafoInput, ButtonSave } from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
@@ -8,9 +8,13 @@ import { SalesService } from "../services/sales.js";
 import { PopUpWindow } from "../../src/components/form/popupwindow.jsx";
 import noImagen from "./img/no_imagen.png";
 const saleService = new SalesService()
-
+import { ContextGlobal  } from "../context/globalContext.jsx";
 
 export const SelesForm = ({ urlBase }) => {
+
+  const {setProductGlobal} = useContext(ContextGlobal)
+
+
   const [query, setQuery] = useState("");
   // Array con todos los productos
   const [suggestions, setSuggestions] = useState([]);
@@ -29,9 +33,22 @@ export const SelesForm = ({ urlBase }) => {
   const [textButton, SetTextButton] = useState('Guardar')
   const [allProducts, setAllProducts] = useState([]);
   const [tableColor, setTableColor] = useState('white');
+  const [urlImage, setUrlImage] = useState(noImagen)
+  const [editImg, setEditImg] = useState(false)
 
+  const handleEditImg = () => {
+    setEditImg(editImg ? false : true)
+  }
+    let lastTapTime = 0;
 
-
+  const handleDoubleTap = () => {
+    const currentTime = Date.now();
+    const tapInterval = currentTime - lastTapTime;
+    if (tapInterval < 300 && tapInterval > 0) { // Detecta doble toque en menos de 300 ms
+      setEditImg(editImg ? false : true)
+    }
+    lastTapTime = currentTime;
+  };
 
   useEffect(() => {
     // Simula la carga de todos los productos al inicio
@@ -124,10 +141,12 @@ export const SelesForm = ({ urlBase }) => {
       if (elem.name == textoLi) {
         setSuggestions([]);
         setProduct(elem);
+        setProductGlobal(elem)
         setCost(elem.cost);
         setQuery('')
         setShow(true)
         SetTextButton('Guardar')
+        elem.url_image ? setUrlImage(elem.url_image) : setUrlImage(noImagen)
       }
     });
   };
@@ -158,6 +177,7 @@ export const SelesForm = ({ urlBase }) => {
   return (
     <>
       <TitleForm text='Registrar Venta'></TitleForm>
+      {editImg ? <PopUpWindow text='Actualizar Imagen' closeFunction={handleEditImg} imagen={urlImage} urlBase={urlBase} product={product}></PopUpWindow> : <></>}
       <input type="text" className="only_input" value={query} onChange={handleChange} placeholder="Buscar..." />
       <ul className="suggestions_lu">   {suggestions.map((suggestion, index) => (
         <li key={index} onClick={handleClick}>
@@ -175,10 +195,9 @@ export const SelesForm = ({ urlBase }) => {
 
       <div className="descriptionSell">
       <div className="image_box">
-      <img className="product_image" src={product.url_image ? product.url_image : noImagen} ></img>
+      <img className="product_image" src={product.url_image ? product.url_image : urlImage} onClick={handleDoubleTap}></img>
 
       </div>
-      <PopUpWindow text='Venta Registrada'></PopUpWindow>
       <div>
       
         <p>{product.name} </p>

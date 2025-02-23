@@ -6,7 +6,6 @@ import { ButtonSave} from "./form/inputSearch";
 
 import {SelesForm} from "./salesForm.jsx";
 import {NewProduct} from "./newProduct.jsx";
-import {Box} from "./box.jsx";
 import {SendExpense} from "./spending.jsx";
 
 import {EntriesForm} from "./entries.jsx";
@@ -22,6 +21,7 @@ import {UpdateExistenceCount} from "./updateExistenceCount.jsx";
 import {Login} from "./login.jsx";
 import {ProtectedRoute} from './ProtectedRoute.jsx'
 import {Monthly} from './searchs/sumSalesMonthly.jsx'
+import {Box} from './box.jsx'
 
 import "./theme.css";
 
@@ -31,6 +31,8 @@ import { TableGet } from './table.jsx';
 const home = 'http://localhost:3000'
 
 export function App(){
+    
+
     const [user, setUser] = useState(null)
     const [token] = useState()
 
@@ -52,40 +54,71 @@ useEffect(()=>{
 
     return(
     <>  
+   
     <Routes>
 
-    <Route path='/' element={
-    user ?  <>  
-                <MainMenu/> 
-                <ButtonSave titulo={'Cerrar Sesión'} func={logout} />
-                <SelesForm urlBase={home}/>
-            </>
-    :  <>
-            <Login urlBase={home} inicio={login}/>
-        </> }/>
-        
-        <Route element={<ProtectedRoute isAllow={!!user}/>}>
-            <Route path='/newProduct' element={<NewProduct urlBase={home}/>}/>
-            <Route path='/deleteSale' element={<DeleteSale urlBase={home}/>}/>
-            <Route path='/expense' element={<SendExpense urlBase={home}/>}/>
-            <Route path='/box' element={<Box urlBase={home}/>}/>
-            <Route path='/putSale' element={<SelesForm urlBase={home}/>}/>
-            <Route path='/entries' element={<EntriesForm urlBase={home}/>}/>
-            <Route path='/searchSales' element={<SearchSale urlBase={home}/>}/>
-            <Route path='/updateProduct' element={<UpdateProductForm urlBase={home}/>}/>
-            <Route path='/inventory' element={<Inventory urlBase={home}/>}/>
-            <Route path='/transactions' element={<TransactionsForm urlBase={home}/>}/>
-            <Route path='/searchSpends' element={<SearchSpends urlBase={home} token={token}/>}/>
-            <Route path='/summaries' element={<SearchSummary urlBase={home}/>}/>
-            <Route path='/inventorySearch' element={<InventorySearchForm urlBase={home}/>}/>
-            <Route path='/existenceCount' element={<UpdateExistenceCount urlBase={home}/>}/>
-            <Route path='/sumSalesMonthly' element={<Monthly urlBase={home}/>}/>
-            <Route path='/products' element={<TableGet url={`${home}/api/v1/products`} minWitdh="900px"/>}/>
-
-            
-        </Route>
+<Route path='/' element={  user ?  <>  
+            <MainMenu/> 
+            <ButtonSave titulo={'Cerrar Sesión'} func={logout} />
+            <SelesForm urlBase={home}/>
+        </>
+:  <Login urlBase={home} inicio={login}/>
+     }/>
     
-    </Routes>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
+        <Route path='/newProduct'element={<NewProduct urlBase={home}/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
+        <Route path='/expense' element={<SendExpense urlBase={home}/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
+        <Route path='/deleteSale' element={<DeleteSale urlBase={home}/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin','seller','viewer']} user={user}/>}>
+        <Route path='/putSale' element={<SelesForm urlBase={home}/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
+        <Route path='/entries' element={<EntriesForm urlBase={home}/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['seller','admin','viewer']} user={user}/>}>
+        <Route path='/searchSales' element={<SearchSale urlBase={home}/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
+        <Route path='/updateProduct' element={<UpdateProductForm urlBase={home}/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin','seller','viewer']} user={user}/>}>
+        <Route path='/inventory' element={<Inventory urlBase={home}/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
+        <Route path='/transactions' element={<TransactionsForm urlBase={home}/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
+        <Route path='/searchSpends' element={<SearchSpends urlBase={home} token={token}/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
+        <Route path='/summaries' element={<SearchSummary urlBase={home}/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin','viewer']} user={user}/>}>
+        <Route path='/inventorySearch' element={<InventorySearchForm urlBase={home}/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
+        <Route path='/existenceCount' element={<UpdateExistenceCount urlBase={home}/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin','viewer']} user={user}/>}>
+        <Route path='/sumSalesMonthly' element={<Monthly urlBase={home}/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
+        <Route path='/products' element={<TableGet url={`${home}/api/v1/products`} minWitdh="900px"/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
+        <Route path='/box' element={<Box urlBase={home}/>}/>
+    </Route>
+
+    
+
+</Routes>
+    
+    
         
         </>
 )
