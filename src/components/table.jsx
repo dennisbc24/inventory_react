@@ -129,6 +129,7 @@ return(
 
 export  function TableGet({url, minWitdh='1051px', token}) {
   const [sumar, setSumar] = useState({v_total:0,suma:0})
+  
       return(
       <div className="result">
         <table className="infoTable" style={{'minWidth':`${minWitdh}`}}>

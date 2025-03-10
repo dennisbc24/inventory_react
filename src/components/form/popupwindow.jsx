@@ -1,33 +1,33 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import imageCompression from "browser-image-compression";
 import '../css/popupwindow.css'
 import axios from "axios";
+import { ContextGlobal  } from "../../context/globalContext.jsx";
 
-export function PopUpWindow({text, imagen, closeFunction, product, urlBase}) {
-  const [img, setImg] = useState(imagen)
-  const [fileToSend, setImageToSend] = useState(null)
-
+export function PopUpWindow({text}) {
   
-const handleClic = () => {
-  handleSubmit()
-  closeFunction()
-}
+  const [fileToSend, setImageToSend] = useState(null)
+  const {productGlobal, urlGlobal,closeWindow, setCloseWindow} = useContext(ContextGlobal)
+  const [img, setImg] = useState(productGlobal.url_image)
+  const closeFunction = () => {
+    setCloseWindow(closeWindow ? false : true)}
+  
+
 
 const handleSubmit = async (e) => {
  // e.preventDefault();
- console.log(product)
   const formData = new FormData();
-  formData.append('cost', product.cost);
-  formData.append('sugested_price', product.list_price);
-  formData.append('wholesale_price', product.lowest_price);
-  formData.append('name', product.name);
-  formData.append('nameFile', product.name.replaceAll(' ','+' ));
+  formData.append('cost',   [productGlobal.cost === null ? 0 : productGlobal.cost]);
+  formData.append('sugested_price', [productGlobal.list_price === null ? 0 : productGlobal.list_price]);
+  formData.append('wholesale_price',[productGlobal.lowest_price === null ? 0 : productGlobal.lowest_price]);
+  formData.append('name', productGlobal.name);
+  formData.append('nameFile', productGlobal.name.replaceAll(' ','+' ));
   formData.append('photo', fileToSend);
   console.log(formData);
   
   try {
         
-    const urlPatch = `${urlBase}/api/v1/products/${product.id_product}`
+    const urlPatch = `${urlGlobal}/api/v1/products/${productGlobal.id_product}`
     console.log(urlPatch);
     const sendData = await axios.patch(urlPatch, formData)
     console.log(sendData);
@@ -60,6 +60,11 @@ const handleSubmit = async (e) => {
               console.error("Error al comprimir la imagen", error);
            }
            }
+}
+
+const handleClic = () => {  
+  handleSubmit()
+  closeFunction()
 }
     return(
   

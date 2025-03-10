@@ -33,7 +33,7 @@ export const SearchSummary = ({urlBase}) => {
       <ButtonSave titulo={"Buscar"} func={handleButton}/>
         
         
-      {<>{ show ? <TableGet url={`${urlBase}/api/v1/summaries/summaryByMonth?year=${year}&month=${month}`}/> : <></>
+      {<>{ show ? <TableGet url={`${urlBase}/api/v1/summaries/summaryByDay?year=${year}&month=${month}`}/> : <></>
       }</>}
       </>
     );

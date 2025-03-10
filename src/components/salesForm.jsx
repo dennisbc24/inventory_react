@@ -9,16 +9,15 @@ import { PopUpWindow } from "../../src/components/form/popupwindow.jsx";
 import noImagen from "./img/no_imagen.png";
 const saleService = new SalesService()
 import { ContextGlobal  } from "../context/globalContext.jsx";
-
+import useFetch from "../hooks/useFetch.jsx";
 export const SelesForm = ({ urlBase }) => {
 
-  const {setProductGlobal} = useContext(ContextGlobal)
-
+  const {setProductGlobal, productGlobal, closeWindow, setCloseWindow, urlGlobal} = useContext(ContextGlobal)
+  
 
   const [query, setQuery] = useState("");
   // Array con todos los productos
   const [suggestions, setSuggestions] = useState([]);
-  const [product, setProduct] = useState([]);
   const [count, setCount] = useState(1);
   const [cost, setCost] = useState(0);
   const [total, setTotal] = useState(0);
@@ -31,64 +30,49 @@ export const SelesForm = ({ urlBase }) => {
   const [show, setShow] = useState(false)
   const [showSales, SetShowSales] = useState(true)
   const [textButton, SetTextButton] = useState('Guardar')
-  const [allProducts, setAllProducts] = useState([]);
   const [tableColor, setTableColor] = useState('white');
   const [urlImage, setUrlImage] = useState(noImagen)
-  const [editImg, setEditImg] = useState(false)
+  //const [editImg, setEditImg] = useState(false)
 
-  const handleEditImg = () => {
-    setEditImg(editImg ? false : true)
-  }
     let lastTapTime = 0;
 
   const handleDoubleTap = () => {
     const currentTime = Date.now();
     const tapInterval = currentTime - lastTapTime;
     if (tapInterval < 300 && tapInterval > 0) { // Detecta doble toque en menos de 300 ms
-      setEditImg(editImg ? false : true)
+      setCloseWindow(closeWindow ? false : true)
     }
     lastTapTime = currentTime;
   };
 
-  useEffect(() => {
-    // Simula la carga de todos los productos al inicio
-    const fetchAllProducts = async () => {
-      try {
-        const response = await axios.get(
-          `${urlBase}/api/v1/products`);
-        setAllProducts(response.data);
-        console.log("fetch listo");
-      } catch (error) {
-        console.error("Error al obtener todos los productos:", error);
-      }
-    };
-    fetchAllProducts()
-
-  }, [])
+  const { data: products, loading: loadingProducts, error: errorProducts } = useFetch(`${urlGlobal}/api/v1/products`);
 
   useEffect(() => {
-    // Filtra los nombres localmente en base a la query
-    const filteredNames = allProducts
-      .filter((product) =>
-        product.name.toLowerCase().includes(query.toLowerCase()) &&
-        query !== ""
-      )
-      .map((product) => {
-        // Resalta las letras coincidentes
-        const index = product.name.toLowerCase().indexOf(query.toLowerCase());
-        const start = product.name.substring(0, index);
-        const match = product.name.substring(index, index + query.length);
-        const end = product.name.substring(index + query.length);
-        return (
-          <span key={product.id_product}>
-            {start}
-            <strong>{match}</strong>
-            {end}
-          </span>
-        );
-      });
-    setSuggestions(filteredNames);
-  }, [query, allProducts]);
+    if (products) {
+      // Filtra los nombres localmente en base a la query
+    const filteredNames = products
+    .filter((product) =>
+      product.name.toLowerCase().includes(query.toLowerCase()) &&
+      query !== ""
+    )
+    .map((product) => {
+      // Resalta las letras coincidentes
+      const index = product.name.toLowerCase().indexOf(query.toLowerCase());
+      const start = product.name.substring(0, index);
+      const match = product.name.substring(index, index + query.length);
+      const end = product.name.substring(index + query.length);
+      return (
+        <span key={product.id_product}>
+          {start}
+          <strong>{match}</strong>
+          {end}
+        </span>
+      );
+    });
+  setSuggestions(filteredNames);
+    }
+    
+  }, [query, products]);
 
   useEffect(() => {
     setPUnit(total / count);
@@ -137,10 +121,9 @@ export const SelesForm = ({ urlBase }) => {
   const changeCostumer = (e) => { setDataCustomer(e.target.value) }
   const handleClick = (event) => {
     const textoLi = event.target.textContent
-    allProducts.forEach((elem) => {
+    products.forEach((elem) => {
       if (elem.name == textoLi) {
         setSuggestions([]);
-        setProduct(elem);
         setProductGlobal(elem)
         setCost(elem.cost);
         setQuery('')
@@ -154,8 +137,9 @@ export const SelesForm = ({ urlBase }) => {
 
   const handleButton = () => {
 
-    if (dateSell != '' && revenue > 0 && count > 0 && product.name != undefined) {
-      const body = { dateSell, count, total, PUnit, revenue, dataCustomer, product, idUser, idBranch }
+    if (dateSell != '' && revenue > 0 && count > 0 && productGlobal.name != undefined) {
+      const body = { dateSell, count, total, PUnit, revenue, dataCustomer, product:productGlobal, idUser, idBranch }
+      
       const upload = saleService.register(urlBase, body)
       SetShowSales(true)
       alert('Felicidades...Venta Registrada!')
@@ -167,7 +151,7 @@ export const SelesForm = ({ urlBase }) => {
         alert('Esta venta es a perdida, por lo cual no se puede registrar!')
       } if (count < 0) {
         alert('Cantidad debe ser mayor que cero')
-      } if (product.name === undefined) {
+      } if (productGlobal.name === undefined) {
         alert('la selección del producto es incorrecta')
       }
 
@@ -177,7 +161,7 @@ export const SelesForm = ({ urlBase }) => {
   return (
     <>
       <TitleForm text='Registrar Venta'></TitleForm>
-      {editImg ? <PopUpWindow text='Actualizar Imagen' closeFunction={handleEditImg} imagen={urlImage} urlBase={urlBase} product={product}></PopUpWindow> : <></>}
+      {closeWindow ? <PopUpWindow text='Actualizar Imagen'></PopUpWindow> : <></>}
       <input type="text" className="only_input" value={query} onChange={handleChange} placeholder="Buscar..." />
       <ul className="suggestions_lu">   {suggestions.map((suggestion, index) => (
         <li key={index} onClick={handleClick}>
@@ -195,12 +179,12 @@ export const SelesForm = ({ urlBase }) => {
 
       <div className="descriptionSell">
       <div className="image_box">
-      <img className="product_image" src={product.url_image ? product.url_image : urlImage} onClick={handleDoubleTap}></img>
+      <img className="product_image" src={productGlobal.url_image ? productGlobal.url_image : urlImage} onClick={handleDoubleTap}></img>
 
       </div>
       <div>
       
-        <p>{product.name} </p>
+        <p>{productGlobal.name} </p>
         <div className="dataSell">
                   <h4>Cant</h4>
                   <input type="number" onChange={handleCount} style={{ 'width': '45px' }} />
@@ -253,13 +237,13 @@ export const SelesForm = ({ urlBase }) => {
         </div>  
         <div className="summarySell">
         <p>Actualizado:</p>
-        <p>{(product.updated ? (product.updated.slice(0, 10)) : product.updated)}</p>
+        <p>{(productGlobal.updated ? (productGlobal.updated.slice(0, 10)) : productGlobal.updated)}</p>
         </div>  
       
       <button onClick={handleButton} className="saveSell">Guardar</button>
 
       <h3>Stock</h3>
-      {<>{show ? <TableGet url={`${urlBase}/api/v1/existence?product=${product.id_product}`} /> : <></>
+      {<>{show ? <TableGet url={`${urlBase}/api/v1/existence?product=${productGlobal.id_product}`} /> : <></>
       }</>}
       <h3>Ultimas Ventas</h3>
 

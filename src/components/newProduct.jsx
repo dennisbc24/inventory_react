@@ -23,7 +23,6 @@ export const NewProduct = ({urlBase}) => {
   const handlePUnit = ({ target: { value } }) => { setList_price(value)};
   const handlePMayor = ({ target: { value } }) => { setLowest_price(value)};
 
-
   const handleInputFileChange = (e) => {
     setPhoto(e.target.files[0]);
   };
@@ -42,7 +41,6 @@ export const NewProduct = ({urlBase}) => {
     formData.append('fk_supplier', proveedor.id_supplier);
     formData.append('photo', photo);
 
-
     try {
       //console.log(formData.getAll('photo'));
       const urlPost = `${urlBase}/api/v1/products/`
@@ -55,8 +53,6 @@ export const NewProduct = ({urlBase}) => {
       console.error('Error uploading the file:', error);
     }
   };
-
-
 
   return (
     <>
