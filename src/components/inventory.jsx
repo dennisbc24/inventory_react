@@ -13,6 +13,8 @@ export const Inventory = ({urlBase}) => {
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
   const [show3, setShow3] = useState(false);
+  const [show4, setShow4] = useState(false);
+
   const [datos, setDatos] = useState(undefined);
   const [datos1, setDatos1] = useState(undefined);
   const [datos2, setDatos2] = useState(undefined);
@@ -68,7 +70,7 @@ setEditandoId(null);
     setShow2(false)
     
   }
-  const handleReview = ({target: {value}}) => {setReview(parseInt(value)), setShow2(false), setShow(false)}
+  const handleReview = ({target: {value}}) => {setReview(parseInt(value)), setShow2(false), setShow(false), setShow3(false), setShow4(false)};  
   
   useEffect(()=>{
     const getData = async () => {
@@ -128,6 +130,8 @@ const handleTest = async () =>{
           <option value="1">Inventario por local</option>
           <option value="2">Diferencia por local</option>
           <option value="3">Llegando a 0</option>
+          <option value="4">En Stock</option>
+
 
           
         </SelectSimple>
@@ -184,6 +188,7 @@ const handleTest = async () =>{
               <ButtonSave titulo={"Comparar"} func={handleTest}></ButtonSave>
           </>}
           {review === 3 && <ButtonSave titulo={"Buscar"} func={searchShortSupplies}></ButtonSave>}
+        {review === 4 && <ButtonSave titulo={"Buscar"} func={() => setShow4(true)}></ButtonSave>}
                      
     </>
     {<>{ show ? 
@@ -234,8 +239,7 @@ const handleTest = async () =>{
     : <></>}</>}
     
         {<>{ show2 ? <TableGet2 respJson={datos} minWitdh="450px"/> : <></>}</>}
-        {<>{ show3 ? 
-    <>
+        {<>{ show3 ? <>
         <div className="result">{datos2 === undefined ? <></> : 
         <div>
           <table style={{width:"920px"}}>
@@ -275,10 +279,14 @@ const handleTest = async () =>{
         </table>
         </div>
         
-        }</div>
+        }
+
+        </div>
 
     </>
     : <></>}</>}
+            {<>{ show4 ? <TableGet url={`${urlBase}/api/v1/existence/inStock`} minWitdh="450px"/> : <></>}</>}
+
     </>
     
   );

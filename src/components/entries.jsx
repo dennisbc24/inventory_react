@@ -5,11 +5,14 @@ import "./salesForm.css";
 import { TitleForm} from "./form/titleForm.jsx";
 import { TableGet } from "./table.jsx";
 import noImagen from "./img/no_imagen.png";
+import { InventoryService } from "../services/inventory.js";
+const inventoryService = new InventoryService()
+
 export const EntriesForm = ({urlBase}) => {
   const urlEntries = `${urlBase}/api/v1/entries`;
 const urlSuppliers = `${urlBase}/api/v1/suppliers`;
 const urlApiProducts = `${urlBase}/api/v1/products`;
-
+  const [isSaving, setIsSaving] = useState(false);
   const [query, setQuery] = useState("");
   const [allProducts, setAllProducts] = useState([]); // Array con todos los productos
   const [suggestions, setSuggestions] = useState([]);
@@ -83,27 +86,27 @@ const urlApiProducts = `${urlBase}/api/v1/products`;
     };
     
 const handleButton = () => {
-      
-    const sendVending = async () => {
-      try {
-        const sendEntry = await axios.post(urlEntries,{
-            pointB: idBranch,
-            amount: count,
-            fk_user:idUser,
-            fk_product: idProduct
-        })
+  if (isSaving) return; // Prevenir múltiples clics
+
+  setIsSaving(true);
+
+  try{const sendEntry = inventoryService.registerEntries(urlBase, {idBranch,count,idUser,idProduct})
         
-        console.log('guardado');
+         console.log("Guardado exitoso:", sendEntry);
         alert('Ingreso de mercaderia registrado')
-      } catch (error) {
-        console.error("Error al guardar Entry :", error);
+      }catch (innerError) {
+        console.error("Error al mostrar alert/log:", innerError);
+      }  
+      finally {
+        console.log("Finalizando el guardado de Entry");
+        console.log(isSaving);
+        
+        
+        setIsSaving(false); // Restablecer el estado de guardado
       }
-    };
- 
-    sendVending()
-    
-    
-  };
+    };    
+  
+
   return (
     <>
     <TitleForm text='Ingreso de Producto'></TitleForm>
@@ -135,7 +138,7 @@ const handleButton = () => {
         </SelectSimple>
         <InputSimple titulo="Cantidad" tipo="number" func={handleCount} callToAction="Cuantos ingresan?"></InputSimple>
       </div>
-      <ButtonSave titulo={"Guardar"} func={handleButton}/>
+      <ButtonSave titulo={"Guardar"} func={handleButton} disabled={isSaving}/>
       
       {<>{ show ? <TableGet url={`${urlBase}/api/v1/existence?product=${idProduct}`}/> : <></>
     }</>}
@@ -144,4 +147,4 @@ const handleButton = () => {
       <TableGet url={`${urlBase}/api/v1/entries`} minWitdh="735px"/>
     </>
   );
-};
+}

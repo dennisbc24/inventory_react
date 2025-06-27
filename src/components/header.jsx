@@ -59,7 +59,7 @@ export function Menu() {
   return (
     <header>
       <div className="boton-check">
-        <p>menu</p>
+        <Link to='/'><p>INICIO</p></Link>
         {
           <>
             {check ? (

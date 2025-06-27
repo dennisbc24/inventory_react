@@ -40,9 +40,9 @@ export function ParrafoInput({titulo, parrafo, clase='parrafoForm'}) {
     )  
 }
 
-export function ButtonSave({titulo,func }) {
+export function ButtonSave({titulo,func, disabled }) {
     return(
-       <button className='button_save' onClick={func}> 
+       <button className='button_save' onClick={func} disabled={disabled}> 
             {titulo}
        </button>
         

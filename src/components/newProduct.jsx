@@ -19,9 +19,9 @@ export const NewProduct = ({urlBase}) => {
   const [photo, setPhoto] = useState(null);
  
   const handleName = ({ target: { value } }) => { setName(value)};
-  const handleCost = ({ target: { value } }) => { setCost(value)};
-  const handlePUnit = ({ target: { value } }) => { setList_price(value)};
-  const handlePMayor = ({ target: { value } }) => { setLowest_price(value)};
+  const handleCost = ({ target: { value } }) => { setCost(parseFloat(value))};
+  const handlePUnit = ({ target: { value } }) => { setList_price(parseFloat(value))};
+  const handlePMayor = ({ target: { value } }) => { setLowest_price(parseFloat(value))};
 
   const handleInputFileChange = (e) => {
     setPhoto(e.target.files[0]);

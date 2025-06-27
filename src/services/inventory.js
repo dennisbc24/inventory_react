@@ -91,4 +91,14 @@ export class InventoryService {
       fk_product: id_product
   })
   }
+  async registerEntries(urlBase, {idBranch,count,idUser,idProduct}) {
+    const urlEntries = `${urlBase}/api/v1/entries`;
+
+    const sendEntry = await axios.post(urlEntries, {
+      pointB: idBranch,
+             amount: count,
+             fk_user:idUser,
+             fk_product: idProduct
+    });
+  }
 }

@@ -57,7 +57,7 @@ const SearchByDate= ({url}) => {
   return (
     <>
     <div className="divForm">
-            <InputSimple titulo="Fecha" tipo="date" func={handleDate}></InputSimple>
+            <InputSimple titulo="Selecciona una fecha: " tipo="date" func={handleDate}></InputSimple>
     </div>
     <ButtonSave titulo={"Buscar"} func={handleButton}/>
      

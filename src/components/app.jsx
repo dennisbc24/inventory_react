@@ -22,11 +22,15 @@ import {Login} from "./login.jsx";
 import {ProtectedRoute} from './ProtectedRoute.jsx'
 import {Monthly} from './searchs/sumSalesMonthly.jsx'
 import {Box} from './box.jsx'
+import { Landing } from './main.jsx';
+import { LastTransactions } from './transactions/lastTransactions.jsx';
+import { LastEntries } from './entries/lastEntries.jsx';
 
 import { ContextGlobal  } from "../context/globalContext.jsx";
 import "./theme.css";
 
 import { TableGet } from './table.jsx';
+
 
 export function App(){
     
@@ -58,7 +62,8 @@ useEffect(()=>{
 <Route path='/' element={  user ?  <>  
             <MainMenu/> 
             <ButtonSave titulo={'Cerrar Sesión'} func={logout} />
-            <SelesForm urlBase={urlGlobal}/>
+            <Landing/>
+            {/* <SelesForm urlBase={urlGlobal}/> */}
         </>
 :  <Login urlBase={urlGlobal} inicio={login}/>
      }/>
@@ -80,6 +85,12 @@ useEffect(()=>{
     </Route>
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['seller','admin','viewer']} user={user}/>}>
         <Route path='/searchSales' element={<SearchSale urlBase={urlGlobal}/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['seller','admin','viewer']} user={user}/>}>
+        <Route path='/lastTransactions' element={<LastTransactions urlBase={urlGlobal}/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['seller','admin','viewer']} user={user}/>}>
+        <Route path='/lastEntries' element={<LastEntries urlBase={urlGlobal}/>}/>
     </Route>
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
         <Route path='/updateProduct' element={<UpdateProductForm urlBase={urlGlobal}/>}/>

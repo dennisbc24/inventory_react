@@ -92,8 +92,8 @@ export const UpdateProductForm = ({urlBase}) => {
   const handleChange = (e) => {setQuery(e.target.value)}
   const handleCost = (e) => setCost(parseFloat(e.target.value))
   const handleName = (e) => setName(e.target.value)
-  const handleSuggestedPrice = (e) => setSugested_price(e.target.value)
-  const handleWholeSalePrice = (e) => setWholesale_price(e.target.value)
+  const handleSuggestedPrice = (e) => setSugested_price(parseFloat(e.target.value))
+  const handleWholeSalePrice = (e) => setWholesale_price(parseFloat(e.target.value))
 
 
   const handleClick = (event) => { 

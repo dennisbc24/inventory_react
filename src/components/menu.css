@@ -4,6 +4,8 @@
 }
 
 .boton-check{
+	justify-content: space-around;
+	width: 125px;
 	float: right;
 	cursor: pointer;
 	align-items: center;
