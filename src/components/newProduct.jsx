@@ -11,9 +11,9 @@ const service = new ProductService()
 
 export const NewProduct = ({urlBase}) => {
   const [name, setName] = useState('');
-  const [cost, setCost] = useState(0);
-  const [lowest_price, setLowest_price] = useState(0);
-  const [list_price, setList_price] = useState(0);
+  const [cost, setCost] = useState(0.00);
+  const [lowest_price, setLowest_price] = useState(0.00);
+  const [list_price, setList_price] = useState(0.00);
   const [proveedor, setProveedor] = useState([{name:'',id_supplier:0}]);
 
   const [photo, setPhoto] = useState(null);

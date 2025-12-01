@@ -1,5 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import useFetch from "../hooks/useFetch.jsx";
+
 import { SelectSimple, ButtonSave} from "./form/inputSearch";
+import { ContextGlobal  } from "../context/globalContext.jsx";
+
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import axios from "axios";
@@ -7,19 +11,22 @@ import {  TableGet, TableGet2 } from "./table.jsx";
 import {InventoryService} from "../services/inventory.js"
 const service = new InventoryService()
 export const Inventory = ({urlBase}) => {
-  
+  const {urlGlobal, setProductGlobal} = useContext(ContextGlobal)
   const [branch, setBranch] = useState(1);
   const [branch2, setBranch2] = useState(4);
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
   const [show3, setShow3] = useState(false);
   const [show4, setShow4] = useState(false);
-
+  const [show5, setShow5] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
+  const [query, setQuery] = useState("");
+  const [product, setProd] = useState(undefined);
   const [datos, setDatos] = useState(undefined);
   const [datos1, setDatos1] = useState(undefined);
   const [datos2, setDatos2] = useState(undefined);
 
-  const [review, setReview] = useState(1);
+  const [review, setReview] = useState(5);
   const [baseCount, setBaseCount] = useState(0);
 
   const [editandoId, setEditandoId] = useState(null);
@@ -70,7 +77,7 @@ setEditandoId(null);
     setShow2(false)
     
   }
-  const handleReview = ({target: {value}}) => {setReview(parseInt(value)), setShow2(false), setShow(false), setShow3(false), setShow4(false)};  
+  const handleReview = ({target: {value}}) => {setReview(parseInt(value)), setShow2(false), setShow(false), setShow3(false), setShow4(false), setShow5(false)};  
   
   useEffect(()=>{
     const getData = async () => {
@@ -112,6 +119,50 @@ setEditandoId(null);
         }
         getData()
           },[branch])
+  
+
+const { data: products, loading: loadingProducts, error: errorProducts } = useFetch(`${urlGlobal}/api/v1/products`);
+  const handleChangeInput = (e) => { setQuery(e.target.value) }
+  const handleClick = async (event) => {
+      const textoLi = event.target.textContent
+      // 2. Usamos find() para obtener el producto que coincide.
+    const productFound = products.find((elem) => elem.name === textoLi);
+
+    if (productFound) {
+        setSuggestions([]);
+        setProductGlobal(productFound);
+        setQuery('');
+        setProd(productFound); // <--- Asumiendo que setProd también es un useState
+
+    }
+      
+    };
+  useEffect(() => {
+    if (products) {
+      // Filtra los nombres localmente en base a la query
+    const filteredNames = products
+    .filter((product) =>
+      product.name.toLowerCase().includes(query.toLowerCase()) &&
+      query !== ""
+    )
+    .map((product) => {
+      // Resalta las letras coincidentes
+      const index = product.name.toLowerCase().indexOf(query.toLowerCase());
+      const start = product.name.substring(0, index);
+      const match = product.name.substring(index, index + query.length);
+      const end = product.name.substring(index + query.length);
+      return (
+        <span key={product.id_product}>
+          {start}
+          <strong>{match}</strong>
+          {end}
+        </span>
+      );
+    });
+  setSuggestions(filteredNames);
+    }
+    
+  }, [query, products]);
 
 const searchShortSupplies = async () => {
   setShow(false)
@@ -127,10 +178,13 @@ const handleTest = async () =>{
   return (
     <>
     <SelectSimple titulo="Revisar"func={handleReview}>
+      <option value="5">Buscar un producto</option>
           <option value="1">Inventario por local</option>
           <option value="2">Diferencia por local</option>
           <option value="3">Llegando a 0</option>
           <option value="4">En Stock</option>
+          
+
 
 
           
@@ -189,6 +243,8 @@ const handleTest = async () =>{
           </>}
           {review === 3 && <ButtonSave titulo={"Buscar"} func={searchShortSupplies}></ButtonSave>}
         {review === 4 && <ButtonSave titulo={"Buscar"} func={() => setShow4(true)}></ButtonSave>}
+
+
                      
     </>
     {<>{ show ? 
@@ -286,6 +342,26 @@ const handleTest = async () =>{
     </>
     : <></>}</>}
             {<>{ show4 ? <TableGet url={`${urlBase}/api/v1/existence/inStock`} minWitdh="450px"/> : <></>}</>}
+            {<>{ review == 5 ?<>
+            <input type="text" className="only_input" value={query} onChange={handleChangeInput} placeholder="Escribe el producto aquí" />
+            <ul className="suggestions_lu">   {suggestions.map((suggestion, index) => (
+        <li key={index} onClick={handleClick}>
+          {suggestion}
+        </li>
+      ))}
+      </ul>
+      
+      <div className="infoProduct"><h3>Producto: </h3>{product?.name && (<p>{product.name}</p>)}</div>
+      <div className="infoProduct"><h3>Costo: </h3>{product?.cost && (<p>{product.cost}</p>)}</div>
+      <div className="infoProduct"><h3>Precio  de Venta: </h3>{product?.list_price && (<p>{product.list_price > 0 ? product.list_price : <>Calcula tu mismo el precio venta</>}</p>)}</div>
+      <div className="infoProduct">{product?.url_image && (<img src={product.url_image} alt={product.name} width="200" />)}</div>
+
+
+      
+      
+
+      </> : <></>}</>}
+
 
     </>
     

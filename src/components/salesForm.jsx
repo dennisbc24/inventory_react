@@ -31,8 +31,18 @@ export const SelesForm = ({ urlBase }) => {
   const [showSales, SetShowSales] = useState(true)
   const [textButton, SetTextButton] = useState('Guardar')
   const [tableColor, setTableColor] = useState('white');
-  const [urlImage, setUrlImage] = useState(noImagen)
+  const [urlImage, setUrlImage] = useState(noImagen);
+  const [revenueEditing, setRevenueEditing] = useState(undefined);
   //const [editImg, setEditImg] = useState(false)
+
+const handleChangeRevenue = (e) => {
+  setRevenueEditing(e.target.value);
+}
+
+// seleccionar dato para editar
+  const handleDoubleClick = (rvn) => {
+    setRevenueEditing(rvn);
+  };
 
     let lastTapTime = 0;
 
@@ -229,7 +239,21 @@ export const SelesForm = ({ urlBase }) => {
         </div> 
         <div className="summarySell">
         <p>Ganancia:</p>
-        <p>{`S/.${revenue}`}</p>
+        <div onDoubleClick={() => handleDoubleClick(revenue)}>
+          {revenueEditing != undefined ? (
+                  <input
+                    type="number"
+                    value={revenueEditing}
+                    onChange={handleChangeRevenue}
+                    // onBlur={() => handleBlur(item.id_existence)}
+                    // autoFocus
+                  />
+                ) : (
+                  <p>{`S/.${revenue}`}</p>
+                )}
+          
+        </div>
+        
         </div>       
         <div className="summarySell">
         <p>Costo:</p>
@@ -239,8 +263,9 @@ export const SelesForm = ({ urlBase }) => {
         <p>Actualizado:</p>
         <p>{(productGlobal.updated ? (productGlobal.updated.slice(0, 10)) : productGlobal.updated)}</p>
         </div>  
-      
-      <button onClick={handleButton} className="saveSell">Guardar</button>
+      <div className="button_save_sell">
+        <button onClick={handleButton} className="saveSell">Guardar</button>
+      </div>
 
       <h3>Stock</h3>
       {<>{show ? <TableGet url={`${urlBase}/api/v1/existence?product=${productGlobal.id_product}`} /> : <></>

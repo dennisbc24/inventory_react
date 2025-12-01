@@ -101,10 +101,14 @@ font-size: smaller;
     text-align: center;
   
 }
-
+.button_save_sell{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .saveSell{
     background-color: #40EA22;
-   
+   margin-top: 24px;
     border-radius: 0.5rem;
     cursor: pointer;
     border: solid #40EA22;
@@ -145,4 +149,10 @@ h3{
 .search_sale_select select{
     border-radius: 5px;
     height: 20px;
+}
+.infoProduct{
+    display: flex;
+    
+    justify-content: center;
+    align-items: center;
 }

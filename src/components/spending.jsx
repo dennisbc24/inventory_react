@@ -25,7 +25,7 @@ export const SendExpense = ({urlBase}) => {
     try {
       const sendData = await axios.post(urlUpload,{
         concept: concept,
-        amount: parseInt(amount),
+        amount: amount,
         date: date,
         user: user,
         bill: type
