@@ -37,7 +37,7 @@ const SpendsByUser = ({urlBase}) => {
       amount: item.p_total
     }))
      const twoArrays = [...newArray,...dataSpendsTemp].sort((a,b)=> new Date(b.date) - new Date(a.date))
-     setData(twoArrays)
+     setData(requestLastSpends.data)
      
  }
   
@@ -56,7 +56,7 @@ const SpendsByUser = ({urlBase}) => {
     </div>
     
     <ButtonSave titulo={"Buscar"} func={handleCLic}/>
-    {show ? <><h2>Saldo Actual: </h2><p>{total_saldo}</p></> : <></>}
+    {/* {show ? <><h2>Saldo Actual: </h2><p>{total_saldo}</p></> : <></>} */}
     {<>{ show ? <table>
         <thead>
             <tr>
@@ -69,7 +69,7 @@ const SpendsByUser = ({urlBase}) => {
         <tbody key={self.crypto.randomUUID()}>
         { show ?
     data.map(element => {return(
-            <tr key={self.crypto.randomUUID()} style={element.amount <=0 ?{"color": "red"}: {"color": "black"}}>
+            <tr key={self.crypto.randomUUID()}>
                 <td  >{element.concept}</td>
                 <td >{element.date.slice(0,10)}</td>
                 <td >{`S/.${element.amount}`}</td>
@@ -133,7 +133,7 @@ const SpendsByMonth =({urlBase})=>{
     </div>
     
     <ButtonSave titulo={"Buscar"} func={handleCLic}/>
-    {show ? <><h2>Saldo Actual: </h2><p>{total_saldo}</p></> : <></>}
+    {/* {show ? <><h2>Saldo Actual: </h2><p>{total_saldo}</p></> : <></>} */}
     {<>{ show ? <table>
         <thead>
             <tr>
@@ -146,7 +146,7 @@ const SpendsByMonth =({urlBase})=>{
         <tbody>
         { 
     data.map(element => {return(
-            <tr style={element.amount <=0 ?{"color": "red"}: {"color": "black"}} key={element.id_money_movement}>
+            <tr  key={element.id_money_movement}>
                 <td >{element.concept}</td>
                 <td >{element.date.slice(0,10)}</td>
                 <td >{`S/.${element.amount}`}</td>

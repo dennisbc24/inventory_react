@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import { useState, useContext } from 'react'
 import imageCompression from "browser-image-compression";
 import '../css/popupwindow.css'
 import axios from "axios";
@@ -14,7 +14,7 @@ export function PopUpWindow({text}) {
   
 
 
-const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {  // enviar datos del producto
  // e.preventDefault();
   const formData = new FormData();
   formData.append('cost',   [productGlobal.cost === null ? 0 : productGlobal.cost]);
@@ -30,7 +30,6 @@ const handleSubmit = async (e) => {
     const urlPatch = `${urlGlobal}/api/v1/products/${productGlobal.id_product}`
     console.log(urlPatch);
     const sendData = await axios.patch(urlPatch, formData)
-    console.log(sendData);
     
     alert(sendData.data);
     
@@ -38,7 +37,9 @@ const handleSubmit = async (e) => {
     console.error("Error al hacer el patch:", error);
   }
 };
-  const handleImageChange = async (e) => {
+
+
+  const handleImageChange = async (e) => { // manejar cambio de imagen
     const file = e.target.files[0];
       
     if (file) {
@@ -62,7 +63,7 @@ const handleSubmit = async (e) => {
            }
 }
 
-const handleClic = () => {  
+const handleClic = () => {  // guardar cambios
   handleSubmit()
   closeFunction()
 }
@@ -75,8 +76,5 @@ const handleClic = () => {
     <img src={img} className='popup_image' alt="img_card" />
     <button className='pop_up_button' onClick={handleClic}>Guardar Cambios</button>
   </div>      
-
-
-
     )  
 }

@@ -46,7 +46,7 @@ const handleChangeRevenue = (e) => {
 
     let lastTapTime = 0;
 
-  const handleDoubleTap = () => {
+  const handleDoubleTap = () => { // open popup window
     const currentTime = Date.now();
     const tapInterval = currentTime - lastTapTime;
     if (tapInterval < 300 && tapInterval > 0) { // Detecta doble toque en menos de 300 ms
@@ -57,7 +57,7 @@ const handleChangeRevenue = (e) => {
 
   const { data: products, loading: loadingProducts, error: errorProducts } = useFetch(`${urlGlobal}/api/v1/products`);
 
-  useEffect(() => {
+  useEffect(() => { // search suggestions
     if (products) {
       // Filtra los nombres localmente en base a la query
     const filteredNames = products
@@ -274,11 +274,6 @@ const handleChangeRevenue = (e) => {
 
       {<>{showSales ? <TableGet url={`${urlBase}/api/v1/ventas`} /> : <></>
       }</>}
-
-
-
-
-
     </>
   );
 };

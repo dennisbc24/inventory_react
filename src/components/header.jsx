@@ -84,34 +84,42 @@ export function Menu() {
       </div>
 
       <ul style={{right:`${cerrar}`}} className="caja_pestañas" onClick={change2}>
-      <Pestana titulo='Ventas'>
-        {usuario.role === 'admin' || usuario.role === 'seller' ? <EnlaceLi name='Registrar' link='/putSale'/> : null}
-        { usuario.role === 'admin' || usuario.role === 'viewer' ? <EnlaceLi name='Buscar Venta' link='/searchSales'/> : null}
-        { usuario.role === 'admin' ? <EnlaceLi name ='Eliminar' link='/deleteSale'/> : null}
-        { usuario.role === 'admin' || usuario.role === 'viewer' ? <EnlaceLi name='Suma Mensual' link='/sumSalesMonthly'/> : null}
-      </Pestana>
+        {usuario.role === 'admin' || usuario.role === 'seller' ? <Pestana titulo='VER'>
+          <EnlaceLi name='Ventas' link='/searchSales'/>
+          <EnlaceLi name='Precios'link='/inventory'/>
+          <EnlaceLi name='Productos' link='/products'/>
+          <EnlaceLi name='Suma Mensual' link='/sumSalesMonthly'/>
+          <EnlaceLi name='Buscar Stock' link='/inventorySearch'/>
+          <EnlaceLi name='Buscar Gasto' link='/searchSpends'/>
+        </Pestana> : null}
+        {usuario.role === 'viewer' ? 
+        <>
+        <EnlaceLi name='VENTAS' link='/searchSales'/>
+          <EnlaceLi name='PRECIOS'link='/inventory'/>
+          <EnlaceLi name='PRODUCTOS' link='/products'/>
+          <EnlaceLi name='SUMA MENSUAL' link='/sumSalesMonthly'/>
+          <EnlaceLi name='BUSCAR STOCK' link='/inventorySearch'/>
+          <EnlaceLi name='BUSCAR GASTO' link='/searchSpends'/> 
+        </>
+          : null}
+    {usuario.role === 'admin' || usuario.role === 'seller' ? <Pestana titulo='Registrar'>
+      {usuario.role === 'admin' || usuario.role === 'seller' ? <EnlaceLi name='Venta' link='/putSale'/> : null}
+          { usuario.role === 'admin' ? <EnlaceLi name='Producto' link='/newProduct'/> : null}
+          { usuario.role === 'admin' || usuario.role === 'seller' ? <EnlaceLi name='Gasto' link='/expense'/> : null}
+          { usuario.role === 'admin' ? <EnlaceLi name='Ingreso' link='/entries'/> : null}
+        { usuario.role === 'admin' || usuario.role === 'seller' ? <EnlaceLi name='Traslado' link='/transactions'/> : null}
+      </Pestana> : null}
 
-      <Pestana titulo='Productos'>
-          { usuario.role === 'admin' || usuario.role === 'viewer' ? <EnlaceLi name='Ver' link='/products'/> : null}
-          { usuario.role === 'admin' ? <EnlaceLi name='Crear' link='/newProduct'/> : null}
-          { usuario.role === 'admin' ? <EnlaceLi name='Editar' link='/updateProduct'/> : null}
-           {/* <EnlaceLi name='Borrar'/> */}
-      </Pestana>
-      <Pestana titulo='Stock'>
-        { usuario.role === 'admin' ? <EnlaceLi name='Ingresos' link='/entries'/> : null}
-        { usuario.role === 'admin' || usuario.role === 'viewer' ? <EnlaceLi name='Inventario'link='/inventory'/> : null}
-        { usuario.role === 'admin' || usuario.role === 'seller' ? <EnlaceLi name='Transacciones' link='/transactions'/> : null}
-        { usuario.role === 'admin' || usuario.role === 'viewer' ? <EnlaceLi name='Buscar' link='/inventorySearch'/> : null} 
-        { usuario.role === 'admin' ? <EnlaceLi name='Editar' link='/existenceCount'/> : null} 
-        {/* <EnlaceLi name='Borrar'/> */}
-      </Pestana>
-      <Pestana titulo='Otros'>
-        { usuario.role === 'admin' || usuario.role === 'seller' ? <EnlaceLi name='Gastos' link='/expense'/> : null}
-        { usuario.role === 'admin' || usuario.role === 'viewer' ? <EnlaceLi name='Buscar Gasto' link='/searchSpends'/> : null}
+      {usuario.role === 'admin' ? <Pestana titulo='Editar'>
+{ usuario.role === 'admin' ? <EnlaceLi name='Stock' link='/existenceCount'/> : null} 
+        { usuario.role === 'admin' ? <EnlaceLi name ='Eliminar Venta' link='/deleteSale'/> : null}
+        { usuario.role === 'admin' ? <EnlaceLi name='Producto' link='/updateProduct'/> : null}
+      </Pestana>: null}
+      
+      {/* <Pestana titulo='Otros'>
         { usuario.role === 'admin' ? <EnlaceLi name='Caja' link='/box'/> : null}
-         {/* <EnlaceLi name='Resumen'/> */}
-         {/* <EnlaceLi name='Buscar Resumen' link='/summaries'/> */}
-      </Pestana>
+         
+      </Pestana> */}
       </ul>
     </header>
   );

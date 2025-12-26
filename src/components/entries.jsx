@@ -92,14 +92,12 @@ const handleButton = () => {
 
   try{const sendEntry = inventoryService.registerEntries(urlBase, {idBranch,count,idUser,idProduct})
         
-         console.log("Guardado exitoso:", sendEntry);
         alert('Ingreso de mercaderia registrado')
       }catch (innerError) {
         console.error("Error al mostrar alert/log:", innerError);
       }  
       finally {
-        console.log("Finalizando el guardado de Entry");
-        console.log(isSaving);
+
         
         
         setIsSaving(false); // Restablecer el estado de guardado

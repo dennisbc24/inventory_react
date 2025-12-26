@@ -101,7 +101,7 @@ useEffect(()=>{
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
         <Route path='/transactions' element={<TransactionsForm urlBase={urlGlobal}/>}/>
     </Route>
-    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['seller','admin','viewer']} user={user}/>}>
         <Route path='/searchSpends' element={<SearchSpends urlBase={urlGlobal} token={token}/>}/>
     </Route>
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
@@ -116,7 +116,7 @@ useEffect(()=>{
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin','viewer']} user={user}/>}>
         <Route path='/sumSalesMonthly' element={<Monthly urlBase={urlGlobal}/>}/>
     </Route>
-    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin','viewer','seller']} user={user}/>}>
         <Route path='/products' element={<TableGet url={`${urlGlobal}/api/v1/products`} minWitdh="900px"/>}/>
     </Route>
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
