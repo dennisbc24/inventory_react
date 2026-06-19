@@ -64,6 +64,44 @@ export class SalesService {
         console.error(error);
       }
     }
+    async getSalesOfTheDay(urlBase){
+      const fetchDate = new Date();
+      const day = String(fetchDate.getDate()).padStart(2, '0');
+      const month = String(fetchDate.getMonth() + 1).padStart(2, '0');
+      const year = fetchDate.getFullYear();
+      const urlApi = `${urlBase}/api/v1/ventas/sumSalesToday?date=${year}-${month}-${day}`;
+      
+      try {
+        const response = await axios.get(urlApi)
+        return response.data[0].venta_total_hoy;
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    async getRevenueOfTheDay(urlBase){
+      const fetchDate = new Date();
+      const day = String(fetchDate.getDate()).padStart(2, '0');
+      const month = String(fetchDate.getMonth() + 1).padStart(2, '0');
+      const year = fetchDate.getFullYear();
+      const urlApi = `${urlBase}/api/v1/ventas/sumRevenueToday?date=${year}-${month}-${day}`;
+      
+      try {
+        const response = await axios.get(urlApi)
+        return response.data[0].ganancia_total_hoy;
+      } catch (error) {
+        console.error(error);
+      }
+    }
 
-}
+    async getTopSellingProducts(urlBase){
+      const urlApi = `${urlBase}/api/v1/ventas/topSellingProducts`    
+      try {
+        const response = await axios.get(urlApi)
+        return response.data
+      } catch (error) {
+        console.error(error);
+      }   
+    }
+} 
+      
 

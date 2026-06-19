@@ -101,4 +101,19 @@ export class InventoryService {
              fk_product: idProduct
     });
   }
+  async getValuesInventory(urlBase) {
+    const urlExistence = `${urlBase}/api/v1/existence/inventoryValue`;  
+    const response = await axios.get(urlExistence); 
+    return response.data[0].suma;
+  }
+  async getInventoryValueByProduct(urlBase) {
+    const urlExistence = `${urlBase}/api/v1/existence/inventoryValueByProduct`;  
+    const response = await axios.get(urlExistence); 
+    return response.data;
+  }
+  async getStockLow(urlBase) {
+    const urlExistence = `${urlBase}/api/v1/existence/stockLow`;  
+    const response = await axios.get(urlExistence); 
+    return response.data;
+  }
 }

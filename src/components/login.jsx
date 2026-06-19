@@ -3,7 +3,10 @@ import {  InputSimple, ButtonSave} from "./form/inputSearch";
 import loginServices from "../services/login"
 import "./login.css";
 
+
 export const Login = ({urlBase, inicio}) => {
+
+
 const [email, setEmail] = useState(null)
 const [password, setPassword] = useState(null)
 
@@ -20,6 +23,7 @@ const handleLogin =  async (e) => {
         setEmail('')
         setPassword('')
         inicio(user)
+        
         window.localStorage.setItem(
             "loggedAppUser", JSON.stringify(user)
         )

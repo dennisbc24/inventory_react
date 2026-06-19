@@ -30,11 +30,12 @@ import { ContextGlobal  } from "../context/globalContext.jsx";
 import "./theme.css";
 
 import { TableGet } from './table.jsx';
+import { ContextUser } from "../context/userContext";
 
 
 export function App(){
     
-const {urlGlobal} = useContext(ContextGlobal)
+    const {urlGlobal} = useContext(ContextGlobal)
     const [user, setUser] = useState(null)
     const [token] = useState()
 
@@ -43,11 +44,14 @@ const {urlGlobal} = useContext(ContextGlobal)
         window.localStorage.removeItem('loggedAppUser')
         setUser(null)
     }
+    const {setUsuario} = useContext(ContextUser)
 
 useEffect(()=>{
     const loggedUserJSON = window.localStorage.getItem('loggedAppUser')
     if(loggedUserJSON){
         setUser(JSON.parse(loggedUserJSON))
+        setUsuario(JSON.parse(loggedUserJSON))
+        console.log(JSON.parse(loggedUserJSON));
         
     }
 
@@ -59,15 +63,17 @@ useEffect(()=>{
    
     <Routes>
 
-<Route path='/' element={  user ?  <>  
-            <MainMenu/> 
-            <ButtonSave titulo={'Cerrar Sesión'} func={logout} />
-            <Landing/>
-            {/* <SelesForm urlBase={urlGlobal}/> */}
-        </>
-:  <Login urlBase={urlGlobal} inicio={login}/>
+    <Route path='/' element={  user 
+            ?  <>
+                <MainMenu/> 
+                <ButtonSave titulo={'Cerrar Sesión'} func={logout} />
+                <Landing/> {/* <SelesForm urlBase={urlGlobal}/> */}    
+               </>     
+            :  <Login urlBase={urlGlobal} inicio={login}/>
      }/>
-    
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin','seller','viewer']} user={user}/>}>
+        <Route path='/home' element={<Landing/>}/>
+    </Route>
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
         <Route path='/newProduct'element={<NewProduct urlBase={urlGlobal}/>}/>
     </Route>

@@ -86,7 +86,7 @@ const urlApiProducts = `${urlBase}/api/v1/products`;
     };
     
 const handleButton = () => {
-  if (isSaving) return; // Prevenir múltiples clics
+ // if (isSaving) return; // Prevenir múltiples clics
 
   setIsSaving(true);
 
@@ -106,8 +106,8 @@ const handleButton = () => {
   
 
   return (
-    <>
-    <TitleForm text='Ingreso de Producto'></TitleForm>
+    <><main>
+<TitleForm text='Ingreso de Producto'></TitleForm>
       <input type="text"  value={query} onChange={handleChangeProducts} placeholder="Buscar producto..." />
       <ul className="suggestions_lu">   {suggestions.map((suggestion, index) => (
           <li key={index} onClick={handleSearchProducts}>
@@ -137,6 +137,8 @@ const handleButton = () => {
         <InputSimple titulo="Cantidad" tipo="number" func={handleCount} callToAction="Cuantos ingresan?"></InputSimple>
       </div>
       <ButtonSave titulo={"Guardar"} func={handleButton} disabled={isSaving}/>
+    </main>
+    
       
       {<>{ show ? <TableGet url={`${urlBase}/api/v1/existence?product=${idProduct}`}/> : <></>
     }</>}

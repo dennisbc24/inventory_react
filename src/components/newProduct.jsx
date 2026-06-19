@@ -56,7 +56,9 @@ export const NewProduct = ({urlBase}) => {
 
   return (
     <>
-    <form onSubmit={handleSubmit2} encType='multipart/form-data'>
+    <main>
+      <TitleForm text='Crear Nuevo Producto'></TitleForm>
+<form onSubmit={handleSubmit2} encType='multipart/form-data'>
     <SearchInput urlApi={`${urlBase}/api/v1/suppliers`} funcSet={setProveedor} place="Buscar Proveedor"/>
        
       <InputSimple titulo="Nombre" tipo="text" func={handleName} nombre='name' callToAction="Escribe un nombre único"></InputSimple>
@@ -67,7 +69,9 @@ export const NewProduct = ({urlBase}) => {
       <ParrafoInput titulo={'Proveedor'} parrafo={proveedor.name}/>
       <button type="submit">Crear</button>
     </form>
-    <TitleForm text='Crear Nuevo Producto'></TitleForm>
+    
+    </main>
+    
       <div className="divForm">
         {/* <UploadPhoto></UploadPhoto> */}
         

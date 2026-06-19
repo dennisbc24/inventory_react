@@ -14,9 +14,14 @@ body{
 a {
     text-decoration: none;
     cursor: pointer;
+    color: black
 }
 
 li{
     list-style: none;
 }
 
+main{
+  max-width: 550px;
+  justify-self: center;
+}

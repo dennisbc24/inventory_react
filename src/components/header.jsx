@@ -38,7 +38,15 @@ export function Menu() {
   const {usuario} = useContext(ContextUser)
   const [check, setCheck] = useState(true);
   const [cerrar, setCerrar] = useState('-100%')
+  const [role, setRole] = useState('viewer')
+  
 
+  
+  useEffect(()=>{
+    
+    setRole(usuario.user.role)
+    
+  }, [])
   useEffect(()=>{
     check ? setCerrar('-100%') : setCerrar('0')
   }, [check])
@@ -59,7 +67,7 @@ export function Menu() {
   return (
     <header>
       <div className="boton-check">
-        <Link to='/'><p>INICIO</p></Link>
+        <Link to='/home'><p>HOME</p></Link>
         {
           <>
             {check ? (
@@ -84,7 +92,8 @@ export function Menu() {
       </div>
 
       <ul style={{right:`${cerrar}`}} className="caja_pestañas" onClick={change2}>
-        {usuario.role === 'admin' || usuario.role === 'seller' ? <Pestana titulo='VER'>
+        {role === 'admin' || role === 'seller' ? 
+        <Pestana titulo='VER'>
           <EnlaceLi name='Ventas' link='/searchSales'/>
           <EnlaceLi name='Precios'link='/inventory'/>
           <EnlaceLi name='Productos' link='/products'/>
@@ -92,32 +101,34 @@ export function Menu() {
           <EnlaceLi name='Buscar Stock' link='/inventorySearch'/>
           <EnlaceLi name='Buscar Gasto' link='/searchSpends'/>
         </Pestana> : null}
-        {usuario.role === 'viewer' ? 
+
+        {role === 'viewer' ? 
         <>
-        <EnlaceLi name='VENTAS' link='/searchSales'/>
+          <EnlaceLi name='VENTAS' link='/searchSales'/>
           <EnlaceLi name='PRECIOS'link='/inventory'/>
           <EnlaceLi name='PRODUCTOS' link='/products'/>
           <EnlaceLi name='SUMA MENSUAL' link='/sumSalesMonthly'/>
           <EnlaceLi name='BUSCAR STOCK' link='/inventorySearch'/>
           <EnlaceLi name='BUSCAR GASTO' link='/searchSpends'/> 
-        </>
-          : null}
-    {usuario.role === 'admin' || usuario.role === 'seller' ? <Pestana titulo='Registrar'>
-      {usuario.role === 'admin' || usuario.role === 'seller' ? <EnlaceLi name='Venta' link='/putSale'/> : null}
-          { usuario.role === 'admin' ? <EnlaceLi name='Producto' link='/newProduct'/> : null}
-          { usuario.role === 'admin' || usuario.role === 'seller' ? <EnlaceLi name='Gasto' link='/expense'/> : null}
-          { usuario.role === 'admin' ? <EnlaceLi name='Ingreso' link='/entries'/> : null}
-        { usuario.role === 'admin' || usuario.role === 'seller' ? <EnlaceLi name='Traslado' link='/transactions'/> : null}
+        </>  : null}
+
+    {role === 'admin' || role === 'seller' ? 
+    <Pestana titulo='Registrar'>
+          {role === 'admin' || role === 'seller' ? <EnlaceLi name='Venta' link='/putSale'/> : null}
+          { role === 'admin' ? <EnlaceLi name='Producto' link='/newProduct'/> : null}
+          { role === 'admin' || role === 'seller' ? <EnlaceLi name='Gasto' link='/expense'/> : null}
+          { role === 'admin' ? <EnlaceLi name='Ingreso' link='/entries'/> : null}
+        { role === 'admin' || role === 'seller' ? <EnlaceLi name='Traslado' link='/transactions'/> : null}
       </Pestana> : null}
 
-      {usuario.role === 'admin' ? <Pestana titulo='Editar'>
-{ usuario.role === 'admin' ? <EnlaceLi name='Stock' link='/existenceCount'/> : null} 
-        { usuario.role === 'admin' ? <EnlaceLi name ='Eliminar Venta' link='/deleteSale'/> : null}
-        { usuario.role === 'admin' ? <EnlaceLi name='Producto' link='/updateProduct'/> : null}
+      {role === 'admin' ? <Pestana titulo='Editar'>
+{ role === 'admin' ? <EnlaceLi name='Stock' link='/existenceCount'/> : null} 
+        { role === 'admin' ? <EnlaceLi name ='Eliminar Venta' link='/deleteSale'/> : null}
+        { role === 'admin' ? <EnlaceLi name='Producto' link='/updateProduct'/> : null}
       </Pestana>: null}
       
       {/* <Pestana titulo='Otros'>
-        { usuario.role === 'admin' ? <EnlaceLi name='Caja' link='/box'/> : null}
+        { role === 'admin' ? <EnlaceLi name='Caja' link='/box'/> : null}
          
       </Pestana> */}
       </ul>

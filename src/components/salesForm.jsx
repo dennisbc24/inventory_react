@@ -170,7 +170,8 @@ const handleChangeRevenue = (e) => {
 
   return (
     <>
-      <TitleForm text='Registrar Venta'></TitleForm>
+    <main>
+<TitleForm text='Registrar Venta'></TitleForm>
       {closeWindow ? <PopUpWindow text='Actualizar Imagen'></PopUpWindow> : <></>}
       <input type="text" className="only_input" value={query} onChange={handleChange} placeholder="Buscar..." />
       <ul className="suggestions_lu">   {suggestions.map((suggestion, index) => (
@@ -267,7 +268,10 @@ const handleChangeRevenue = (e) => {
         <button onClick={handleButton} className="saveSell">Guardar</button>
       </div>
 
-      <h3>Stock</h3>
+      
+      
+    </main>
+    <h3>Stock</h3>
       {<>{show ? <TableGet url={`${urlBase}/api/v1/existence?product=${productGlobal.id_product}`} /> : <></>
       }</>}
       <h3>Ultimas Ventas</h3>

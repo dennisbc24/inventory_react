@@ -220,20 +220,20 @@ const Formulario = () => {
 };
 
 
-const MoneyTransactions = (urlBase) => {
+// const MoneyTransactions = (urlBase) => {
   
-  return(
-    <>
-    <TitleForm text='Transferencias de dinero'></TitleForm>
-    <Formulario></Formulario>
-    </>
+//   return(
+//     <>
+//     <TitleForm text='Transferencias de dinero'></TitleForm>
+//     <Formulario></Formulario>
+//     </>
     
 
 
 
 
-  )
-}
+//   )
+// }
 
 const PayDebt = (urlBase) => {
   
@@ -246,74 +246,74 @@ const PayDebt = (urlBase) => {
   )
 }
 
-const NewTransation = ({urlBase}) => {
-  const [userA, setUserA] = useState(1)
-  const [userB, setUserB] = useState(1)
-  const [concept, setConcept] = useState(1)
-  const [amount, setAmount] = useState(1)
+// const NewTransation = ({urlBase}) => {
+//   const [userA, setUserA] = useState(1)
+//   const [userB, setUserB] = useState(1)
+//   const [concept, setConcept] = useState(1)
+//   const [amount, setAmount] = useState(1)
 
- const urlPost = `${urlBase}/api/v1/box/newTrans`
+//  const urlPost = `${urlBase}/api/v1/box/newTrans`
 
-  const handleCLic = async () => {
-    console.log(urlPost);
+//   const handleCLic = async () => {
+//     console.log(urlPost);
     
-    const saveTransaction = await axios.post(urlPost, {
-      userA,
-      userB,
-      concept:`TRD ${concept}`,
-      amount
-    })
-    alert("Registro guardado con éxito!")
-  }
-  const handleUserA = (e) => {
-    const value = parseInt(e.target.value)
-    setUserA(value)
-  }
-  const handleUserB = (e) => {
-    const value = parseInt(e.target.value)
-    setUserB(value)
-  }
-  const handleConcept = (e) => {
-    const value = e.target.value
-    setConcept(value)
-  }
-  const handleAmount = (e) => {
-    const value = e.target.value
-    setAmount(value)
-  }
-  return(
-    <>
-    <TitleForm text='Nueva Transferencia'></TitleForm>
-    <input type="number" placeholder="Monto" onChange={handleAmount}/>
-    <div>
-    <h3>Description</h3><input type="text" placeholder="Motivo" onChange={handleConcept}/>
+//     const saveTransaction = await axios.post(urlPost, {
+//       userA,
+//       userB,
+//       concept:`TRD ${concept}`,
+//       amount
+//     })
+//     alert("Registro guardado con éxito!")
+//   }
+//   const handleUserA = (e) => {
+//     const value = parseInt(e.target.value)
+//     setUserA(value)
+//   }
+//   const handleUserB = (e) => {
+//     const value = parseInt(e.target.value)
+//     setUserB(value)
+//   }
+//   const handleConcept = (e) => {
+//     const value = e.target.value
+//     setConcept(value)
+//   }
+//   const handleAmount = (e) => {
+//     const value = e.target.value
+//     setAmount(value)
+//   }
+//   return(
+//     <>
+//     <TitleForm text='Nueva Transferencia'></TitleForm>
+//     <input type="number" placeholder="Monto" onChange={handleAmount}/>
+//     <div>
+//     <h3>Description</h3><input type="text" placeholder="Motivo" onChange={handleConcept}/>
 
-    </div>
-    <div>
-      <div>
-        <h3>De: </h3>
-      <select onChange={handleUserA}>
-      <option value="1">Dennis</option>
-      <option value="2">Luz Marina</option>
-      <option value="3">Miguel</option>
-    </select>
-      </div>
-    <div>
-      <h3>Hacia: </h3>
-    <select onChange={handleUserB}>
-      <option value="1">Dennis</option>
-      <option value="2">Luz Marina</option>
-      <option value="3">Miguel</option>
-    </select>
-    </div>
+//     </div>
+//     <div>
+//       <div>
+//         <h3>De: </h3>
+//       <select onChange={handleUserA}>
+//       <option value="1">Dennis</option>
+//       <option value="2">Luz Marina</option>
+//       <option value="3">Miguel</option>
+//     </select>
+//       </div>
+//     <div>
+//       <h3>Hacia: </h3>
+//     <select onChange={handleUserB}>
+//       <option value="1">Dennis</option>
+//       <option value="2">Luz Marina</option>
+//       <option value="3">Miguel</option>
+//     </select>
+//     </div>
     
-    </div>
+//     </div>
     
-    <button onClick={handleCLic}>Registrar</button>
-    </>
+//     <button onClick={handleCLic}>Registrar</button>
+//     </>
     
-  )
-}
+//   )
+// }
 
 
 const BoxByUser = ({urlBase}) => {
@@ -379,7 +379,7 @@ return(<>
 }
 
 export const Box = ({urlBase}) => {
-  const [option, setOption] = useState(1)
+  const [option, setOption] = useState(2)
 
   const changeOption=(e)=>{
     const value = parseInt(e.target.value)
@@ -390,12 +390,12 @@ export const Box = ({urlBase}) => {
         <>
         <TitleForm text='Caja'></TitleForm>
       <select onChange={changeOption}>
-        <option value="1">Ver Caja</option>
+        {/* <option value="1">Ver Caja</option> */}
         <option value="2">Ver Deudas</option>
         <option value="3">Nueva Deuda</option>
-        <option value="4">Transferencias</option>
+        {/* <option value="4">Transferencias</option>
         <option value="5">Nueva Transacción</option>
-        <option value="6">Pagar Deuda</option>
+        <option value="6">Pagar Deuda</option> */}
 
       </select>
       {option === 1 && <BoxByUser urlBase={urlBase}/>}

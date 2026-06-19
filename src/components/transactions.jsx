@@ -115,7 +115,8 @@ if (dateTrans == '' ) {
   };
   return (
     <>
-    <TitleForm text='Traslado de Mercaderia'></TitleForm>
+    <main>
+<TitleForm text='Traslado de Mercaderia'></TitleForm>
       
 
       <div className="divForm">
@@ -164,6 +165,8 @@ if (dateTrans == '' ) {
         
       </div>
       <ButtonSave titulo={"Guardar"} func={handleButton}/>
+    </main>
+    
       <h3>Stock</h3>
       {<>{ showStock ? <TableGet url={`${urlBase}/api/v1/existence?product=${product.id_product}`}/> : <></>
     }</>}

@@ -45,7 +45,8 @@ export const SendExpense = ({urlBase}) => {
 
     return (
         <>
-        <TitleForm text='Salidas de dinero'></TitleForm>
+        <main>
+<TitleForm text='Salidas de dinero'></TitleForm>
           
           <div className="divForm">
           <InputSimple titulo="Monto" tipo="number" func={handleMount} callToAction="Cuánto fue?"></InputSimple>
@@ -63,6 +64,8 @@ export const SendExpense = ({urlBase}) => {
             </SelectSimple>
           </div>
           <ButtonSave titulo={"Guardar"} func={handleButton}/>
+        </main>
+        
           
         </>
       );
