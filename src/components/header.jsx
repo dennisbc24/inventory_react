@@ -67,7 +67,7 @@ export function Menu() {
   return (
     <header>
       <div className="boton-check">
-        <Link to='/home'><p>HOME</p></Link>
+        <Link to='/home'><p>INICIO</p></Link>
         {
           <>
             {check ? (
@@ -87,7 +87,7 @@ export function Menu() {
       <div className="caja-logo">
         <img src={repartidor} alt="" className="logito" />
         <a href="https://inventario.elwayardo.com/" className="main_title">
-          El Wayardo
+          CocinaMejor.Store
         </a>
       </div>
 
@@ -100,6 +100,12 @@ export function Menu() {
           <EnlaceLi name='Suma Mensual' link='/sumSalesMonthly'/>
           <EnlaceLi name='Buscar Stock' link='/inventorySearch'/>
           <EnlaceLi name='Buscar Gasto' link='/searchSpends'/>
+          <EnlaceLi name='Caja' link='/box'/>
+          
+
+    
+
+
         </Pestana> : null}
 
         {role === 'viewer' ? 

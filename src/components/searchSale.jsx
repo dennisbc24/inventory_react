@@ -59,7 +59,7 @@ const SearchByDate= ({url}) => {
     <div className="divForm">
             <InputSimple titulo="Selecciona una fecha: " tipo="date" func={handleDate}></InputSimple>
     </div>
-    <ButtonSave titulo={"Buscar"} func={handleButton}/>
+    <ButtonSave titulo={"Buscar"} func={handleButton} disabled={!date}/>
      
       
     {<>{ show ? <TableGet url={`${url}/api/v1/ventas/salesByDate?date=${date}`} minWitdh="800px"/> : <></>
@@ -87,7 +87,7 @@ const SearchByMonth= ({urlB}) => {
     <div className="divForm">
     <InputSimple titulo="Fecha" tipo="month" func={handleDate}></InputSimple>
     </div>
-    <ButtonSave titulo={"Buscar"} func={handleButton}/>
+    <ButtonSave titulo={"Buscar"} func={handleButton} disabled={!year && !month}/>
      
       
     {<>{ show ? <TableGet url={`${urlB}/api/v1/summaries/summaryByDay?year=${year}&month=${month}`} minWitdh="800px"/> : <></>

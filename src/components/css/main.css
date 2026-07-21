@@ -57,8 +57,10 @@ body{
 }
 
 .sumaries_products_home img{
-  width: 35px;
-  height: 35px;
+  width: 60px;
+  height: auto;
+  margin: 4px;
+  border-radius: 5px;
 }
 .product_summary_card{
   display: flex;

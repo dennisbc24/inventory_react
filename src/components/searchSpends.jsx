@@ -56,7 +56,7 @@ const SpendsByUser = ({urlBase}) => {
     </div>
     
     <ButtonSave titulo={"Buscar"} func={handleCLic}/>
-    {/* {show ? <><h2>Saldo Actual: </h2><p>{total_saldo}</p></> : <></>} */}
+    {show ? <><h2>Saldo Actual: </h2><p>{total_saldo}</p></> : <></>}
     {<>{ show ? <table>
         <thead>
             <tr>
@@ -133,7 +133,7 @@ const SpendsByMonth =({urlBase})=>{
     </div>
     
     <ButtonSave titulo={"Buscar"} func={handleCLic}/>
-    {/* {show ? <><h2>Saldo Actual: </h2><p>{total_saldo}</p></> : <></>} */}
+    {show ? <><h2>Saldo Actual: </h2><p>{total_saldo}</p></> : <></>}
     {<>{ show ? <table>
         <thead>
             <tr>

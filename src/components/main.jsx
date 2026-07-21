@@ -49,7 +49,6 @@ return(
 )
 }
 
-
 const Summary_Card = ({img, title, description,color, link}) =>{
     return(
         <Link className="sumaries_home_card" to={link}>
@@ -96,13 +95,13 @@ useEffect(() => {
 useEffect(() => {
     const topSelling = async () => {
         const topSelling = await salesService.getTopSellingProducts(urlGlobal);
-        setSellingProducts(topSelling);         
+        setSellingProducts(topSelling);  
     };
     topSelling();
 }, []);
 useEffect(() => {    const stockLow = async () => {
         const stockLow = await inventoryService.getStockLow(urlGlobal);
-        setStockLow(stockLow);         
+        setStockLow(stockLow); 
     };
     stockLow();
 }, []);
@@ -123,7 +122,8 @@ useEffect(() => {
 //     fetchInventoryValueByProduct();
 // }, []);
 
-
+    let randomIndex = Math.floor(Math.random() * stocvkLow.length)
+    let randomIndex2 = Math.floor(Math.random() * sellingProducts.length)
     const {urlGlobal} = useContext(ContextGlobal)
     return(
         <>
@@ -135,14 +135,15 @@ useEffect(() => {
             {/* <Card title={'Proveedores'} colorCard={'grey'} link={'/searchSales'}/> */}
             <Card title={'Ganancia Hoy'} colorCard={'red'} link={'/searchSales'} paragraph={`S/.${revenueOfTheDay}`} />
             <Card title={'Traslados'} colorCard={'purple'} link={'/lastTransactions'} paragraph={'0 Operaciones'} />
-
-            {/* <Card title={'Ingresos'} colorCard={'#40ea22'} link={''} />
-            <Card title={'Producto Vendido'} colorCard={'#00b4ff'} link={''}/> */}
+            <Card title={'Mejores Productos'} colorCard={'#00b4ff'} link={''} paragraph={'100 mejores'} link={'/bestProducts'}/>
+            {/* <Card title={'Producto Vendido'} colorCard={'#00b4ff'} link={''}/> */}
 
         </div>
-            <Product_Card title={'Productos populares'} description={sellingProducts[0]?.producto || 'No hay datos'} img={flecha_arriba} productosImg={sellingProducts[0]?.img || ''}/>
+            <Product_Card title={'Productos populares'} description={sellingProducts[randomIndex2]?.producto || 'No hay datos'} img={flecha_arriba} productosImg={sellingProducts[randomIndex2]?.img || ''} link={'/lastBestProducts'}/>
             <Product_Card img={flecha_abajo} title={'Stock bajo'} description={
-                stocvkLow[Math.floor(Math.random() * stocvkLow.length)]?.nombre|| 'No hay datos'}/>
+                
+                stocvkLow[randomIndex]?.nombre|| 'No hay datos'} link={'/stockLow'} 
+                productosImg={stocvkLow[randomIndex]?.url_image || ''}/>
         <section className="summaries_card">
             <Summary_Card img={car} title={'Registro de venta'} description={'Registrar'} color={'green'} link={'/putSale'}/>
             <Summary_Card img={ingresosImg} title={'Añadir ingreso'} description={'ingreso'} color={'#220080'} link={'/entries'}/>

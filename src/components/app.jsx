@@ -128,7 +128,15 @@ useEffect(()=>{
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
         <Route path='/box' element={<Box urlBase={urlGlobal}/>}/>
     </Route>
-
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin','viewer','seller']} user={user}/>}>
+        <Route path='/lastBestProducts' element={<TableGet url={`${urlGlobal}/api/v1/ventas/topSellingProducts`} minWitdh="800px"/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin','viewer','seller']} user={user}/>}>
+        <Route path='/stockLow' element={<TableGet url={`${urlGlobal}/api/v1/existence/stockLow`} minWitdh="800px"/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin','viewer','seller']} user={user}/>}>
+        <Route path='/bestProducts' element={<TableGet url={`${urlGlobal}/api/v1/ventas/bestProducts`} minWitdh="800px"/>}/>
+    </Route>
     
 
 </Routes>
