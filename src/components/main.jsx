@@ -135,7 +135,7 @@ useEffect(() => {
             {/* <Card title={'Proveedores'} colorCard={'grey'} link={'/searchSales'}/> */}
             <Card title={'Ganancia Hoy'} colorCard={'red'} link={'/searchSales'} paragraph={`S/.${revenueOfTheDay}`} />
             <Card title={'Traslados'} colorCard={'purple'} link={'/lastTransactions'} paragraph={'0 Operaciones'} />
-            <Card title={'Mejores Productos'} colorCard={'#00b4ff'} link={''} paragraph={'100 mejores'} link={'/bestProducts'}/>
+            <Card title={'Mejores Productos'} colorCard={'#00b4ff'} paragraph={'100 mejores'} link={'/bestProducts'}/>
             {/* <Card title={'Producto Vendido'} colorCard={'#00b4ff'} link={''}/> */}
 
         </div>

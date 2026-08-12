@@ -87,7 +87,7 @@ export function Menu() {
       <div className="caja-logo">
         <img src={repartidor} alt="" className="logito" />
         <a href="https://inventario.elwayardo.com/" className="main_title">
-          CocinaMejor.Store
+          CocinaMejor
         </a>
       </div>
 
