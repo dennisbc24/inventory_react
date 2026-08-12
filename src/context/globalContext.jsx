@@ -13,7 +13,7 @@ export function GlobalProvider({children}) {
         id:0
     })
     const [urlGlobal, setUrlGlobal] = useState(
-        IS_DEVELOPMENT ? "http://localhost:3000" : "https://inventario.elwayardo.com"
+        IS_DEVELOPMENT ? "http://localhost:3000" : "https://inventario.cocinamejor.store"
          //"https://inventario.elwayardo.com"
          //'http://localhost:3000'
     )
