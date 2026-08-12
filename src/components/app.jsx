@@ -37,7 +37,6 @@ export function App(){
     
     const {urlGlobal} = useContext(ContextGlobal)
     const [user, setUser] = useState(null)
-    const [token] = useState()
 
     const login = (user) =>{setUser(user)}
     const logout = () => {
@@ -108,7 +107,7 @@ useEffect(()=>{
         <Route path='/transactions' element={<TransactionsForm urlBase={urlGlobal}/>}/>
     </Route>
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['seller','admin','viewer']} user={user}/>}>
-        <Route path='/searchSpends' element={<SearchSpends urlBase={urlGlobal} token={token}/>}/>
+        <Route path='/searchSpends' element={<SearchSpends urlBase={urlGlobal}/>}/>
     </Route>
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
         <Route path='/summaries' element={<SearchSummary urlBase={urlGlobal}/>}/>
