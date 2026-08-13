@@ -28,7 +28,7 @@ import { LastEntries } from './entries/lastEntries.jsx';
 
 import { ContextGlobal  } from "../context/globalContext.jsx";
 import "./theme.css";
-import "../darkmode.css";
+import "../obsidian.css";
 import { ThemeToggle } from "./themeToggle.jsx";
 
 import { TableGet } from './table.jsx';

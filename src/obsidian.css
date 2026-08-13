@@ -1,0 +1,148 @@
+[data-theme="obsidian"] {
+  --card-bg: #161c2f;
+  --card-text: #e7ecf8;
+  --chart-grid: #262f4a;
+  --chart-text: #8f9bbd;
+  --color-invalid-bg: #3a1f2a;
+  --color-hover: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="obsidian"] body {
+  background-color: #0e1324;
+  color: #e7ecf8;
+}
+
+[data-theme="obsidian"] a {
+  color: #a5b4fc;
+}
+
+[data-theme="obsidian"] header,
+[data-theme="obsidian"] .caja_pestañas,
+[data-theme="obsidian"] .dropDown {
+  background: linear-gradient(90deg, #232c4a 0%, #10162b 67%, #1a2240);
+}
+
+[data-theme="obsidian"] .sumaries_products_home,
+[data-theme="obsidian"] .sumaries_home_card,
+[data-theme="obsidian"] footer {
+  background-color: #161c2f;
+  border-color: #232c44;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="obsidian"] .home_card_content h3,
+[data-theme="obsidian"] .sumaries_products_home h3,
+[data-theme="obsidian"] .sumaries_home_card h3 {
+  color: #e7ecf8;
+}
+
+[data-theme="obsidian"] .home_card_content p,
+[data-theme="obsidian"] .sumaries_products_home p,
+[data-theme="obsidian"] .sumaries_home_card p,
+[data-theme="obsidian"] footer .footer_card p {
+  color: #9aa6c3;
+}
+
+[data-theme="obsidian"] tr {
+  background-color: #161c2f;
+  color: #e7ecf8;
+}
+
+[data-theme="obsidian"] tr:nth-child(even) {
+  background-color: #1b2336;
+  color: #e7ecf8;
+}
+
+[data-theme="obsidian"] .table_body {
+  color: #e7ecf8;
+}
+
+[data-theme="obsidian"] .table_header {
+  background-color: #232c4a;
+  color: #e7ecf8;
+}
+
+[data-theme="obsidian"] input,
+[data-theme="obsidian"] select {
+  background-color: #12182b;
+  color: #e7ecf8;
+  border-color: #2b3550;
+}
+
+[data-theme="obsidian"] input:focus,
+[data-theme="obsidian"] select:focus {
+  border-color: #6d7cff;
+  outline: 1px solid #6d7cff;
+}
+
+[data-theme="obsidian"] input::placeholder {
+  color: #5f6c8f;
+}
+
+[data-theme="obsidian"] select option {
+  background-color: #161c2f;
+  color: #e7ecf8;
+}
+
+[data-theme="obsidian"] .only_input,
+[data-theme="obsidian"] .only_select {
+  background-color: #12182b;
+  color: #cdd6f0;
+  border-color: #46537e;
+}
+
+[data-theme="obsidian"] .dataSell input {
+  border-color: #2b3550;
+}
+
+[data-theme="obsidian"] .registrationDate:invalid,
+[data-theme="obsidian"] .only_input:invalid {
+  background-color: #3a1f2a;
+  border-color: #f87171;
+}
+
+[data-theme="obsidian"] .button_save {
+  background-color: #4f5ff0;
+  border-color: #4f5ff0;
+  color: #ffffff;
+}
+
+[data-theme="obsidian"] .popup_frame {
+  background-color: #161c2f;
+  color: #e7ecf8;
+}
+
+[data-theme="obsidian"] .popup_frame .closeButton {
+  background-color: #262f4a;
+  color: #cdd6f0;
+}
+
+[data-theme="obsidian"] .suggestions_lu {
+  background-color: #1b2336;
+}
+
+[data-theme="obsidian"] h1,
+[data-theme="obsidian"] h2,
+[data-theme="obsidian"] h3,
+[data-theme="obsidian"] p {
+  color: #e7ecf8;
+}
+
+[data-theme="obsidian"] .unitPrice,
+[data-theme="obsidian"] .title_product {
+  color: #9aa6c3;
+}
+
+[data-theme="obsidian"] ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+[data-theme="obsidian"] ::-webkit-scrollbar-thumb {
+  background: #2b3550;
+  border-radius: 6px;
+}
+
+[data-theme="obsidian"] ::-webkit-scrollbar-track {
+  background: transparent;
+}

@@ -12,11 +12,11 @@ export function ThemeToggle() {
   return (
     <button
       className="theme-toggle"
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      title={theme === "dark" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+      onClick={() => setTheme(theme === "obsidian" ? "light" : "obsidian")}
+      title={theme === "obsidian" ? "Cambiar a modo claro" : "Cambiar a tema obsidian"}
       aria-label="Cambiar tema"
     >
-      {theme === "dark" ? "Claro" : "Oscuro"}
+      {theme === "obsidian" ? "Claro" : "Obsidian"}
     </button>
   );
 }
