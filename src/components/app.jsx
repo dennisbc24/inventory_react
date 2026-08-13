@@ -28,6 +28,8 @@ import { LastEntries } from './entries/lastEntries.jsx';
 
 import { ContextGlobal  } from "../context/globalContext.jsx";
 import "./theme.css";
+import "../darkmode.css";
+import { ThemeToggle } from "./themeToggle.jsx";
 
 import { TableGet } from './table.jsx';
 import { ContextUser } from "../context/userContext";
@@ -61,7 +63,6 @@ useEffect(()=>{
     <>  
    
     <Routes>
-
     <Route path='/' element={  user 
             ?  <>
                 <MainMenu/> 
@@ -140,6 +141,7 @@ useEffect(()=>{
 
 </Routes>
     
+    <ThemeToggle/>
     
         
         </>

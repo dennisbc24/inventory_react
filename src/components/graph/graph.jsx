@@ -33,8 +33,8 @@ export function SalesChart({ urlBase }) {
     }, [urlBase]);
 
     return (
-        <div style={{ width: '100%', height: 350, backgroundColor: '#fff', padding: '15px', borderRadius: '10px', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
-            <h3 style={{ fontFamily: 'sans-serif', color: '#444', marginBottom: '20px' }}>
+        <div style={{ width: '100%', height: 350, backgroundColor: 'var(--card-bg)', padding: '15px', borderRadius: '10px', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
+            <h3 style={{ fontFamily: 'sans-serif', color: 'var(--card-text)', marginBottom: '20px' }}>
                 Ventas del Mes Actual
             </h3>
             
@@ -47,20 +47,20 @@ export function SalesChart({ urlBase }) {
                         </linearGradient>
                     </defs>
 
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--chart-grid)" />
                     
                     <XAxis 
                         dataKey="dia" 
-                        tick={{ fontSize: 11 }}
+                        tick={{ fontSize: 11, fill: 'var(--chart-text)' }}
                         // interval="preserveStartEnd" evita que los números se traslapen si hay muchos días
                         interval="preserveStartEnd" 
                         minTickGap={10}
                     />
                     
-                    <YAxis tick={{ fontSize: 11 }} />
+                    <YAxis tick={{ fontSize: 11, fill: 'var(--chart-text)' }} />
                     
                     <Tooltip 
-                        contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+                        contentStyle={{ borderRadius: '8px', border: '1px solid var(--chart-grid)', backgroundColor: 'var(--card-bg)', color: 'var(--card-text)', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
                         labelFormatter={(value) => `Día: ${value}`}
                     />
                     

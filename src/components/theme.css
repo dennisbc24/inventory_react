@@ -19,6 +19,11 @@
   --color-danger: #dc2626;
   --color-invalid-bg: #fee2e2;
   --color-hover: rgba(255, 255, 255, 0.25);
+
+  --card-bg: #ffffff;
+  --card-text: #444444;
+  --chart-grid: #f0f0f0;
+  --chart-text: #666666;
 }
 
 .divForm{
