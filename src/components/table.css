@@ -1,6 +1,6 @@
 .table_header{
     background-color: var(--persian-blue-800);
-    color:var(--persian-blue-700);
+    color: var(--dark-text);
 }
 
 .table_body{

@@ -13,7 +13,12 @@
   --persian-blue-700: #284bd7;
   --persian-blue-800: #253ca8;
   --persian-blue-900: #233785;
-  --persian-blue-950: #1a2451;  
+  --persian-blue-950: #1a2451;
+
+  --color-success: #16a34a;
+  --color-danger: #dc2626;
+  --color-invalid-bg: #fee2e2;
+  --color-hover: rgba(255, 255, 255, 0.25);
 }
 
 .divForm{

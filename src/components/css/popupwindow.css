@@ -25,11 +25,13 @@
 }
 
 .popup_frame button{
-    background-color: #40EA22;
+    background-color: var(--color-success);
     font-weight: bold;
     font-size-adjust: initial;
     padding: 5px;
     border-radius: 10px;
+    color: white;
+    border: none;
 }
 .popup_frame .closeButton{
     background-color: rgb(190, 189, 189);

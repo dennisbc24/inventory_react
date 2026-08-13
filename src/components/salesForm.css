@@ -109,12 +109,12 @@ font-size: smaller;
     align-items: center;
 }
 .saveSell{
-    background-color: #40EA22;
+    background-color: var(--color-success);
    margin-top: 24px;
     border-radius: 0.5rem;
     cursor: pointer;
-    border: solid #40EA22;
-    
+    border: solid var(--color-success);
+    color: white;
     padding: 7px;
 }
 .descriptionSell{
@@ -124,10 +124,12 @@ font-size: smaller;
     height: 10px;
 }
 .registrationDate:invalid {
-    background-color: #8f8686;
+    background-color: var(--color-invalid-bg);
+    border: 1px solid var(--color-danger);
 }
 .only_input:invalid {
-    background-color: #8f8686;
+    background-color: var(--color-invalid-bg);
+    border: 1px solid var(--color-danger);
 }
 
 .summarySell{
