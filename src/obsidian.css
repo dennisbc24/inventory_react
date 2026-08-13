@@ -30,6 +30,11 @@
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
 }
 
+[data-theme="obsidian"] .home_card {
+  color: #e7ecf8;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
 [data-theme="obsidian"] .home_card_content h3,
 [data-theme="obsidian"] .sumaries_products_home h3,
 [data-theme="obsidian"] .sumaries_home_card h3 {

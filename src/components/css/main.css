@@ -22,8 +22,10 @@ body{
     height: 35px;
     border-radius: 20px;
     font-weight: bold;
-    color: white;
-    
+    color: var(--persian-blue-900);
+    background-color: var(--card-bg);
+    border-left: 5px solid var(--card-accent);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     padding: 13px;
     gap: 10px;
       font-size: medium;
@@ -40,7 +42,11 @@ body{
 }
 
 .home_card_content h3{
+  color: var(--persian-blue-900);
   margin-bottom: -13px;
+}
+.home_card_content p{
+  color: var(--color-fourth);
 }
 .sumaries_products_home{
   display: flex;

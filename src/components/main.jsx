@@ -21,7 +21,7 @@ const inventoryService = new InventoryService();
 
 const Card = ({title, colorCard, link, paragraph}) => {
     return(
-        <Link className="home_card" style={{"backgroundColor": `${colorCard}`}} to={link}>
+        <Link className="home_card" style={{"--card-accent": `${colorCard}`}} to={link}>
             <div className="container_img_card_home">
                
             </div>
