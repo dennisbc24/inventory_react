@@ -1,18 +1,23 @@
 import { useState, useEffect, useContext } from "react";
-import { InputSimple, SelectSimple, ParrafoInput, ButtonSave } from "./form/inputSearch";
-import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
+import { ButtonSave } from "./form/inputSearch";
 import { TableGet } from "./table.jsx";
 import { SalesService } from "../services/sales.js";
 import { PopUpWindow } from "../../src/components/form/popupwindow.jsx";
 import noImagen from "./img/no_imagen.png";
 const saleService = new SalesService()
 import { ContextGlobal  } from "../context/globalContext.jsx";
+import { ContextUser } from "../context/userContext.jsx";
 import useFetch from "../hooks/useFetch.jsx";
+import shoppingService from "../services/shoppingList";
 export const SelesForm = ({ urlBase }) => {
 
   const {setProductGlobal, productGlobal, closeWindow, setCloseWindow, urlGlobal} = useContext(ContextGlobal)
+  const { usuario } = useContext(ContextUser)
+  
+  const [inShoppingList, setInShoppingList] = useState(false);
+  const [shoppingItemId, setShoppingItemId] = useState(null);
   
 
   const [query, setQuery] = useState("");
@@ -29,8 +34,6 @@ export const SelesForm = ({ urlBase }) => {
   const [idBranch, setIdBranch] = useState(1);
   const [show, setShow] = useState(false)
   const [showSales, SetShowSales] = useState(true)
-  const [textButton, SetTextButton] = useState('Guardar')
-  const [tableColor, setTableColor] = useState('white');
   const [urlImage, setUrlImage] = useState(noImagen);
   const [revenueEditing, setRevenueEditing] = useState(undefined);
   //const [editImg, setEditImg] = useState(false)
@@ -55,7 +58,7 @@ const handleChangeRevenue = (e) => {
     lastTapTime = currentTime;
   };
 
-  const { data: products, loading: loadingProducts, error: errorProducts } = useFetch(`${urlGlobal}/api/v1/products`);
+  const { data: products } = useFetch(`${urlGlobal}/api/v1/products`);
 
   useEffect(() => { // search suggestions
     if (products) {
@@ -91,26 +94,50 @@ const handleChangeRevenue = (e) => {
   useEffect(() => {
     const value = ((PUnit - cost) * count).toFixed(2)
     setRevenue(value)
-
-    // no funciona aun
-    if (value < 0) {
-      setTableColor('red')
-    }
-    else {
-      setTableColor('white')
-    }
   }, [PUnit]);
 
-  const handleCount = ({ target: { value } }) => {
-    const valueCount = parseInt(value)
-    setCount(valueCount)
-    if (valueCount < 0) {
+  useEffect(() => {
+    let isActive = true;
+    const checkShoppingList = async () => {
+      if (usuario.role === 'admin' && productGlobal && productGlobal.id_product) {
+        try {
+          const response = await shoppingService.checkProduct(urlGlobal, productGlobal.id_product);
+          if (isActive) {
+            setInShoppingList(response.inList);
+            setShoppingItemId(response.id_shopping);
+          }
+        } catch (error) {
+          console.error("Error al consultar la lista de compras:", error);
+        }
+      } else {
+        setInShoppingList(false);
+        setShoppingItemId(null);
+      }
+    };
+    checkShoppingList();
+    return () => { isActive = false; };
+  }, [productGlobal, urlGlobal, usuario.role]);
 
-    } else {
-
+  const toggleShoppingList = async () => {
+    if (!productGlobal || !productGlobal.id_product) return;
+    try {
+      if (inShoppingList) {
+        if (shoppingItemId) {
+          await shoppingService.remove(urlGlobal, shoppingItemId);
+        }
+        setInShoppingList(false);
+        setShoppingItemId(null);
+      } else {
+        const response = await shoppingService.addManual(urlGlobal, productGlobal.id_product);
+        setInShoppingList(true);
+        setShoppingItemId(response.id_shopping);
+      }
+    } catch (error) {
+      console.error("Error al modificar la lista de compras:", error);
     }
-
   };
+
+  const handleCount = ({ target: { value } }) => { setCount(parseInt(value)) };
   const handleTotal = ({ target: { value } }) => { setTotal(parseFloat(value)) };
   const handleChange = (e) => { setQuery(e.target.value), setShow(false), SetShowSales(false) }
   const handleDate = (e) => { setDateSell(e.target.value) }
@@ -138,7 +165,6 @@ const handleChangeRevenue = (e) => {
         setCost(elem.cost);
         setQuery('')
         setShow(true)
-        SetTextButton('Guardar')
         elem.url_image ? setUrlImage(elem.url_image) : setUrlImage(noImagen)
       }
     });
@@ -150,7 +176,7 @@ const handleChangeRevenue = (e) => {
     if (dateSell != '' && revenue > 0 && count > 0 && productGlobal.name != undefined) {
       const body = { dateSell, count, total, PUnit, revenue, dataCustomer, product:productGlobal, idUser, idBranch }
       
-      const upload = saleService.register(urlBase, body)
+      saleService.register(urlBase, body)
       SetShowSales(true)
       alert('Felicidades...Venta Registrada!')
     } else {
@@ -272,6 +298,9 @@ const handleChangeRevenue = (e) => {
       
     </main>
     <h3>Stock</h3>
+      {usuario.role === 'admin' && productGlobal && productGlobal.id_product ? (
+        <ButtonSave titulo={inShoppingList ? 'Quitar de lista de compras' : 'Agregar a lista de compras'} func={toggleShoppingList}/>
+      ) : null}
       {<>{show ? <TableGet url={`${urlBase}/api/v1/existence?product=${productGlobal.id_product}`} /> : <></>
       }</>}
       <h3>Ultimas Ventas</h3>

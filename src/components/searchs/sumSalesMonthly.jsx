@@ -1,6 +1,6 @@
 import "../salesForm.css";
 import { TitleForm } from "../form/titleForm.jsx";
-import {  ButtonSave, InputSimple, SearchInput} from "../form/inputSearch";
+import {  ButtonSave, SearchInput} from "../form/inputSearch";
 import { useEffect, useState } from "react";
 import { TableGet2 } from "../table.jsx";
 import { SalesService } from "../../services/sales.js";

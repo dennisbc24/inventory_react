@@ -82,7 +82,7 @@ export class InventoryService {
     const urlTransactions = `${urlBase}/api/v1/transactions`;
 
 
-    const sendData = await axios.post(urlTransactions,{
+    await axios.post(urlTransactions,{
       pointA: branchA,
       pointB: branchB,
       amount: count,
@@ -94,7 +94,7 @@ export class InventoryService {
   async registerEntries(urlBase, {idBranch,count,idUser,idProduct}) {
     const urlEntries = `${urlBase}/api/v1/entries`;
 
-    const sendEntry = await axios.post(urlEntries, {
+    await axios.post(urlEntries, {
       pointB: idBranch,
              amount: count,
              fk_user:idUser,

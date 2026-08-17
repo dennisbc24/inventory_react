@@ -12,7 +12,7 @@ export const DeleteSale = ({urlBase}) => {
   const [textButton, SetTextButton] = useState('Eliminar')
   const handleID = ({ target: { value } }) => { setIdSale(parseInt(value)), SetTextButton("Eliminar")};
   const handleButton = () => {
-  const remove = saleService.delete(urlBase,idSale)
+    saleService.delete(urlBase,idSale)
     SetTextButton("Eliminado")
     alert('Venta Eliminada')
   };

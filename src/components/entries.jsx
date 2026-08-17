@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {  InputSimple,  SelectSimple,  ParrafoInput, ButtonSave} from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
@@ -9,8 +9,6 @@ import { InventoryService } from "../services/inventory.js";
 const inventoryService = new InventoryService()
 
 export const EntriesForm = ({urlBase}) => {
-  const urlEntries = `${urlBase}/api/v1/entries`;
-const urlSuppliers = `${urlBase}/api/v1/suppliers`;
 const urlApiProducts = `${urlBase}/api/v1/products`;
   const [isSaving, setIsSaving] = useState(false);
   const [query, setQuery] = useState("");
@@ -67,7 +65,6 @@ const urlApiProducts = `${urlBase}/api/v1/products`;
 
   const handleCount = ({ target: { value } }) => { setCount(parseInt(value))};
   const handleChangeProducts = (e) => {setQuery(e.target.value), setShow(false)}
-  const handleChangeSuppliers = (e) => {setQuerySuppliers(e.target.value)}
   const handleIdUser = (e) =>{  setIdUser(parseInt(e.target.value))}
   const handleIdBranch = (e) =>{  setIdBranch(parseInt(e.target.value))}
   
@@ -90,7 +87,7 @@ const handleButton = () => {
 
   setIsSaving(true);
 
-  try{const sendEntry = inventoryService.registerEntries(urlBase, {idBranch,count,idUser,idProduct})
+  try{inventoryService.registerEntries(urlBase, {idBranch,count,idUser,idProduct})
         
         alert('Ingreso de mercaderia registrado')
       }catch (innerError) {

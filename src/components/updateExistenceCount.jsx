@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import {  InputSimple,  ParrafoInput, ButtonSave, SelectSimple} from "./form/inputSearch";
+import {  InputSimple,  ParrafoInput, SelectSimple} from "./form/inputSearch";
 import axios from "axios";
 import "./css/updateExistenceCount.css";
 import { TitleForm } from "./form/titleForm.jsx";

@@ -77,8 +77,6 @@ const TableTr =  ({urlApi, token, modify}) =>{
     sumas()
   }, [fill])
 
-  const [sum, setSum] = useState(null)
-
   function sumas(){
     let suma = []
     let suma2 = []

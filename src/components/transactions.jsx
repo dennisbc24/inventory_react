@@ -1,5 +1,5 @@
 import  { useState, useEffect } from "react";
-import {  InputSimple,  SelectSimple,  ParrafoInput, ButtonSave} from "./form/inputSearch";
+import {  InputSimple,  SelectSimple, ButtonSave} from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
 import "./css/transactions.css";
@@ -11,7 +11,6 @@ import noImagen from "./img/no_imagen.png";
 import entregaImagen from "./icons/entrega.png";
 
 export const TransactionsForm = ({urlBase}) => {
-  const urlTransactions = `${urlBase}/api/v1/transactions`;
   const [query, setQuery] = useState("");
   const [allProducts, setAllProducts] = useState([]); // Array con todos los productos
   const [suggestions, setSuggestions] = useState([]);
@@ -90,7 +89,7 @@ export const TransactionsForm = ({urlBase}) => {
     if (dateTrans != '' && branchA !== branchB && count > 0 && product.id_product != undefined ){
       const sendVending = async () => {
         const id_product = product.id_product
-        const makeTransaction = inventoryService.registerTransaction(urlBase,{branchA,branchB,count,idUser,dateTrans,id_product})
+        inventoryService.registerTransaction(urlBase,{branchA,branchB,count,idUser,dateTrans,id_product})
           alert('Traslado registrado con exito') 
       };
    

@@ -122,8 +122,6 @@ useEffect(() => {
 //     fetchInventoryValueByProduct();
 // }, []);
 
-    let randomIndex = Math.floor(Math.random() * stocvkLow.length)
-    let randomIndex2 = Math.floor(Math.random() * sellingProducts.length)
     const {urlGlobal} = useContext(ContextGlobal)
     return(
         <>
@@ -134,16 +132,17 @@ useEffect(() => {
             <Card title={'Valor Inventario'} colorCard={'green'} link={'/inventory'} paragraph={`S/.${valueInventory}`}/>
             {/* <Card title={'Proveedores'} colorCard={'grey'} link={'/searchSales'}/> */}
             <Card title={'Ganancia Hoy'} colorCard={'red'} link={'/searchSales'} paragraph={`S/.${revenueOfTheDay}`} />
-            <Card title={'Traslados'} colorCard={'purple'} link={'/lastTransactions'} paragraph={'0 Operaciones'} />
+            <Card title={'Traslados'} colorCard={'purple'} link={'/lastTransactions'} paragraph={'Ver movimientos'} />
             <Card title={'Mejores Productos'} colorCard={'#00b4ff'} paragraph={'100 mejores'} link={'/bestProducts'}/>
+            <Card title={'Lista de Compras'} colorCard={'orange'} paragraph={'Productos por adquirir'} link={'/shoppingList'}/>
             {/* <Card title={'Producto Vendido'} colorCard={'#00b4ff'} link={''}/> */}
 
         </div>
-            <Product_Card title={'Productos populares'} description={sellingProducts[randomIndex2]?.producto || 'No hay datos'} img={flecha_arriba} productosImg={sellingProducts[randomIndex2]?.img || ''} link={'/lastBestProducts'}/>
+            <Product_Card title={'Productos populares'} description={sellingProducts[0]?.producto || 'No hay datos'} img={flecha_arriba} productosImg={sellingProducts[0]?.img || ''} link={'/lastBestProducts'}/>
             <Product_Card img={flecha_abajo} title={'Stock bajo'} description={
                 
-                stocvkLow[randomIndex]?.nombre|| 'No hay datos'} link={'/stockLow'} 
-                productosImg={stocvkLow[randomIndex]?.url_image || ''}/>
+                stocvkLow[0]?.nombre|| 'No hay datos'} link={'/stockLow'} 
+                productosImg={stocvkLow[0]?.url_image || ''}/>
         <section className="summaries_card">
             <Summary_Card img={car} title={'Registro de venta'} description={'Registrar'} color={'green'} link={'/putSale'}/>
             <Summary_Card img={ingresosImg} title={'Añadir ingreso'} description={'ingreso'} color={'#220080'} link={'/entries'}/>

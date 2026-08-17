@@ -3,8 +3,6 @@ import { IS_DEVELOPMENT } from "../components/config.js";
 //crearmos el contexto
 export const ContextGlobal = createContext()
 
-const apiUrl = import.meta.env.VITE_API_URL; // variable de entorno
-
 
 
 //crear provider

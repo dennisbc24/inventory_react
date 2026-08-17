@@ -22,7 +22,7 @@ const urlPayDebt = `${urlBase}/api/v1/box/payDebt`
 
 const handleCLic = async () => {
   const body = {idDebt, user, total, concept }
-  const sendData = await axios.post(urlPayDebt, body)
+  await axios.post(urlPayDebt, body)
   alert("data sent")
 
 }
@@ -204,7 +204,7 @@ const Formulario = () => {
         {Object.keys(errors).length > 0 && (
           <div style={{ color: "red" }}>
             <ul>
-              {Object.entries(errors).map(([field, message], index) => (
+              {Object.entries(errors).map(([, message], index) => (
                 <li key={index}>{message}</li>
               ))}
             </ul>
@@ -220,7 +220,7 @@ const Formulario = () => {
 };
 
 
- const MoneyTransactions = (urlBase) => {
+ const MoneyTransactions = () => {
   
 return(
   <>
@@ -231,7 +231,7 @@ return(
   )
 }
 
-const PayDebt = (urlBase) => {
+const PayDebt = () => {
   
   return(
     <>
@@ -253,7 +253,7 @@ const NewTransation = ({urlBase}) => {
   const handleCLic = async () => {
     console.log(urlPost);
     
-    const saveTransaction = await axios.post(urlPost, {
+    await axios.post(urlPost, {
       userA,
       userB,
       concept:`TRD ${concept}`,
@@ -321,7 +321,7 @@ const BoxByUser = ({urlBase}) => {
 useEffect(()=>{
 const fetchBox = async () => {
   try {
-    const requestCash = await axios.get(urlToCash)
+    await axios.get(urlToCash)
     const response1 = await axios.get(`${urlToCash}1`)
     setBox1(response1.data[0].cash)
     const response2 = await axios.get(`${urlToCash}2`)
@@ -354,7 +354,7 @@ const CreateDebt = ({urlBase}) => {
 
  const handleCLic = async ()=>{
     const body = { debt, expiration_date, description, currency, fk_user }
-    const sendData = await boxService.register(urlBase, body)
+    await boxService.register(urlBase, body)
 }
  
 const handleDebt = ({ target: { value } }) => { setDebt(value) };

@@ -12,8 +12,7 @@ export function Pestana({ children, titulo }) {
     vista == "close" ? "dropDown dropDownClose" : "dropDown";
 
   function witch() {
-    const changeView =
-      vista == "close" ? setVista("abierto") : setVista("close");
+    vista == "close" ? setVista("abierto") : setVista("close");
   }
 
   return (
@@ -86,7 +85,7 @@ export function Menu() {
 
       <div className="caja-logo">
         <img src={repartidor} alt="" className="logito" />
-        <a href="https://inventario.elwayardo.com/" className="main_title">
+        <a href="https://inventario.cocinamejor.store/" className="main_title">
           CocinaMejor
         </a>
       </div>
@@ -100,7 +99,8 @@ export function Menu() {
           <EnlaceLi name='Suma Mensual' link='/sumSalesMonthly'/>
           <EnlaceLi name='Buscar Stock' link='/inventorySearch'/>
           <EnlaceLi name='Buscar Gasto' link='/searchSpends'/>
-          <EnlaceLi name='Caja' link='/box'/>
+<EnlaceLi name='Caja' link='/box'/>
+          <EnlaceLi name='Lista de Compras' link='/shoppingList'/>
           
 
     
@@ -116,6 +116,7 @@ export function Menu() {
           <EnlaceLi name='SUMA MENSUAL' link='/sumSalesMonthly'/>
           <EnlaceLi name='BUSCAR STOCK' link='/inventorySearch'/>
           <EnlaceLi name='BUSCAR GASTO' link='/searchSpends'/> 
+          <EnlaceLi name='LISTA DE COMPRAS' link='/shoppingList'/>
         </>  : null}
 
     {role === 'admin' || role === 'seller' ? 

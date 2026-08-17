@@ -23,7 +23,7 @@ export const SendExpense = ({urlBase}) => {
     const handleButton = () => {
         const sendData = async () => {
     try {
-      const sendData = await axios.post(urlUpload,{
+      await axios.post(urlUpload,{
         concept: concept,
         amount: amount,
         date: date,

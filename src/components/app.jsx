@@ -25,6 +25,7 @@ import {Box} from './box.jsx'
 import { Landing } from './main.jsx';
 import { LastTransactions } from './transactions/lastTransactions.jsx';
 import { LastEntries } from './entries/lastEntries.jsx';
+import { ShoppingList } from './shoppingList.jsx';
 
 import { ContextGlobal  } from "../context/globalContext.jsx";
 import "./theme.css";
@@ -127,6 +128,9 @@ useEffect(()=>{
     </Route>
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
         <Route path='/box' element={<Box urlBase={urlGlobal}/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin','seller','viewer']} user={user}/>}>
+        <Route path='/shoppingList' element={<ShoppingList urlBase={urlGlobal}/>}/>
     </Route>
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin','viewer','seller']} user={user}/>}>
         <Route path='/lastBestProducts' element={<TableGet url={`${urlGlobal}/api/v1/ventas/topSellingProducts`} minWitdh="800px"/>}/>

@@ -7,7 +7,7 @@ export class BoxService {
         
         const {debt, expiration_date, description, currency, fk_user} = body
         try {
-            const sendData = await axios.post(urlToAPI,{
+            await axios.post(urlToAPI,{
                 debt, expiration_date, description, currency, fk_user
             })
             

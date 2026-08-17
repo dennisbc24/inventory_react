@@ -7,7 +7,7 @@ export class SalesService {
         const urlUMofifyExistence = `${urlBase}/api/v1/existence/vendings`;
         const {dateSell, count, total,PUnit, revenue, dataCustomer, product, idUser, idBranch} = body
         try {
-            const sendData = await axios.post(urlUploadVendings,{
+            await axios.post(urlUploadVendings,{
               date: dateSell,
               amount: count,
               p_total: total,
@@ -21,7 +21,7 @@ export class SalesService {
               product:product.name
             })
     
-            const modifyExistence = await axios.patch(urlUMofifyExistence,{
+            await axios.patch(urlUMofifyExistence,{
               amount: count, 
               fk_branch: idBranch, 
               fk_product:product.id_product, 

@@ -1,13 +1,9 @@
-import {useEffect, useState } from "react";
-import {  InputSimple, ButtonSave, ParrafoInput, SearchInput} from "./form/inputSearch";
+import { useState } from "react";
+import {  InputSimple, ParrafoInput, SearchInput} from "./form/inputSearch";
 import "./salesForm.css";
 import axios from 'axios';
 import { TitleForm } from "./form/titleForm.jsx";
 import { TableGet } from "./table.jsx";
-import {ProductService} from "../services/product.js"
-//import { UploadPhoto } from "./inputs/upload_img.jsx";
-
-const service = new ProductService()
 
 export const NewProduct = ({urlBase}) => {
   const [name, setName] = useState('');

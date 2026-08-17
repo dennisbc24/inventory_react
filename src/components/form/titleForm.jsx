@@ -1,5 +1,3 @@
-import React from 'react'
-
 import './titleForm.css'
 
 export function TitleForm({text}) {

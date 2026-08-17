@@ -14,8 +14,7 @@ export function PopUpWindow({text}) {
   
 
 
-const handleSubmit = async (e) => {  // enviar datos del producto
- // e.preventDefault();
+const handleSubmit = async () => {  // enviar datos del producto
   const formData = new FormData();
   formData.append('cost',   [productGlobal.cost === null ? 0 : productGlobal.cost]);
   formData.append('sugested_price', [productGlobal.list_price === null ? 0 : productGlobal.list_price]);

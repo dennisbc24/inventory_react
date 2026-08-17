@@ -18,7 +18,6 @@ export const Inventory = ({urlBase}) => {
   const [show2, setShow2] = useState(false);
   const [show3, setShow3] = useState(false);
   const [show4, setShow4] = useState(false);
-  const [show5, setShow5] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const [query, setQuery] = useState("");
   const [product, setProd] = useState(undefined);
@@ -77,7 +76,7 @@ setEditandoId(null);
     setShow2(false)
     
   }
-  const handleReview = ({target: {value}}) => {setReview(parseInt(value)), setShow2(false), setShow(false), setShow3(false), setShow4(false), setShow5(false)};  
+  const handleReview = ({target: {value}}) => {setReview(parseInt(value)), setShow2(false), setShow(false), setShow3(false), setShow4(false)};  
   
   useEffect(()=>{
     const getData = async () => {
@@ -121,7 +120,7 @@ setEditandoId(null);
           },[branch])
   
 
-const { data: products, loading: loadingProducts, error: errorProducts } = useFetch(`${urlGlobal}/api/v1/products`);
+const { data: products } = useFetch(`${urlGlobal}/api/v1/products`);
   const handleChangeInput = (e) => { setQuery(e.target.value) }
   const handleClick = async (event) => {
       const textoLi = event.target.textContent

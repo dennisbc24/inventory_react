@@ -9,36 +9,21 @@ const SpendsByUser = ({urlBase}) => {
   const [data, setData] = useState([]);
   const [user, setUser] = useState(1);
   const [total_saldo, setTotal_saldo] = useState(0)
-  const [dataSales, setDataSales] = useState([]);
   
 
   const urlToCash = `${urlBase}/api/v1/users/getCash?id=${user}`
 
   const urlLastSpends = `${urlBase}/api/v1/box/lastSpends?user=${user}`
-  const urlLastSales = `${urlBase}/api/v1/ventas/lastSales?user=${user}`
 
  const handleCLic = async () => {
 
-  const requestLastSales = await axios.get(urlLastSales)
   const requestLastSpends = await axios.get(urlLastSpends)
     const requestCash = await axios.get(urlToCash)
     
-    setDataSales(requestLastSales.data)
-    const dataSalesTemp = requestLastSales.data
-    const dataSpendsTemp = requestLastSpends.data
-    
     setTotal_saldo(requestCash.data[0].cash)
     setShow(true)
-
-
-    const newArray = dataSalesTemp.map(item => ({
-      concept: `Venta: ${item.producto}`,
-      date: item.date,
-      amount: item.p_total
-    }))
-     const twoArrays = [...newArray,...dataSpendsTemp].sort((a,b)=> new Date(b.date) - new Date(a.date))
-     setData(requestLastSpends.data)
-     
+    setData(requestLastSpends.data)
+    
  }
   
  const handleUser = (e) => {
@@ -160,7 +145,7 @@ const SpendsByMonth =({urlBase})=>{
   );
 }
 
-export const SearchSpends = ({urlBase, token}) => {
+export const SearchSpends = ({urlBase}) => {
  const [opt, setOpt] = useState(1) 
 
  const changeOption =  (e) => {

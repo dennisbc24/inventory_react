@@ -1,15 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
 
-const uploadFile = (formDataParam) => {
-
-  fetch('http://localhost:3000/api/v1/products/files',{
-      method:'POST',
-      body:formDataParam
-  })
-
-};
-
 
 
 export const UploadPhoto = () => {

@@ -6,7 +6,7 @@ export class ProductService {
         const urlUpload = `${urlBase}/api/v1/products`
         const {proveedor,nameProduct,costProduct,PUnit,pMayor} = payload
         try {
-            const sendData = await axios.post(urlUpload,{
+            await axios.post(urlUpload,{
               //fk_user: idUser,
               //fk_branch:idBranch,
               fk_supplier:proveedor.id_supplier,
