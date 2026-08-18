@@ -8,6 +8,16 @@
     font-weight: 500;
 }
 
+.result{
+    width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+}
+
+.infoTable{
+    min-width: 700px;
+}
+
 td{
     padding-left: 8px;
 }
