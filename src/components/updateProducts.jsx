@@ -90,10 +90,10 @@ export const UpdateProductForm = ({urlBase}) => {
   };
 
   const handleChange = (e) => {setQuery(e.target.value)}
-  const handleCost = (e) => setCost(parseFloat(e.target.value))
+  const handleCost = (e) => setCost(e.target.value)
   const handleName = (e) => setName(e.target.value)
-  const handleSuggestedPrice = (e) => setSugested_price(parseFloat(e.target.value))
-  const handleWholeSalePrice = (e) => setWholesale_price(parseFloat(e.target.value))
+  const handleSuggestedPrice = (e) => setSugested_price(e.target.value)
+  const handleWholeSalePrice = (e) => setWholesale_price(e.target.value)
 
 
   const handleClick = (event) => { 
@@ -159,9 +159,9 @@ export const UpdateProductForm = ({urlBase}) => {
 
         <InputSimple titulo='Nombre' tipo='text' valor={name} func={handleName} nombre='name'></InputSimple>
         
-        <InputSimple titulo='Costo' tipo='number' valor={cost} func={handleCost} nombre='cost'></InputSimple>
-        <InputSimple titulo='Precio Sugerido' tipo='number' valor={sugested_price} func={handleSuggestedPrice} nombre='sugested_price'></InputSimple>
-        <InputSimple titulo='Precio por mayor' tipo='number' valor={wholesale_price} func={handleWholeSalePrice} nombre='wholesale_price'></InputSimple>
+        <InputSimple titulo='Costo' tipo='number' step="any" valor={cost} func={handleCost} nombre='cost'></InputSimple>
+        <InputSimple titulo='Precio Sugerido' tipo='number' step="any" valor={sugested_price} func={handleSuggestedPrice} nombre='sugested_price'></InputSimple>
+        <InputSimple titulo='Precio por mayor' tipo='number' step="any" valor={wholesale_price} func={handleWholeSalePrice} nombre='wholesale_price'></InputSimple>
         <InputSimple titulo="Subir Imagen" tipo="file" func={handleInputFileChange} nombre='image_product'></InputSimple>
           <ParrafoInput titulo="Codigo" parrafo={id_product}></ParrafoInput>
           <ParrafoInput titulo="Proveedor" parrafo={product.supplier}></ParrafoInput>

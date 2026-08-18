@@ -58,10 +58,10 @@ export const NewProduct = ({urlBase}) => {
     <SearchInput urlApi={`${urlBase}/api/v1/suppliers`} funcSet={setProveedor} place="Buscar Proveedor"/>
        
       <InputSimple titulo="Nombre" tipo="text" func={handleName} nombre='name' callToAction="Escribe un nombre único"></InputSimple>
-      <InputSimple titulo="Costo S/." tipo="number" func={handleCost} nombre='cost'></InputSimple>
-      <InputSimple titulo="P. Unit S/." tipo="number" func={handlePUnit} nombre='unit'></InputSimple>
+      <InputSimple titulo="Costo S/." tipo="number" step="any" func={handleCost} nombre='cost'></InputSimple>
+      <InputSimple titulo="P. Unit S/." tipo="number" step="any" func={handlePUnit} nombre='unit'></InputSimple>
       <InputSimple titulo="Cargar Archivo" tipo="file" func={handleInputFileChange} nombre='photo'></InputSimple>
-      <InputSimple titulo="P. Mayor S/." tipo="number" func={handlePMayor} nombre='total'></InputSimple>
+      <InputSimple titulo="P. Mayor S/." tipo="number" step="any" func={handlePMayor} nombre='total'></InputSimple>
       <ParrafoInput titulo={'Proveedor'} parrafo={proveedor.name}/>
       <button type="submit">Crear</button>
     </form>

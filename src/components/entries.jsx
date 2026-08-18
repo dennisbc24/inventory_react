@@ -82,24 +82,21 @@ const urlApiProducts = `${urlBase}/api/v1/products`;
       });
     };
     
-const handleButton = () => {
- // if (isSaving) return; // Prevenir múltiples clics
+const handleButton = async () => {
+  if (isSaving) return; // Prevenir múltiples envíos
 
   setIsSaving(true);
 
-  try{inventoryService.registerEntries(urlBase, {idBranch,count,idUser,idProduct})
-        
-        alert('Ingreso de mercaderia registrado')
-      }catch (innerError) {
-        console.error("Error al mostrar alert/log:", innerError);
-      }  
-      finally {
-
-        
-        
-        setIsSaving(false); // Restablecer el estado de guardado
-      }
-    };    
+  try {
+    await inventoryService.registerEntries(urlBase, {idBranch,count,idUser,idProduct});
+    alert('Ingreso de mercaderia registrado')
+  } catch (innerError) {
+    console.error("Error al registrar el ingreso:", innerError);
+    alert('No se pudo registrar el ingreso')
+  } finally {
+    setIsSaving(false); // Restablecer el estado de guardado al terminar la petición
+  }
+};    
   
 
   return (

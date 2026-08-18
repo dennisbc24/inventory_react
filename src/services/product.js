@@ -13,8 +13,8 @@ export class ProductService {
               //amount: count,
               name:nameProduct,
               cost: costProduct,
-              lowest_price: parseInt(PUnit),
-              list_price: parseInt(pMayor),
+              lowest_price: parseFloat(PUnit),
+              list_price: parseFloat(pMayor),
             })
     
             return 'product created successfully'

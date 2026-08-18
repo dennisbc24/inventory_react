@@ -49,7 +49,7 @@ export const SendExpense = ({urlBase}) => {
 <TitleForm text='Salidas de dinero'></TitleForm>
           
           <div className="divForm">
-          <InputSimple titulo="Monto" tipo="number" func={handleMount} callToAction="Cuánto fue?"></InputSimple>
+          <InputSimple titulo="Monto" tipo="number" step="any" func={handleMount} callToAction="Cuánto fue?"></InputSimple>
           <InputSimple titulo="Concepto" tipo="text" func={handleConcept} callToAction="Para qué fue?"></InputSimple>
           <InputSimple titulo="Fecha" tipo="date" func={handleDate}></InputSimple>
           <SelectSimple titulo="Usuario" func={handleUser}>
