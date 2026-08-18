@@ -15,11 +15,6 @@ const checkProduct = async (urlBase, id_product) => {
   return data
 }
 
-const generate = async (urlBase, { threshold = 0, days = 7 } = {}) => {
-  const { data } = await axios.post(`${urlBase}/api/v1/shoppingList/generate`, { threshold, days })
-  return data
-}
-
 const markPurchased = async (urlBase, id_shopping) => {
   const { data } = await axios.patch(`${urlBase}/api/v1/shoppingList/${id_shopping}/purchased`)
   return data
@@ -35,4 +30,4 @@ const remove = async (urlBase, id_shopping) => {
   return data
 }
 
-export default { getList, addManual, checkProduct, generate, markPurchased, remove, reorder }
+export default { getList, addManual, checkProduct, markPurchased, remove, reorder }

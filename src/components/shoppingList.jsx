@@ -8,9 +8,6 @@ import { ContextUser } from "../context/userContext.jsx";
 export const ShoppingList = ({ urlBase }) => {
   const [items, setItems] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [threshold, setThreshold] = useState(5);
-  const [days, setDays] = useState(7);
-  const [generating, setGenerating] = useState(false);
   const [dragIndex, setDragIndex] = useState(null);
   const [dragOverIndex, setDragOverIndex] = useState(null);
 
@@ -30,9 +27,6 @@ export const ShoppingList = ({ urlBase }) => {
     loadList();
   }, []);
 
-  const handleThreshold = ({ target: { value } }) => { setThreshold(parseInt(value)) }
-  const handleDays = ({ target: { value } }) => { setDays(parseInt(value)) }
-
   const addManual = async () => {
     if (!selectedProduct) {
       alert("Busca y selecciona un producto");
@@ -41,14 +35,6 @@ export const ShoppingList = ({ urlBase }) => {
     const response = await shoppingService.addManual(urlBase, selectedProduct.id_product);
     alert(response.message);
     setSelectedProduct(null);
-    loadList();
-  };
-
-  const generateAuto = async () => {
-    setGenerating(true);
-    const response = await shoppingService.generate(urlBase, { threshold, days });
-    alert(response.message);
-    setGenerating(false);
     loadList();
   };
 
@@ -88,23 +74,12 @@ export const ShoppingList = ({ urlBase }) => {
       <TitleForm text='Lista de Compras'></TitleForm>
 
       {canEdit ? (
-      <>
       <div className="divForm">
         <h3>Agregar producto a mano</h3>
         <SearchInput urlApi={`${urlBase}/api/v1/products`} funcSet={setSelectedProduct} place="Buscar producto..."/>
         <p>{selectedProduct ? `Seleccionado: ${selectedProduct.name}` : ""}</p>
         <ButtonSave titulo={'Agregar a la lista'} func={addManual}/>
       </div>
-
-      <div className="divForm">
-        <h3>Generar automáticamente</h3>
-        <label>Stock total igual o menor a: </label>
-        <input type="number" value={threshold} onChange={handleThreshold} />
-        <label>Días restantes de stock menor o igual a: </label>
-        <input type="number" value={days} onChange={handleDays} />
-        <ButtonSave titulo={'Generar lista'} func={generateAuto} disabled={generating}/>
-      </div>
-      </>
       ) : null}
 
       <h3>Productos por adquirir</h3>
