@@ -2,8 +2,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./table.css"
+import { ProductModal, IMAGE_KEYS } from "./form/productModal.jsx";
 
-const TableTh =  ({urlApi, token}) =>{
+const TableTh =  ({urlApi, token, hideImages}) =>{
 
   let config = {
     headers:{
@@ -17,7 +18,7 @@ const TableTh =  ({urlApi, token}) =>{
     axios.get(urlApi, config)
     .then(function (response) {
       const data3 = response.data
-      setLlaves(Object.keys(data3[0]))
+      setLlaves(Object.keys(data3[0]).filter(k => !(hideImages && IMAGE_KEYS.includes(k))))
       
       
       
@@ -43,17 +44,17 @@ return(
 
 
 const TableTd2 =  (Adata) =>{ 
-const {dato} = Adata
+const {dato, hideImages} = Adata
 
-  const data = Object.values(dato)
+  const data = Object.entries(dato).filter(([key]) => !(hideImages && IMAGE_KEYS.includes(key)))
     return(   
-  <>{data.map((ele)=>{
-    return(<td key={crypto.randomUUID()}>{ele}</td>)})
+  <>{data.map(([key, ele])=>{
+    return(<td key={key}>{ele}</td>)})
       }
   </>)
 }
 
-const TableTr =  ({urlApi, token, modify}) =>{
+const TableTr =  ({urlApi, token, modify, showDetail, setSelected, hideImages}) =>{
 
   let config = {
     headers:{
@@ -111,7 +112,8 @@ return(
       
       return(
         <tr key={crypto.randomUUID()}>
-        <TableTd2 dato={ele}/>
+        <TableTd2 dato={ele} hideImages={hideImages}/>
+        {showDetail ? <td><button onClick={() => setSelected(ele)}>Ver</button></td> : null}
       </tr>
       )
     })
@@ -125,20 +127,24 @@ return(
 
 
 
-export  function TableGet({url, minWitdh='1051px', token}) {
+export  function TableGet({url, minWitdh='1051px', token, title, showDetail=false}) {
   const [sumar, setSumar] = useState({v_total:0,suma:0})
+  const [selectedRow, setSelectedRow] = useState(null)
   
       return(
+      <>
+      {title ? <h3>{title}</h3> : null}
       <div className="result">
 <table className="infoTable" style={{'minWidth':`${minWitdh}`,'width':'100%'}}>
         <thead className="table_header">
           <tr>
-              {<TableTh urlApi={url} token={token}/> }      
+              {<TableTh urlApi={url} token={token} hideImages={showDetail}/> }
+              {showDetail ? <th>Ver</th> : null}
 
           </tr>
         </thead>
         <tbody className="table_body">
-          <TableTr urlApi={url} token={token} modify={setSumar} />
+          <TableTr urlApi={url} token={token} modify={setSumar} showDetail={showDetail} setSelected={setSelectedRow} hideImages={showDetail} />
       
     </tbody>
     {<>{sumar.suma > 0 ? <tfoot>
@@ -153,7 +159,9 @@ export  function TableGet({url, minWitdh='1051px', token}) {
         
   </table>
       </div>
- 
+      {selectedRow ? <ProductModal product={selectedRow} onClose={() => setSelectedRow(null)}/> : null}
+      </>
+  
         )}
 
 

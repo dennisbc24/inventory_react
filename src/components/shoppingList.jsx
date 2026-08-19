@@ -6,6 +6,7 @@ import shoppingService from "../services/shoppingList";
 import { ContextUser } from "../context/userContext.jsx";
 import axios from "axios";
 import noImagen from "./img/no_imagen.png";
+import { ProductModal } from "./form/productModal.jsx";
 
 export const ShoppingList = ({ urlBase }) => {
   const [items, setItems] = useState([]);
@@ -13,6 +14,7 @@ export const ShoppingList = ({ urlBase }) => {
   const [selectedStock, setSelectedStock] = useState(null);
   const [dragIndex, setDragIndex] = useState(null);
   const [dragOverIndex, setDragOverIndex] = useState(null);
+  const [viewItem, setViewItem] = useState(null);
 
   const { usuario } = useContext(ContextUser)
   const canEdit = usuario.role === 'admin'
@@ -134,6 +136,7 @@ export const ShoppingList = ({ urlBase }) => {
             {canEdit ? <th>Acciones</th> : null}
             <th>Origen</th>
             <th>Agregado por</th>
+            <th>Ver</th>
           </tr>
         </thead>
         <tbody>
@@ -164,11 +167,13 @@ export const ShoppingList = ({ urlBase }) => {
               ) : null}
               <td>{item.source === 'auto' ? 'Automático' : 'Manual'}</td>
               <td>{item.added_by}</td>
+              <td><button onClick={() => setViewItem(item)}>Ver</button></td>
             </tr>
           ))}
         </tbody>
       </table>
       </div>
+      {viewItem ? <ProductModal product={viewItem} onClose={() => setViewItem(null)} /> : null}
     </>
   );
 };

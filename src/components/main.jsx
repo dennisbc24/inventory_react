@@ -61,14 +61,13 @@ const Summary_Card = ({img, title, description,color, link}) =>{
     )
 }
 
-const Footer_Card = ({image,title}) => {
+const Footer_Card = ({image,title, link}) => {
     return(
-<div className="footer_card">
+<Link className="footer_card" to={link}>
                 <img src={image}/>
                                 <p>{title}</p>
-
-            </div>
-    )
+</Link>
+            )
 }
 export const Landing = () => {
     const [saleOfTheDay, setSaleOfTheDay] = useState(0);
@@ -164,11 +163,11 @@ useEffect(() => {
 
         <footer>
             
-            <Footer_Card image={home} title={'Dashboard'} />
-            <Footer_Card image={ventas} title={'Ventas'} />
-            <Footer_Card image={inventario} title={'Inventario'} />
-            <Footer_Card image={movimientos} title={'Movimientos'} />
-            <Footer_Card image={alerta} title={'Notificaciones'}/>
+            <Footer_Card image={home} title={'Dashboard'} link={'/home'} />
+            <Footer_Card image={ventas} title={'Ventas'} link={'/searchSales'} />
+            <Footer_Card image={inventario} title={'Inventario'} link={'/inventory'} />
+            <Footer_Card image={movimientos} title={'Movimientos'} link={'/lastTransactions'} />
+            <Footer_Card image={alerta} title={'Comprar'} link={'/shoppingList'}/>
 
         </footer>
         </>

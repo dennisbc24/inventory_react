@@ -15,6 +15,7 @@
     background-color: rgb(251, 251, 251);
     box-shadow: 7px 9px 41px 6px rgba(0,0,0,0.75);
     gap: 10px;
+    overflow-y: auto;
 }
 
 .popup_frame img{
@@ -36,4 +37,35 @@
 .popup_frame .closeButton{
     background-color: rgb(190, 189, 189);
     align-self:flex-end;
+}
+
+.product_modal_fields{
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    overflow-y: auto;
+}
+
+.product_modal_field{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.04);
+    font-size: 0.95em;
+    min-width: 0;
+}
+
+.product_modal_field strong{
+    text-transform: capitalize;
+    flex-shrink: 0;
+}
+
+.product_modal_field span{
+    text-align: right;
+    overflow-wrap: anywhere;
 }

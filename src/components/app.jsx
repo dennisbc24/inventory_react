@@ -133,13 +133,13 @@ useEffect(()=>{
         <Route path='/shoppingList' element={<ShoppingList urlBase={urlGlobal}/>}/>
     </Route>
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin','viewer','seller']} user={user}/>}>
-        <Route path='/lastBestProducts' element={<TableGet url={`${urlGlobal}/api/v1/ventas/topSellingProducts`} minWitdh="800px"/>}/>
+        <Route path='/lastBestProducts' element={<TableGet url={`${urlGlobal}/api/v1/ventas/topSellingProducts`} minWitdh="800px" title="Productos populares" showDetail/>}/>
     </Route>
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin','viewer','seller']} user={user}/>}>
-        <Route path='/stockLow' element={<TableGet url={`${urlGlobal}/api/v1/existence/stockLow`} minWitdh="800px"/>}/>
+        <Route path='/stockLow' element={<TableGet url={`${urlGlobal}/api/v1/existence/stockLow`} minWitdh="800px" title="Stock bajo" showDetail/>}/>
     </Route>
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin','viewer','seller']} user={user}/>}>
-        <Route path='/bestProducts' element={<TableGet url={`${urlGlobal}/api/v1/ventas/bestProducts`} minWitdh="800px"/>}/>
+        <Route path='/bestProducts' element={<TableGet url={`${urlGlobal}/api/v1/ventas/bestProducts`} minWitdh="800px" title="Mejores Productos" showDetail/>}/>
     </Route>
     
 
