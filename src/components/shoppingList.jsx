@@ -4,10 +4,13 @@ import { TitleForm } from "./form/titleForm.jsx";
 import { ButtonSave, SearchInput } from "./form/inputSearch";
 import shoppingService from "../services/shoppingList";
 import { ContextUser } from "../context/userContext.jsx";
+import axios from "axios";
+import noImagen from "./img/no_imagen.png";
 
 export const ShoppingList = ({ urlBase }) => {
   const [items, setItems] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedStock, setSelectedStock] = useState(null);
   const [dragIndex, setDragIndex] = useState(null);
   const [dragOverIndex, setDragOverIndex] = useState(null);
 
@@ -26,6 +29,28 @@ export const ShoppingList = ({ urlBase }) => {
   useEffect(() => {
     loadList();
   }, []);
+
+  useEffect(() => {
+    let isActive = true;
+    const loadStock = async () => {
+      if (selectedProduct && selectedProduct.id_product) {
+        try {
+          const { data } = await axios.get(`${urlBase}/api/v1/existence?product=${selectedProduct.id_product}`);
+          if (isActive) {
+            const total = data.reduce((acc, row) => acc + parseFloat(row.amount || 0), 0);
+            setSelectedStock(total);
+          }
+        } catch (error) {
+          console.error("Error al obtener el stock:", error);
+          if (isActive) setSelectedStock(null);
+        }
+      } else if (isActive) {
+        setSelectedStock(null);
+      }
+    };
+    loadStock();
+    return () => { isActive = false; };
+  }, [selectedProduct, urlBase]);
 
   const addManual = async () => {
     if (!selectedProduct) {
@@ -77,23 +102,38 @@ export const ShoppingList = ({ urlBase }) => {
       <div className="divForm">
         <h3>Agregar producto a mano</h3>
         <SearchInput urlApi={`${urlBase}/api/v1/products`} funcSet={setSelectedProduct} place="Buscar producto..."/>
-        <p>{selectedProduct ? `Seleccionado: ${selectedProduct.name}` : ""}</p>
+        {selectedProduct ? (
+          <div className="descriptionSell">
+            <div className="image_box">
+              <img
+                className="product_image"
+                src={selectedProduct.url_image ? selectedProduct.url_image : noImagen}
+                alt={selectedProduct.name}
+              />
+            </div>
+            <div>
+              <p>{selectedProduct.name}</p>
+              <p className="unitPrice">Stock total: {selectedStock !== null ? selectedStock : "Cargando..."}</p>
+            </div>
+          </div>
+        ) : null}
         <ButtonSave titulo={'Agregar a la lista'} func={addManual}/>
       </div>
       ) : null}
 
       <h3>Productos por adquirir</h3>
       {canEdit ? <p>Arrastra las filas para cambiar la prioridad (las agregadas a mano van arriba por defecto)</p> : null}
-      <table>
+      <div className="result">
+      <table className="infoTable">
         <thead>
           <tr>
             {canEdit ? <th></th> : null}
             <th>Producto</th>
             <th>Stock total</th>
             <th>Costo S/.</th>
+            {canEdit ? <th>Acciones</th> : null}
             <th>Origen</th>
             <th>Agregado por</th>
-            {canEdit ? <th>Acciones</th> : null}
           </tr>
         </thead>
         <tbody>
@@ -115,18 +155,20 @@ export const ShoppingList = ({ urlBase }) => {
               <td>{item.product_name}</td>
               <td>{item.total_stock}</td>
               <td>{item.cost}</td>
-              <td>{item.source === 'auto' ? 'Automático' : 'Manual'}</td>
-              <td>{item.added_by}</td>
+              
               {canEdit ? (
               <td>
                 <button onClick={() => markPurchased(item.id_shopping)}>Comprado</button>
                 <button onClick={() => removeItem(item.id_shopping)}>Eliminar</button>
               </td>
               ) : null}
+              <td>{item.source === 'auto' ? 'Automático' : 'Manual'}</td>
+              <td>{item.added_by}</td>
             </tr>
           ))}
         </tbody>
       </table>
+      </div>
     </>
   );
 };
