@@ -26,6 +26,7 @@ import { Landing } from './main.jsx';
 import { LastTransactions } from './transactions/lastTransactions.jsx';
 import { LastEntries } from './entries/lastEntries.jsx';
 import { ShoppingList } from './shoppingList.jsx';
+import { CategoriesManager } from './categoriesManager.jsx';
 
 import { ContextGlobal  } from "../context/globalContext.jsx";
 import "./theme.css";
@@ -140,6 +141,9 @@ useEffect(()=>{
     </Route>
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin','viewer','seller']} user={user}/>}>
         <Route path='/bestProducts' element={<TableGet url={`${urlGlobal}/api/v1/ventas/bestProducts`} minWitdh="800px" title="Mejores Productos" showDetail/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
+        <Route path='/categories' element={<CategoriesManager urlBase={urlGlobal}/>}/>
     </Route>
     
 
