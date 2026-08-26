@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import {  InputSimple,  ParrafoInput} from "./form/inputSearch";
+import {  InputSimple,  ParrafoInput, SearchInput} from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
@@ -17,6 +17,8 @@ export const UpdateProductForm = ({urlBase}) => {
   const [wholesale_price, setWholesale_price] = useState('')
   const [name, setName] = useState('')
   const [cost, setCost] = useState(0)
+  const [fk_category, setFk_category] = useState('')
+  const [categoriaObj, setCategoriaObj] = useState({name:'', id_category: ''})
   const [photo, setPhoto] = useState(null);
 
   useEffect(() => {
@@ -70,6 +72,7 @@ export const UpdateProductForm = ({urlBase}) => {
     formData.append('cost', cost);
     formData.append('sugested_price', sugested_price);
     formData.append('wholesale_price', wholesale_price);
+    formData.append('fk_category', fk_category);
     formData.append('name', name);
     formData.append('nameFile', name.replaceAll(' ','+' ));
     formData.append('photo', photo);
@@ -94,6 +97,9 @@ export const UpdateProductForm = ({urlBase}) => {
   const handleName = (e) => setName(e.target.value)
   const handleSuggestedPrice = (e) => setSugested_price(e.target.value)
   const handleWholeSalePrice = (e) => setWholesale_price(e.target.value)
+  const handleCategory = (e) => setFk_category(e.target.value)
+  // sincroniza selector SearchInput con fk_category
+  useEffect(()=>{ if(categoriaObj?.id_category) setFk_category(categoriaObj.id_category)},[categoriaObj])
 
 
   const handleClick = (event) => { 
@@ -118,6 +124,8 @@ export const UpdateProductForm = ({urlBase}) => {
           }
           
           setId_Product(elem.id_product)
+          setFk_category(elem.fk_category || '')
+          setCategoriaObj({name: elem.category_name || '', id_category: elem.fk_category || ''})
           setShow('true')
         }
       });
@@ -162,7 +170,11 @@ export const UpdateProductForm = ({urlBase}) => {
         <InputSimple titulo='Costo' tipo='number' step="any" valor={cost} func={handleCost} nombre='cost'></InputSimple>
         <InputSimple titulo='Precio Sugerido' tipo='number' step="any" valor={sugested_price} func={handleSuggestedPrice} nombre='sugested_price'></InputSimple>
         <InputSimple titulo='Precio por mayor' tipo='number' step="any" valor={wholesale_price} func={handleWholeSalePrice} nombre='wholesale_price'></InputSimple>
+        <SearchInput urlApi={`${urlBase}/api/v1/categories`} funcSet={setCategoriaObj} place="Buscar Categoría (cambiar)"/>
+        <InputSimple titulo='Categoría ID' tipo='number' valor={fk_category} func={handleCategory} nombre='fk_category' callToAction="ID categoría (ver lista)"></InputSimple>
         <InputSimple titulo="Subir Imagen" tipo="file" func={handleInputFileChange} nombre='image_product'></InputSimple>
+        <ParrafoInput titulo="Categoría actual" parrafo={product.category_name || 'Sin categoría'}></ParrafoInput>
+        <ParrafoInput titulo="Categoría seleccionada" parrafo={categoriaObj.name || '—'}></ParrafoInput>
           <ParrafoInput titulo="Codigo" parrafo={id_product}></ParrafoInput>
           <ParrafoInput titulo="Proveedor" parrafo={product.supplier}></ParrafoInput>
           <ParrafoInput titulo="Creado" parrafo={product.created}></ParrafoInput>

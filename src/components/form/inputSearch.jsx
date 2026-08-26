@@ -77,8 +77,9 @@ export const SearchInput = ({urlApi, funcSet, minWitdh='200px', place='Buscar'})
         const start = product.name.substring(0, index);
         const match = product.name.substring(index, index + query.length);
         const end = product.name.substring(index + query.length);
+        const key = product.id_product ?? product.id_category ?? product.id_supplier ?? product.name;
         return (
-          <span key={product.id_product}>
+          <span key={key}>
             {start}
             <strong>{match}</strong>
             {end}

@@ -11,6 +11,7 @@ export const NewProduct = ({urlBase}) => {
   const [lowest_price, setLowest_price] = useState(0.00);
   const [list_price, setList_price] = useState(0.00);
   const [proveedor, setProveedor] = useState([{name:'',id_supplier:0}]);
+  const [categoria, setCategoria] = useState({name:'',id_category:0});
 
   const [photo, setPhoto] = useState(null);
  
@@ -32,9 +33,13 @@ export const NewProduct = ({urlBase}) => {
     
     formData.append('name', name);
     formData.append('cost', cost);
+    formData.append('list_price', list_price);
+    formData.append('lowest_price', lowest_price);
+    // compat: backend legacy también acepta unit/total -> enviar ambos
     formData.append('unit', list_price);
     formData.append('total', lowest_price);
     formData.append('fk_supplier', proveedor.id_supplier);
+    formData.append('fk_category', categoria.id_category || '');
     formData.append('photo', photo);
 
     try {
@@ -56,6 +61,7 @@ export const NewProduct = ({urlBase}) => {
       <TitleForm text='Crear Nuevo Producto'></TitleForm>
 <form onSubmit={handleSubmit2} encType='multipart/form-data'>
     <SearchInput urlApi={`${urlBase}/api/v1/suppliers`} funcSet={setProveedor} place="Buscar Proveedor"/>
+    <SearchInput urlApi={`${urlBase}/api/v1/categories`} funcSet={setCategoria} place="Buscar Categoría"/>
        
       <InputSimple titulo="Nombre" tipo="text" func={handleName} nombre='name' callToAction="Escribe un nombre único"></InputSimple>
       <InputSimple titulo="Costo S/." tipo="number" step="any" func={handleCost} nombre='cost'></InputSimple>
@@ -63,6 +69,7 @@ export const NewProduct = ({urlBase}) => {
       <InputSimple titulo="Cargar Archivo" tipo="file" func={handleInputFileChange} nombre='photo'></InputSimple>
       <InputSimple titulo="P. Mayor S/." tipo="number" step="any" func={handlePMayor} nombre='total'></InputSimple>
       <ParrafoInput titulo={'Proveedor'} parrafo={proveedor.name}/>
+      <ParrafoInput titulo={'Categoría'} parrafo={categoria.name}/>
       <button type="submit">Crear</button>
     </form>
     
