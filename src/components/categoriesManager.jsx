@@ -33,7 +33,20 @@ export const CategoriesManager = ({ urlBase }) => {
   const fetchCats = async () => {
     try {
       setLoading(true);
-      const r = await axios.get(`${urlBase}/api/v1/categories`, { params: { includeInactive: true } });
+      setError(null);
+      // intenta endpoint privado; si 404 (prod sin deploy), fallback a public
+      let r;
+      try {
+        r = await axios.get(`${urlBase}/api/v1/categories`, { params: { includeInactive: true } });
+      } catch (e) {
+        if (e?.response?.status === 404) {
+          r = await axios.get(`${urlBase}/api/v1/public/categories`, { params: { withCounts: true } });
+          // public no devuelve inactive ni product_count completo, normaliza
+          const data = Array.isArray(r.data) ? r.data : [];
+          // si public no trae product_count, ya viene del nuevo código si está deployado; si no, fallback a 0
+          r = { data };
+        } else throw e;
+      }
       setCategories(Array.isArray(r.data) ? r.data : []);
     } catch (e) { setError(e?.response?.data?.message || e.message); } finally { setLoading(false); }
   };
@@ -62,7 +75,10 @@ export const CategoriesManager = ({ urlBase }) => {
       await axios.post(`${urlBase}/api/v1/categories`, { name: newName, slug: newSlug || undefined, description: newDesc || undefined, position: Number(newPos) || 0 });
       setNewName(""); setNewSlug(""); setNewDesc(""); setNewPos(0);
       await fetchCats();
-    } catch (e) { alert(e?.response?.data?.message || e.message); }
+    } catch (e) {
+      if (e?.response?.status === 404) alert("Backend en producción aún no tiene /api/v1/categories. Haz push de inventory (ver instrucciones). En local sí funciona.");
+      else alert(e?.response?.data?.message || e.message);
+    }
   };
 
   const startEdit = (c) => {
@@ -234,6 +250,10 @@ export const CategoriesManager = ({ urlBase }) => {
           <div style={{minWidth:260}}>
             <p style={{margin:'4px 0',fontSize:13}}>Nueva categoría</p>
             <SearchInput urlApi={`${urlBase}/api/v1/categories`} funcSet={setTargetCat} place="Buscar Categoría (vacío=sin cat)"/>
+            <select value={targetCat.id_category || ""} onChange={e=>{ const id=e.target.value; const c=categories.find(x=>String(x.id_category)===id); setTargetCat(c||{name:'',id_category:''}); }} style={{width:'100%',padding:8,borderRadius:8,border:'1px solid #ccc',marginTop:6}}>
+              <option value="">-- Sin categoría --</option>
+              {categories.map(c=> <option key={c.id_category} value={c.id_category}>{c.name} ({c.slug})</option>)}
+            </select>
             <ParrafoInput titulo="Destino" parrafo={targetCat?.name || 'Sin categoría'} />
           </div>
           <button onClick={handleMove} style={{height:36,padding:'0 16px',borderRadius:20,background:'black',color:'white'}}>Mover</button>
