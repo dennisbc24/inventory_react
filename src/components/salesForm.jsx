@@ -3,6 +3,8 @@ import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import { ButtonSave } from "./form/inputSearch";
 import { TableGet } from "./table.jsx";
+import { ExistenceEditableTable } from "./ExistenceEditableTable.jsx";
+import axios from "axios";
 import { SalesService } from "../services/sales.js";
 import { PopUpWindow } from "../../src/components/form/popupwindow.jsx";
 import noImagen from "./img/no_imagen.png";
@@ -36,6 +38,7 @@ export const SelesForm = ({ urlBase }) => {
   const [showSales, SetShowSales] = useState(true)
   const [urlImage, setUrlImage] = useState(noImagen);
   const [revenueEditing, setRevenueEditing] = useState(undefined);
+  const [isOnline, setIsOnline] = useState(false);
   //const [editImg, setEditImg] = useState(false)
 
 const handleChangeRevenue = (e) => {
@@ -163,11 +166,29 @@ const handleChangeRevenue = (e) => {
         setSuggestions([]);
         setProductGlobal(elem)
         setCost(elem.cost);
+        setIsOnline(!!elem.is_online);
         setQuery('')
         setShow(true)
         elem.url_image ? setUrlImage(elem.url_image) : setUrlImage(noImagen)
       }
     });
+  };
+
+  const toggleOnline = async (e) => {
+    const val = e.target.checked;
+    if (!productGlobal?.id_product) return;
+    setIsOnline(val);
+    try {
+      const fd = new FormData();
+      fd.append('name', productGlobal.name);
+      fd.append('cost', productGlobal.cost ?? 0);
+      fd.append('sugested_price', productGlobal.list_price ?? 0);
+      fd.append('wholesale_price', productGlobal.lowest_price ?? 0);
+      fd.append('fk_category', productGlobal.fk_category || '');
+      fd.append('is_online', val ? 'true' : 'false');
+      await axios.patch(`${urlBase}/api/v1/products/${productGlobal.id_product}`, fd);
+      setProductGlobal({ ...productGlobal, is_online: val });
+    } catch (err) { console.error(err); alert(err?.response?.data?.message || err.message); setIsOnline(!val); }
   };
 
 
@@ -222,6 +243,12 @@ const handleChangeRevenue = (e) => {
       <div>
       
         <p>{productGlobal.name} </p>
+        {productGlobal?.id_product && (
+          <label style={{display:'flex',gap:6,alignItems:'center',margin:'6px 0',fontSize:13}}>
+            <input type="checkbox" checked={isOnline} onChange={toggleOnline} disabled={usuario?.role!=='admin' && usuario?.user?.role!=='admin'} /> Venta online {isOnline ? '✅' : '❌'}
+            {(usuario?.role!=='admin' && usuario?.user?.role!=='admin') && <span style={{fontSize:11,color:'#888'}}>(solo admin)</span>}
+          </label>
+        )}
         <div className="dataSell">
                   <h4>Cant</h4>
                   <input type="number" onChange={handleCount} style={{ 'width': '45px' }} />
@@ -301,7 +328,7 @@ const handleChangeRevenue = (e) => {
       {usuario.role === 'admin' && productGlobal && productGlobal.id_product ? (
         <ButtonSave titulo={inShoppingList ? 'Quitar de lista de compras' : 'Agregar a lista de compras'} func={toggleShoppingList}/>
       ) : null}
-      {<>{show ? <TableGet url={`${urlBase}/api/v1/existence?product=${productGlobal.id_product}`} /> : <></>
+      {<>{show ? <ExistenceEditableTable url={`${urlBase}/api/v1/existence?product=${productGlobal.id_product}`} /> : <></>
       }</>}
       <h3>Ultimas Ventas</h3>
 

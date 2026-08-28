@@ -223,8 +223,22 @@ export const CategoriesManager = ({ urlBase }) => {
         </div>
         {filterCat && (
           <div style={{marginTop:10, maxHeight:240, overflow:'auto', border:'1px solid #eee', borderRadius:8}}>
-            <table style={{width:'100%',fontSize:13}}><thead><tr style={{background:'#fafafa'}}><th style={{padding:6,textAlign:'left'}}>Producto</th><th style={{padding:6}}>Costo</th><th style={{padding:6}}>Precio</th></tr></thead>
-              <tbody>{filteredProductsByCat.slice(0,100).map(p=> <tr key={p.id_product} style={{borderTop:'1px solid #eee'}}><td style={{padding:6}}>{p.name}</td><td style={{padding:6,textAlign:'center'}}>{p.cost}</td><td style={{padding:6,textAlign:'center'}}>{p.list_price}</td></tr>)}</tbody>
+            <table style={{width:'100%',fontSize:13}}><thead><tr style={{background:'#fafafa'}}><th style={{padding:6,textAlign:'left'}}>Producto</th><th style={{padding:6}}>Costo</th><th style={{padding:6}}>Precio</th><th style={{padding:6}}>Online</th></tr></thead>
+              <tbody>{filteredProductsByCat.slice(0,100).map(p=> (
+                <tr key={p.id_product} style={{borderTop:'1px solid #eee'}}>
+                  <td style={{padding:6}}>{p.name}</td>
+                  <td style={{padding:6,textAlign:'center'}}>{p.cost}</td>
+                  <td style={{padding:6,textAlign:'center'}}>{p.list_price}</td>
+                  <td style={{padding:6,textAlign:'center'}}>
+                    <input type="checkbox" checked={!!p.is_online} onChange={async e=>{
+                      const val=e.target.checked;
+                      const fd=new FormData(); fd.append('name',p.name); fd.append('cost',p.cost??0); fd.append('sugested_price',p.list_price??0); fd.append('wholesale_price',p.lowest_price??0); fd.append('fk_category',p.fk_category||''); fd.append('is_online', val?'true':'false');
+                      await axios.patch(`${urlBase}/api/v1/products/${p.id_product}`, fd);
+                      setAllProducts(prev=> prev.map(x=> x.id_product===p.id_product ? {...x, is_online: val} : x));
+                    }} title="Online" />
+                  </td>
+                </tr>
+              ))}</tbody>
             </table>
           </div>
         )}

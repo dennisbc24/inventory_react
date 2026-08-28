@@ -3,6 +3,7 @@ import useFetch from "../hooks/useFetch.jsx";
 
 import { SelectSimple, ButtonSave} from "./form/inputSearch";
 import { ContextGlobal  } from "../context/globalContext.jsx";
+import { ContextUser } from "../context/userContext.jsx";
 
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
@@ -12,6 +13,8 @@ import {InventoryService} from "../services/inventory.js"
 const service = new InventoryService()
 export const Inventory = ({urlBase}) => {
   const {urlGlobal, setProductGlobal} = useContext(ContextGlobal)
+  const {usuario} = useContext(ContextUser)
+  const isAdmin = usuario?.role==='admin' || usuario?.user?.role==='admin'
   const [branch, setBranch] = useState(1);
   const [branch2, setBranch2] = useState(4);
   const [show, setShow] = useState(false);
@@ -31,8 +34,9 @@ export const Inventory = ({urlBase}) => {
   const [editandoId, setEditandoId] = useState(null);
   const [cantidadEditada, setCantidadEditada] = useState("");
 
-  // seleccionar fila
+  // seleccionar fila - solo admin
   const handleDoubleClick = (id, cantidad) => {
+    if (!isAdmin) return;
     setEditandoId(id);
     setCantidadEditada(cantidad);
   };
@@ -265,7 +269,7 @@ const handleTest = async () =>{
               return (
                 <tr key={item.id_existence}>
                   <td>{item.product}</td>
-                  <td onDoubleClick={() => handleDoubleClick(item.id_existence, item.amount)}>
+                  <td onDoubleClick={() => handleDoubleClick(item.id_existence, item.amount)} style={{cursor: isAdmin ? 'pointer' : 'default'}} title={isAdmin ? 'Doble click para editar' : undefined}>
                 {editandoId === item.id_existence ? (
                   <input
                     type="number"
@@ -275,7 +279,7 @@ const handleTest = async () =>{
                     autoFocus
                   />
                 ) : (
-                  <p>{item.amount}</p>
+                  <p>{item.amount} {isAdmin && <span style={{fontSize:10,color:'#aaa'}}>✎</span>}</p>
                 )}
               </td>
                   <td>{item.costo}</td>

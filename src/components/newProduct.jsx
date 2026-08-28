@@ -12,6 +12,7 @@ export const NewProduct = ({urlBase}) => {
   const [list_price, setList_price] = useState(0.00);
   const [proveedor, setProveedor] = useState([{name:'',id_supplier:0}]);
   const [categoria, setCategoria] = useState({name:'',id_category:0});
+  const [isOnline, setIsOnline] = useState(false);
 
   const [photo, setPhoto] = useState(null);
  
@@ -40,6 +41,7 @@ export const NewProduct = ({urlBase}) => {
     formData.append('total', lowest_price);
     formData.append('fk_supplier', proveedor.id_supplier);
     formData.append('fk_category', categoria.id_category || '');
+    formData.append('is_online', isOnline ? 'true' : 'false');
     formData.append('photo', photo);
 
     try {
@@ -68,8 +70,15 @@ export const NewProduct = ({urlBase}) => {
       <InputSimple titulo="P. Unit S/." tipo="number" step="any" func={handlePUnit} nombre='unit'></InputSimple>
       <InputSimple titulo="Cargar Archivo" tipo="file" func={handleInputFileChange} nombre='photo'></InputSimple>
       <InputSimple titulo="P. Mayor S/." tipo="number" step="any" func={handlePMayor} nombre='total'></InputSimple>
+      <div className='inputSimple'>
+        <h3>Venta online</h3>
+        <label style={{display:'flex',gap:8,alignItems:'center'}}>
+          <input type="checkbox" checked={isOnline} onChange={e=>setIsOnline(e.target.checked)} /> Habilitar para ecommerce
+        </label>
+      </div>
       <ParrafoInput titulo={'Proveedor'} parrafo={proveedor.name}/>
       <ParrafoInput titulo={'Categoría'} parrafo={categoria.name}/>
+      <ParrafoInput titulo={'Online'} parrafo={isOnline ? 'Sí - visible en shop' : 'No'}/>
       <button type="submit">Crear</button>
     </form>
     

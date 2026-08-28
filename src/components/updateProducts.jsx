@@ -19,6 +19,7 @@ export const UpdateProductForm = ({urlBase}) => {
   const [cost, setCost] = useState(0)
   const [fk_category, setFk_category] = useState('')
   const [categoriaObj, setCategoriaObj] = useState({name:'', id_category: ''})
+  const [isOnline, setIsOnline] = useState(false)
   const [photo, setPhoto] = useState(null);
 
   useEffect(() => {
@@ -73,6 +74,7 @@ export const UpdateProductForm = ({urlBase}) => {
     formData.append('sugested_price', sugested_price);
     formData.append('wholesale_price', wholesale_price);
     formData.append('fk_category', fk_category);
+    formData.append('is_online', isOnline ? 'true' : 'false');
     formData.append('name', name);
     formData.append('nameFile', name.replaceAll(' ','+' ));
     formData.append('photo', photo);
@@ -126,6 +128,7 @@ export const UpdateProductForm = ({urlBase}) => {
           setId_Product(elem.id_product)
           setFk_category(elem.fk_category || '')
           setCategoriaObj({name: elem.category_name || '', id_category: elem.fk_category || ''})
+          setIsOnline(!!elem.is_online)
           setShow('true')
         }
       });
@@ -172,9 +175,16 @@ export const UpdateProductForm = ({urlBase}) => {
         <InputSimple titulo='Precio por mayor' tipo='number' step="any" valor={wholesale_price} func={handleWholeSalePrice} nombre='wholesale_price'></InputSimple>
         <SearchInput urlApi={`${urlBase}/api/v1/categories`} funcSet={setCategoriaObj} place="Buscar Categoría (cambiar)"/>
         <InputSimple titulo='Categoría ID' tipo='number' valor={fk_category} func={handleCategory} nombre='fk_category' callToAction="ID categoría (ver lista)"></InputSimple>
+        <div className='inputSimple'>
+          <h3>Venta online</h3>
+          <label style={{display:'flex',gap:8,alignItems:'center'}}>
+            <input type="checkbox" checked={isOnline} onChange={e=>setIsOnline(e.target.checked)} /> Habilitar para ecommerce
+          </label>
+        </div>
         <InputSimple titulo="Subir Imagen" tipo="file" func={handleInputFileChange} nombre='image_product'></InputSimple>
         <ParrafoInput titulo="Categoría actual" parrafo={product.category_name || 'Sin categoría'}></ParrafoInput>
         <ParrafoInput titulo="Categoría seleccionada" parrafo={categoriaObj.name || '—'}></ParrafoInput>
+        <ParrafoInput titulo="Online actual" parrafo={product.is_online ? 'Sí' : 'No'}></ParrafoInput>
           <ParrafoInput titulo="Codigo" parrafo={id_product}></ParrafoInput>
           <ParrafoInput titulo="Proveedor" parrafo={product.supplier}></ParrafoInput>
           <ParrafoInput titulo="Creado" parrafo={product.created}></ParrafoInput>

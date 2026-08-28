@@ -4,6 +4,7 @@ import axios from "axios";
 import "./salesForm.css";
 import { TitleForm} from "./form/titleForm.jsx";
 import { TableGet } from "./table.jsx";
+import { ExistenceEditableTable } from "./ExistenceEditableTable.jsx";
 import noImagen from "./img/no_imagen.png";
 import { InventoryService } from "../services/inventory.js";
 const inventoryService = new InventoryService()
@@ -134,7 +135,7 @@ const handleButton = async () => {
     </main>
     
       
-      {<>{ show ? <TableGet url={`${urlBase}/api/v1/existence?product=${idProduct}`}/> : <></>
+      {<>{ show ? <ExistenceEditableTable url={`${urlBase}/api/v1/existence?product=${idProduct}`}/> : <></>
     }</>}
       
       <h3>Ultimos Ingresos</h3>

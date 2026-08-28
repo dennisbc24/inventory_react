@@ -7,6 +7,7 @@ import { InventoryService } from "../services/inventory.js";
 const inventoryService = new InventoryService()
 import { TitleForm } from "./form/titleForm.jsx";
 import { TableGet } from "./table.jsx";
+import { ExistenceEditableTable } from "./ExistenceEditableTable.jsx";
 import noImagen from "./img/no_imagen.png";
 import entregaImagen from "./icons/entrega.png";
 
@@ -166,8 +167,8 @@ if (dateTrans == '' ) {
       <ButtonSave titulo={"Guardar"} func={handleButton}/>
     </main>
     
-      <h3>Stock</h3>
-      {<>{ showStock ? <TableGet url={`${urlBase}/api/v1/existence?product=${product.id_product}`}/> : <></>
+      <h3>Stock {product?.name ? `- ${product.name}` : ''} {product?.id_product && <span style={{fontSize:12,color:'#888'}}>(doble click admin para editar)</span>}</h3>
+      {<>{ showStock ? <ExistenceEditableTable url={`${urlBase}/api/v1/existence?product=${product.id_product}`}/> : <></>
     }</>}
       <h3>Ultimas Movimientos</h3>
       {<>{ show ? <TableGet url={`${urlBase}/api/v1/transactions`} minWitdh="860px"/> : <></>
