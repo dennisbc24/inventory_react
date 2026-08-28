@@ -91,6 +91,9 @@ const handleButton = async () => {
   try {
     await inventoryService.registerEntries(urlBase, {idBranch,count,idUser,idProduct});
     alert('Ingreso de mercaderia registrado')
+    // limpiar para evitar repetir
+    setQuery(''); setSuggestions([]); setProduct([]); setId_Product(1); setCount(0); setShow(false);
+    const inp = document.querySelector('input[placeholder="Buscar producto..."]'); if(inp) inp.value='';
   } catch (innerError) {
     console.error("Error al registrar el ingreso:", innerError);
     alert('No se pudo registrar el ingreso')

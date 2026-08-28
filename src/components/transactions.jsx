@@ -86,15 +86,16 @@ export const TransactionsForm = ({urlBase}) => {
     };
 
 
-  const handleButton = () => {
+  const handleButton = async () => {
     if (dateTrans != '' && branchA !== branchB && count > 0 && product.id_product != undefined ){
-      const sendVending = async () => {
+      try {
         const id_product = product.id_product
-        inventoryService.registerTransaction(urlBase,{branchA,branchB,count,idUser,dateTrans,id_product})
-          alert('Traslado registrado con exito') 
-      };
-   
-      sendVending()
+        await inventoryService.registerTransaction(urlBase,{branchA,branchB,count,idUser,dateTrans,id_product})
+        alert('Traslado registrado con exito')
+        // limpiar para evitar repetir
+        setQuery(''); setSuggestions([]); setProduct([]); setCount(0); setDateTrans(''); setShowStock(false); setShow(true);
+        const dateEl = document.querySelector('input[name="fecha"]'); if(dateEl) dateEl.value='';
+      } catch(e){ console.error(e); alert('Error al registrar traslado'); }
       setShow(true)
 
     } else {

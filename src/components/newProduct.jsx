@@ -16,6 +16,7 @@ export const NewProduct = ({urlBase}) => {
   const [isOnline, setIsOnline] = useState(false);
 
   const [photo, setPhoto] = useState(null);
+  const [fileKey, setFileKey] = useState(0);
  
   const handleName = ({ target: { value } }) => { setName(value)};
   const handleCost = ({ target: { value } }) => { setCost(parseFloat(value))};
@@ -55,15 +56,18 @@ export const NewProduct = ({urlBase}) => {
     formData.append('photo', photo);
 
     try {
-      //console.log(formData.getAll('photo'));
       const urlPost = `${urlBase}/api/v1/products/`
-      console.log(urlPost);
-      
       const response = await axios.post(urlPost, formData, {});
-      console.log('Response:', response.data);
-      alert(`Producto con el nomnbre ${name} ha sido creado`)
+      alert(`Producto con el nombre ${name} ha sido creado`)
+      // limpiar formulario y archivo
+      setName(''); setCost(0); setLowest_price(0); setList_price(0);
+      setProveedor([{name:'',id_supplier:0}]); setCategoria({name:'',id_category:0});
+      setIsOnline(false); setPhoto(null); setFileKey(k=>k+1);
+      // reset inputs no controlados
+      const form = document.querySelector('form'); if(form) form.reset();
     } catch (error) {
       console.error('Error uploading the file:', error);
+      alert(error?.response?.data?.message || 'Error al crear producto');
     }
   };
 
@@ -78,7 +82,7 @@ export const NewProduct = ({urlBase}) => {
       <InputSimple titulo="Nombre" tipo="text" func={handleName} nombre='name' callToAction="Escribe un nombre único"></InputSimple>
       <InputSimple titulo="Costo S/." tipo="number" step="any" func={handleCost} nombre='cost'></InputSimple>
       <InputSimple titulo="P. Unit S/." tipo="number" step="any" func={handlePUnit} nombre='unit'></InputSimple>
-      <InputSimple titulo="Cargar Archivo" tipo="file" func={handleInputFileChange} nombre='photo'></InputSimple>
+      <InputSimple key={fileKey} titulo="Cargar Archivo" tipo="file" func={handleInputFileChange} nombre='photo'></InputSimple>
       <InputSimple titulo="P. Mayor S/." tipo="number" step="any" func={handlePMayor} nombre='total'></InputSimple>
       <div className='inputSimple'>
         <h3>Venta online</h3>

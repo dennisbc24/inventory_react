@@ -202,14 +202,22 @@ const handleChangeRevenue = (e) => {
   };
 
 
-  const handleButton = () => {
+  const handleButton = async () => {
 
     if (dateSell != '' && revenue > 0 && count > 0 && productGlobal.name != undefined) {
       const body = { dateSell, count, total, PUnit, revenue, dataCustomer, product:productGlobal, idUser, idBranch }
       
-      saleService.register(urlBase, body)
-      SetShowSales(true)
-      alert('Felicidades...Venta Registrada!')
+      try {
+        await saleService.register(urlBase, body)
+        SetShowSales(true)
+        alert('Felicidades...Venta Registrada!')
+        // limpiar formulario para evitar repetir datos
+        setQuery(''); setSuggestions([]); setProductGlobal({}); setCost(0); setTotal(0); setRevenue(0); setPUnit(0); setCount(1); setDataCustomer(''); setDateSell(''); setShow(false); setUrlImage(noImagen); setIsOnline(false); setRevenueEditing(undefined);
+        // reset inputs no controlados
+        document.querySelectorAll('input[type="number"]').forEach(el=>{ if(el.placeholder==="") el.value=""; });
+        const dateEl = document.querySelector('input[type="date"].registrationDate'); if(dateEl) dateEl.value='';
+        const custEl = document.querySelector('input[placeholder="Cliente"]'); if(custEl) custEl.value='';
+      } catch(e){ console.error(e); alert('Error al registrar venta'); }
     } else {
       if (dateSell === '') {
         alert('No hay una fecha seleccionada!')

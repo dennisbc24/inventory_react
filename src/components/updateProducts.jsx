@@ -21,6 +21,7 @@ export const UpdateProductForm = ({urlBase}) => {
   const [categoriaObj, setCategoriaObj] = useState({name:'', id_category: ''})
   const [isOnline, setIsOnline] = useState(false)
   const [photo, setPhoto] = useState(null);
+  const [fileKey, setFileKey] = useState(0);
 
   useEffect(() => {
     // Simula la carga de todos los productos al inicio
@@ -83,14 +84,16 @@ export const UpdateProductForm = ({urlBase}) => {
     try {
           
       const urlPatch = `${urlBase}/api/v1/products/${id_product}`
-      console.log(urlPatch);
       const sendData = await axios.patch(urlPatch, formData)
-      console.log(sendData);
-      
       alert(sendData.data);
+      // limpiar para evitar repetir
+      setQuery(''); setSuggestions([]); setProduct([]); setId_Product(''); setShow(false);
+      setName(''); setCost(0); setSugested_price(''); setWholesale_price(''); setFk_category(''); setCategoriaObj({name:'',id_category:''}); setIsOnline(false); setPhoto(null); setFileKey(k=>k+1);
+      const form = document.querySelector('form'); if(form) form.reset();
       
     } catch (error) {
       console.error("Error al hacer el patch:", error);
+      alert(error?.response?.data?.message || 'Error al actualizar');
     }
   };
 
@@ -181,7 +184,7 @@ export const UpdateProductForm = ({urlBase}) => {
             <input type="checkbox" checked={isOnline} onChange={e=>setIsOnline(e.target.checked)} /> Habilitar para ecommerce
           </label>
         </div>
-        <InputSimple titulo="Subir Imagen" tipo="file" func={handleInputFileChange} nombre='image_product'></InputSimple>
+        <InputSimple key={fileKey} titulo="Subir Imagen" tipo="file" func={handleInputFileChange} nombre='image_product'></InputSimple>
         <ParrafoInput titulo="Categoría actual" parrafo={product.category_name || 'Sin categoría'}></ParrafoInput>
         <ParrafoInput titulo="Categoría seleccionada" parrafo={categoriaObj.name || '—'}></ParrafoInput>
         <ParrafoInput titulo="Online actual" parrafo={product.is_online ? 'Sí' : 'No'}></ParrafoInput>
