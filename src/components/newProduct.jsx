@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {  InputSimple, ParrafoInput, SearchInput} from "./form/inputSearch";
+import imageCompression from "browser-image-compression";
 import "./salesForm.css";
 import axios from 'axios';
 import { TitleForm } from "./form/titleForm.jsx";
@@ -21,8 +22,17 @@ export const NewProduct = ({urlBase}) => {
   const handlePUnit = ({ target: { value } }) => { setList_price(parseFloat(value))};
   const handlePMayor = ({ target: { value } }) => { setLowest_price(parseFloat(value))};
 
-  const handleInputFileChange = (e) => {
-    setPhoto(e.target.files[0]);
+  const handleInputFileChange = async (e) => {
+    const img = e.target.files[0];
+    if (!img) return;
+    const options = { maxSizeMB: 1, maxWidthOrHeight: 700, useWebWorker: true };
+    try {
+      const compressed = await imageCompression(img, options);
+      setPhoto(compressed);
+    } catch (err) {
+      console.error("Error al comprimir imagen", err);
+      setPhoto(img);
+    }
   };
  
   const handleSubmit2 = async (e) => {
