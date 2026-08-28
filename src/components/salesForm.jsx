@@ -63,6 +63,16 @@ const handleChangeRevenue = (e) => {
 
   const { data: products } = useFetch(`${urlGlobal}/api/v1/products`);
 
+  // hidrata costo/imagen/online al volver a la vista con productGlobal ya seteado
+  useEffect(() => {
+    if (productGlobal?.id_product) {
+      if (productGlobal.cost !== undefined) setCost(productGlobal.cost);
+      setIsOnline(!!productGlobal.is_online);
+      setUrlImage(productGlobal.url_image || noImagen);
+      setShow(true);
+    }
+  }, [productGlobal]);
+
   useEffect(() => { // search suggestions
     if (products) {
       // Filtra los nombres localmente en base a la query
