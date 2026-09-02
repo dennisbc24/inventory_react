@@ -274,9 +274,12 @@ const handleCostKey = (e) => {
     }
   };
 
+  const bgByUser = { 1: '#e0f0ff', 2: '#ffe0ec', 3: '#e0ffe8' }[idUser] || '#ffffff';
+  const borderByUser = { 1: '#3b82f6', 2: '#ec4899', 3: '#22c55e' }[idUser] || '#e5e7eb';
+
   return (
     <>
-    <main>
+    <main style={{ background: bgByUser, borderLeft: `4px solid ${borderByUser}`, borderRadius: 12, padding: 16, transition: 'background 0.3s, border-color 0.3s' }}>
 <TitleForm text='Registrar Venta'></TitleForm>
       {closeWindow ? <PopUpWindow text='Actualizar Imagen'></PopUpWindow> : <></>}
       <input type="text" className="only_input" value={query} onChange={handleChange} placeholder="Buscar..." />
