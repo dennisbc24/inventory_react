@@ -38,6 +38,7 @@ export const SelesForm = ({ urlBase }) => {
   const [showSales, SetShowSales] = useState(true)
   const [urlImage, setUrlImage] = useState(noImagen);
   const [revenueEditing, setRevenueEditing] = useState(undefined);
+  const [costEditing, setCostEditing] = useState(undefined);
   const [isOnline, setIsOnline] = useState(false);
   //const [editImg, setEditImg] = useState(false)
 
@@ -64,9 +65,26 @@ const handleRevenueKey = (e) => {
   if (e.key === 'Escape') setRevenueEditing(undefined);
 };
 
+const commitCost = () => {
+  const val = parseFloat(costEditing);
+  if (isNaN(val) || val < 0) { setCostEditing(undefined); return; }
+  setCost(val);
+  setCostEditing(undefined);
+  // revenue se recalcula vía useEffect [PUnit,cost]
+};
+
+const handleCostBlur = () => commitCost();
+const handleCostKey = (e) => {
+  if (e.key === 'Enter') commitCost();
+  if (e.key === 'Escape') setCostEditing(undefined);
+};
+
 // seleccionar dato para editar
   const handleDoubleClick = (rvn) => {
     setRevenueEditing(String(rvn));
+  };
+  const handleDoubleClickCost = (c) => {
+    setCostEditing(String(c));
   };
 
     let lastTapTime = 0;
@@ -124,9 +142,11 @@ const handleRevenueKey = (e) => {
   }, [count, total]);
 
   useEffect(() => {
+    // no sobrescribas si el usuario está editando ganancia manualmente
+    if (revenueEditing !== undefined) return;
     const value = ((PUnit - cost) * count).toFixed(2)
     setRevenue(value)
-  }, [PUnit]);
+  }, [PUnit, cost, revenueEditing]);
 
   useEffect(() => {
     let isActive = true;
@@ -349,7 +369,13 @@ const handleRevenueKey = (e) => {
         </div>       
         <div className="summarySell">
         <p>Costo:</p>
-        <p>{`S/.${(cost)}`}</p>
+        <div onDoubleClick={() => handleDoubleClickCost(cost)} title="Doble click para editar">
+          {costEditing !== undefined ? (
+            <input type="number" value={costEditing} onChange={e=>setCostEditing(e.target.value)} onBlur={handleCostBlur} onKeyDown={handleCostKey} autoFocus />
+          ) : (
+            <p>{`S/.${cost}`} <span style={{fontSize:10,color:'#aaa'}}>✎</span></p>
+          )}
+        </div>
         </div>  
         <div className="summarySell">
         <p>Actualizado:</p>
