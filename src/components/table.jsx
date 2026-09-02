@@ -47,9 +47,20 @@ const TableTd2 =  (Adata) =>{
 const {dato, hideImages} = Adata
 
   const data = Object.entries(dato).filter(([key]) => !(hideImages && IMAGE_KEYS.includes(key)))
+  const render = (v) => {
+    if (v === null || v === undefined) return '';
+    if (typeof v === 'object') {
+      if (Array.isArray(v)) return v.join(', ');
+      const keys = Object.keys(v);
+      if (keys.length === 0) return '';
+      try { return JSON.stringify(v); } catch { return String(v); }
+    }
+    if (typeof v === 'boolean') return v ? 'Sí' : 'No';
+    return String(v);
+  };
     return(   
   <>{data.map(([key, ele])=>{
-    return(<td key={key}>{ele}</td>)})
+    return(<td key={key}>{render(ele)}</td>)})
       }
   </>)
 }
