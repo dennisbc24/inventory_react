@@ -188,7 +188,7 @@ export const UpdateProductForm = ({urlBase}) => {
             <input type="checkbox" checked={isOnline} onChange={e=>setIsOnline(e.target.checked)} /> Habilitar para ecommerce
           </label>
         </div>
-        <AttributesEditor value={attributes} onChange={setAttributes} />
+        {isOnline && <AttributesEditor value={attributes} onChange={setAttributes} />}
         <InputSimple key={fileKey} titulo="Subir Imagen" tipo="file" func={handleInputFileChange} nombre='image_product'></InputSimple>
         <ParrafoInput titulo="Categoría actual" parrafo={product.category_name || 'Sin categoría'}></ParrafoInput>
         <ParrafoInput titulo="Categoría seleccionada" parrafo={categoriaObj.name || '—'}></ParrafoInput>

@@ -93,7 +93,7 @@ export const NewProduct = ({urlBase}) => {
           <input type="checkbox" checked={isOnline} onChange={e=>setIsOnline(e.target.checked)} /> Habilitar para ecommerce
         </label>
       </div>
-      <AttributesEditor value={attributes} onChange={setAttributes} />
+      {isOnline && <AttributesEditor value={attributes} onChange={setAttributes} />}
       <ParrafoInput titulo={'Proveedor'} parrafo={proveedor.name}/>
       <ParrafoInput titulo={'Categoría'} parrafo={categoria.name}/>
       <ParrafoInput titulo={'Online'} parrafo={isOnline ? 'Sí - visible en shop' : 'No'}/>
