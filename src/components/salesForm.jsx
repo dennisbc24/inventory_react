@@ -34,6 +34,8 @@ export const SelesForm = ({ urlBase }) => {
   const [dataCustomer, setDataCustomer] = useState('');
   const [idUser, setIdUser] = useState(1);
   const [idBranch, setIdBranch] = useState(1);
+  const [showMoreUsers, setShowMoreUsers] = useState(false);
+  const [showMoreBranches, setShowMoreBranches] = useState(false);
   const [show, setShow] = useState(false)
   const [showSales, SetShowSales] = useState(true)
   const [urlImage, setUrlImage] = useState(noImagen);
@@ -317,31 +319,31 @@ const handleCostKey = (e) => {
                 <p className="unitPrice">{`Precio Unitario: S/.${(PUnit).toFixed(2)}`}</p>       
       </div>
       </div>
-      <div className="selectsBox">
+      <div className="selectsBox" style={{gap:20}}>
 
       <div>
             <h3>Fecha</h3>
             <input type="date" onChange={handleDate} className="registrationDate" placeholder="Fecha" required />
           </div>
-      <div className="selectSimple">
-            <h3>Usuario</h3>
-            <select  name="listSelect" className='only_select' onChange={handleIdUser}>
-              <option value="1">Dennis</option>
-              <option value="2">Luz</option>
-              <option value="3">Miguel</option>
-            </select>
-          </div>     
-          <div className="selectSimple">
-            <h3>Sucursal</h3>
-            <select  name="listSelect"  className='only_select' onChange={handleIdBranch}>
-              <option value="1">B17</option>
-              <option value="3">Departamento</option>
-              <option value="4">Deposito</option>
-              <option value="7">Tambopata</option>
-              <option value="5">Los Nogales</option>
-              <option value="6">Los Incas</option>
-            </select>
-          </div>    
+      <div style={{display:'flex',flexDirection:'column',gap:6}}>
+        <h3>Usuario</h3>
+        <label style={{display:'flex',gap:6,alignItems:'center',fontSize:13}}><input type="checkbox" checked={idUser===1} onChange={()=>setIdUser(1)} /> Dennis</label>
+        <label style={{display:'flex',gap:6,alignItems:'center',fontSize:13}}><input type="checkbox" checked={idUser===2} onChange={()=>setIdUser(2)} /> Luz</label>
+        {showMoreUsers && <label style={{display:'flex',gap:6,alignItems:'center',fontSize:13}}><input type="checkbox" checked={idUser===3} onChange={()=>setIdUser(3)} /> Miguel</label>}
+        <button type="button" onClick={()=>setShowMoreUsers(v=>!v)} style={{fontSize:11,background:'none',border:'none',color:'#2962FF',cursor:'pointer',padding:0,textAlign:'left'}}>{showMoreUsers ? '▲ ver menos' : '••• ver más'}</button>
+      </div>
+      <div style={{display:'flex',flexDirection:'column',gap:6}}>
+        <h3>Sucursal</h3>
+        <label style={{display:'flex',gap:6,alignItems:'center',fontSize:13}}><input type="checkbox" checked={idBranch===1} onChange={()=>setIdBranch(1)} /> B17</label>
+        <label style={{display:'flex',gap:6,alignItems:'center',fontSize:13}}><input type="checkbox" checked={idBranch===4} onChange={()=>setIdBranch(4)} /> Deposito</label>
+        {showMoreBranches && <>
+          <label style={{display:'flex',gap:6,alignItems:'center',fontSize:13}}><input type="checkbox" checked={idBranch===3} onChange={()=>setIdBranch(3)} /> Departamento</label>
+          <label style={{display:'flex',gap:6,alignItems:'center',fontSize:13}}><input type="checkbox" checked={idBranch===7} onChange={()=>setIdBranch(7)} /> Tambopata</label>
+          <label style={{display:'flex',gap:6,alignItems:'center',fontSize:13}}><input type="checkbox" checked={idBranch===5} onChange={()=>setIdBranch(5)} /> Los Nogales</label>
+          <label style={{display:'flex',gap:6,alignItems:'center',fontSize:13}}><input type="checkbox" checked={idBranch===6} onChange={()=>setIdBranch(6)} /> Los Incas</label>
+        </>}
+        <button type="button" onClick={()=>setShowMoreBranches(v=>!v)} style={{fontSize:11,background:'none',border:'none',color:'#2962FF',cursor:'pointer',padding:0,textAlign:'left'}}>{showMoreBranches ? '▲ ver menos' : '••• ver más'}</button>
+      </div>
       </div>
       <input type="text" onChange={changeCostumer} placeholder="Cliente"/>
        <div className="summarySell">
