@@ -45,9 +45,28 @@ const handleChangeRevenue = (e) => {
   setRevenueEditing(e.target.value);
 }
 
+const commitRevenue = () => {
+  const val = parseFloat(revenueEditing);
+  if (isNaN(val)) { setRevenueEditing(undefined); return; }
+  // sobrescribe ganancia y recalcula PUnit/total para que el form refleje el override
+  setRevenue(val.toFixed(2));
+  if (count > 0) {
+    const newPUnit = (val / count) + Number(cost || 0);
+    setPUnit(newPUnit);
+    setTotal(newPUnit * count);
+  }
+  setRevenueEditing(undefined);
+};
+
+const handleRevenueBlur = () => commitRevenue();
+const handleRevenueKey = (e) => {
+  if (e.key === 'Enter') commitRevenue();
+  if (e.key === 'Escape') setRevenueEditing(undefined);
+};
+
 // seleccionar dato para editar
   const handleDoubleClick = (rvn) => {
-    setRevenueEditing(rvn);
+    setRevenueEditing(String(rvn));
   };
 
     let lastTapTime = 0;
@@ -311,17 +330,18 @@ const handleChangeRevenue = (e) => {
         </div> 
         <div className="summarySell">
         <p>Ganancia:</p>
-        <div onDoubleClick={() => handleDoubleClick(revenue)}>
+        <div onDoubleClick={() => handleDoubleClick(revenue)} title="Doble click para editar">
           {revenueEditing != undefined ? (
                   <input
                     type="number"
                     value={revenueEditing}
                     onChange={handleChangeRevenue}
-                    // onBlur={() => handleBlur(item.id_existence)}
-                    // autoFocus
+                    onBlur={handleRevenueBlur}
+                    onKeyDown={handleRevenueKey}
+                    autoFocus
                   />
                 ) : (
-                  <p>{`S/.${revenue}`}</p>
+                  <p>{`S/.${revenue}`} <span style={{fontSize:10,color:'#aaa'}}>✎</span></p>
                 )}
           
         </div>
