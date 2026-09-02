@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import {  InputSimple,  ParrafoInput, SearchInput} from "./form/inputSearch";
+import { AttributesEditor } from "./form/AttributesEditor.jsx";
 import axios from "axios";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
@@ -20,6 +21,7 @@ export const UpdateProductForm = ({urlBase}) => {
   const [fk_category, setFk_category] = useState('')
   const [categoriaObj, setCategoriaObj] = useState({name:'', id_category: ''})
   const [isOnline, setIsOnline] = useState(false)
+  const [attributes, setAttributes] = useState({});
   const [photo, setPhoto] = useState(null);
   const [fileKey, setFileKey] = useState(0);
 
@@ -76,6 +78,7 @@ export const UpdateProductForm = ({urlBase}) => {
     formData.append('wholesale_price', wholesale_price);
     formData.append('fk_category', fk_category);
     formData.append('is_online', isOnline ? 'true' : 'false');
+    formData.append('attributes', JSON.stringify(attributes));
     formData.append('name', name);
     formData.append('nameFile', name.replaceAll(' ','+' ));
     formData.append('photo', photo);
@@ -88,7 +91,7 @@ export const UpdateProductForm = ({urlBase}) => {
       alert(sendData.data);
       // limpiar para evitar repetir
       setQuery(''); setSuggestions([]); setProduct([]); setId_Product(''); setShow(false);
-      setName(''); setCost(0); setSugested_price(''); setWholesale_price(''); setFk_category(''); setCategoriaObj({name:'',id_category:''}); setIsOnline(false); setPhoto(null); setFileKey(k=>k+1);
+      setName(''); setCost(0); setSugested_price(''); setWholesale_price(''); setFk_category(''); setCategoriaObj({name:'',id_category:''}); setIsOnline(false); setAttributes({}); setPhoto(null); setFileKey(k=>k+1);
       const form = document.querySelector('form'); if(form) form.reset();
       
     } catch (error) {
@@ -132,6 +135,7 @@ export const UpdateProductForm = ({urlBase}) => {
           setFk_category(elem.fk_category || '')
           setCategoriaObj({name: elem.category_name || '', id_category: elem.fk_category || ''})
           setIsOnline(!!elem.is_online)
+          setAttributes(elem.attributes && typeof elem.attributes === 'object' ? elem.attributes : (typeof elem.attributes === 'string' ? JSON.parse(elem.attributes||'{}') : {}))
           setShow('true')
         }
       });
@@ -184,6 +188,7 @@ export const UpdateProductForm = ({urlBase}) => {
             <input type="checkbox" checked={isOnline} onChange={e=>setIsOnline(e.target.checked)} /> Habilitar para ecommerce
           </label>
         </div>
+        <AttributesEditor value={attributes} onChange={setAttributes} />
         <InputSimple key={fileKey} titulo="Subir Imagen" tipo="file" func={handleInputFileChange} nombre='image_product'></InputSimple>
         <ParrafoInput titulo="Categoría actual" parrafo={product.category_name || 'Sin categoría'}></ParrafoInput>
         <ParrafoInput titulo="Categoría seleccionada" parrafo={categoriaObj.name || '—'}></ParrafoInput>

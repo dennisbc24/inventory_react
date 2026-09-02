@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {  InputSimple, ParrafoInput, SearchInput} from "./form/inputSearch";
+import { AttributesEditor } from "./form/AttributesEditor.jsx";
 import imageCompression from "browser-image-compression";
 import "./salesForm.css";
 import axios from 'axios';
@@ -14,6 +15,7 @@ export const NewProduct = ({urlBase}) => {
   const [proveedor, setProveedor] = useState([{name:'',id_supplier:0}]);
   const [categoria, setCategoria] = useState({name:'',id_category:0});
   const [isOnline, setIsOnline] = useState(false);
+  const [attributes, setAttributes] = useState({});
 
   const [photo, setPhoto] = useState(null);
   const [fileKey, setFileKey] = useState(0);
@@ -53,6 +55,7 @@ export const NewProduct = ({urlBase}) => {
     formData.append('fk_supplier', proveedor.id_supplier);
     formData.append('fk_category', categoria.id_category || '');
     formData.append('is_online', isOnline ? 'true' : 'false');
+    formData.append('attributes', JSON.stringify(attributes));
     formData.append('photo', photo);
 
     try {
@@ -62,7 +65,7 @@ export const NewProduct = ({urlBase}) => {
       // limpiar formulario y archivo
       setName(''); setCost(0); setLowest_price(0); setList_price(0);
       setProveedor([{name:'',id_supplier:0}]); setCategoria({name:'',id_category:0});
-      setIsOnline(false); setPhoto(null); setFileKey(k=>k+1);
+      setIsOnline(false); setAttributes({}); setPhoto(null); setFileKey(k=>k+1);
       // reset inputs no controlados
       const form = document.querySelector('form'); if(form) form.reset();
     } catch (error) {
@@ -90,6 +93,7 @@ export const NewProduct = ({urlBase}) => {
           <input type="checkbox" checked={isOnline} onChange={e=>setIsOnline(e.target.checked)} /> Habilitar para ecommerce
         </label>
       </div>
+      <AttributesEditor value={attributes} onChange={setAttributes} />
       <ParrafoInput titulo={'Proveedor'} parrafo={proveedor.name}/>
       <ParrafoInput titulo={'Categoría'} parrafo={categoria.name}/>
       <ParrafoInput titulo={'Online'} parrafo={isOnline ? 'Sí - visible en shop' : 'No'}/>
