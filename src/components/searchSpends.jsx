@@ -1,15 +1,14 @@
-import { useState } from "react";
-import {  ButtonSave, InputSimple} from "./form/inputSearch";
+import { useState, useEffect } from "react";
+import { InputSimple } from "./form/inputSearch";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import axios from "axios";
 const SpendsByUser = ({urlBase}) => {
-  
-  const [show, setShow] = useState(false);
+
   const [data, setData] = useState([]);
   const [user, setUser] = useState(1);
   const [total_saldo, setTotal_saldo] = useState(0)
-  
+
 
   const urlToCash = `${urlBase}/api/v1/users/getCash?id=${user}`
 
@@ -19,12 +18,13 @@ const SpendsByUser = ({urlBase}) => {
 
   const requestLastSpends = await axios.get(urlLastSpends)
     const requestCash = await axios.get(urlToCash)
-    
+
     setTotal_saldo(requestCash.data[0].cash)
-    setShow(true)
     setData(requestLastSpends.data)
-    
+
  }
+
+  useEffect(() => { handleCLic(); }, [user]);
   
  const handleUser = (e) => {
   setUser(e.target.value)
@@ -39,20 +39,19 @@ const SpendsByUser = ({urlBase}) => {
       <option value="3">Miguel</option>
     </select>
     </div>
-    
-    <ButtonSave titulo={"Buscar"} func={handleCLic}/>
-    {show ? <><h2>Saldo Actual: </h2><p>{total_saldo}</p></> : <></>}
-    {<>{ show ? <table>
+
+    <><h2>Saldo Actual: </h2><p>{total_saldo}</p></>
+    {<><table>
         <thead>
             <tr>
                 <th>Concepto</th>
                 <th>Fecha</th>
                 <th>Monto</th>
-                
+
             </tr>
         </thead>
         <tbody key={self.crypto.randomUUID()}>
-        { show ?
+        {
     data.map(element => {return(
             <tr key={self.crypto.randomUUID()}>
                 <td  >{element.concept}</td>
@@ -60,47 +59,44 @@ const SpendsByUser = ({urlBase}) => {
                 <td >{`S/.${element.amount}`}</td>
             </tr>
           )})
-        : <></>}
+        }
         </tbody>
-        
-    </table> : <></>
-    }</>}
+
+    </table>
+    </>}
     </>
   );
 }
 const SpendsByMonth =({urlBase})=>{
-  const [date, setDate] = useState('');
-  const [show, setShow] = useState(false);
+  const now = new Date();
+  const [date, setDate] = useState(`${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`);
   const [data, setData] = useState([]);
   const [user, setUser] = useState(1);
   const [total_saldo, setTotal_saldo] = useState(0)
-  
+
 
   const urlToGet = `${urlBase}/api/v1/box/transByUSer?date=${date}&user=${user}`
   const urlToCash = `${urlBase}/api/v1/users/getCash?id=${user}`
 
-  const handleDate = ({ target: { value } }) => { 
-    setDate(value), 
-    console.log(date);
-    
-    setShow(false)
-    
+  const handleDate = ({ target: { value } }) => {
+    if (!value) return;
+    setDate(value)
 };
-  
 
- const handleCLic = async () => {
 
-  
+  const handleCLic = async () => {
+
+
     const requestCash = await axios.get(urlToCash)
     const requestData = await axios.get(urlToGet)
-    
+
     setTotal_saldo(requestCash.data[0].cash)
     setData(requestData.data)
-    setShow(true)
 
 
-     
- }
+  }
+
+  useEffect(() => { if (date) handleCLic(); }, [date, user]);
   
  const handleUser = (e) => {
   setUser(e.target.value)
@@ -109,17 +105,16 @@ const SpendsByMonth =({urlBase})=>{
     <>
     <TitleForm text='Gastos por Mes'></TitleForm>
     <div className="divForm">
-            <InputSimple titulo="Fecha" tipo="month" func={handleDate}></InputSimple>
+            <InputSimple titulo="Fecha" tipo="month" func={handleDate} valor={date}></InputSimple>
             <select onChange={handleUser} >
       <option value="1">Dennis</option>
       <option value="2">Luz Marina</option>
       <option value="3">Miguel</option>
     </select>
     </div>
-    
-    <ButtonSave titulo={"Buscar"} func={handleCLic}/>
-    {show ? <><h2>Saldo Actual: </h2><p>{total_saldo}</p></> : <></>}
-    {<>{ show ? <table>
+
+    <><h2>Saldo Actual: </h2><p>{total_saldo}</p></>
+    {<><table>
         <thead>
             <tr>
                 <th>Concepto</th>
@@ -138,9 +133,9 @@ const SpendsByMonth =({urlBase})=>{
             </tr>
           )})}
         </tbody>
-        
-    </table> : <></>
-    }</>}
+
+    </table>
+    </>}
     </>
   );
 }

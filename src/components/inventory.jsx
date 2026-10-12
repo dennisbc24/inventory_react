@@ -8,7 +8,7 @@ import { ContextUser } from "../context/userContext.jsx";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import axios from "axios";
-import {  TableGet, TableGet2 } from "./table.jsx";
+import {  TableGet, TableGet2, TABLE_HEADERS } from "./table.jsx";
 import {InventoryService} from "../services/inventory.js"
 const service = new InventoryService()
 export const Inventory = ({urlBase}) => {
@@ -344,7 +344,7 @@ const handleTest = async () =>{
 
     </>
     : <></>}</>}
-            {<>{ show4 ? <TableGet url={`${urlBase}/api/v1/existence/inStock`} minWitdh="450px"/> : <></>}</>}
+            {<>{ show4 ? <TableGet url={`${urlBase}/api/v1/existence/inStock`} minWitdh="450px" headers={TABLE_HEADERS.inStock}/> : <></>}</>}
             {<>{ review == 5 ?<>
             <input type="text" className="only_input" value={query} onChange={handleChangeInput} placeholder="Escribe el producto aquí" />
             <ul className="suggestions_lu">   {suggestions.map((suggestion, index) => (

@@ -15,6 +15,24 @@ export const ShoppingList = ({ urlBase }) => {
   const [dragIndex, setDragIndex] = useState(null);
   const [dragOverIndex, setDragOverIndex] = useState(null);
   const [viewItem, setViewItem] = useState(null);
+  const [supplierFilter, setSupplierFilter] = useState("");
+  const [suppliers, setSuppliers] = useState([]);
+  const [editingSupplier, setEditingSupplier] = useState(null);
+
+  const suppliersInList = items.reduce((acc, it) => {
+    const key = it.fk_supplier === null || it.fk_supplier === undefined ? "none" : String(it.fk_supplier);
+    if (!acc.some((s) => s.key === key)) {
+      acc.push({ key, name: it.supplier_name || "Sin proveedor" });
+    }
+    return acc;
+  }, []);
+
+  const visibleItems = supplierFilter === ""
+    ? items
+    : items.filter((it) => {
+        const key = it.fk_supplier === null || it.fk_supplier === undefined ? "none" : String(it.fk_supplier);
+        return key === supplierFilter;
+      });
 
   const { usuario } = useContext(ContextUser)
   const canEdit = usuario.role === 'admin'
@@ -30,6 +48,9 @@ export const ShoppingList = ({ urlBase }) => {
 
   useEffect(() => {
     loadList();
+    axios.get(`${urlBase}/api/v1/suppliers`)
+      .then((r) => setSuppliers(Array.isArray(r.data) ? r.data : []))
+      .catch((e) => console.error("Error al obtener proveedores:", e));
   }, []);
 
   useEffect(() => {
@@ -73,6 +94,40 @@ export const ShoppingList = ({ urlBase }) => {
   const removeItem = async (id_shopping) => {
     await shoppingService.remove(urlBase, id_shopping);
     loadList();
+  };
+
+  const saveItemSupplier = async (item, newFk) => {
+    try {
+      const { data: prod } = await axios.get(`${urlBase}/api/v1/products/${item.id_product}`);
+      const p = Array.isArray(prod) ? prod[0] : prod;
+      if (!p) {
+        alert("No se pudo obtener el producto");
+        return;
+      }
+      const sup = suppliers.find((s) => String(s.id_supplier) === String(newFk));
+      const fd = new FormData();
+      fd.append('name', p.name);
+      fd.append('cost', p.cost ?? 0);
+      fd.append('sugested_price', p.list_price ?? '');
+      fd.append('wholesale_price', p.lowest_price ?? '');
+      fd.append('fk_category', p.fk_category ?? '');
+      fd.append('is_online', p.is_online ? 'true' : 'false');
+      fd.append('attributes', JSON.stringify(p.attributes || {}));
+      fd.append('fk_supplier', newFk === '' ? '' : newFk);
+      fd.append('supplier', sup ? sup.name : '');
+      await axios.patch(`${urlBase}/api/v1/products/${item.id_product}`, fd);
+      setItems((prev) => prev.map((it) =>
+        it.id_shopping === item.id_shopping
+          ? { ...it, fk_supplier: newFk === '' ? null : Number(newFk), supplier_name: sup ? sup.name : null }
+          : it
+      ));
+      alert('Proveedor actualizado');
+    } catch (e) {
+      console.error(e);
+      alert(e?.response?.data?.message || 'Error al actualizar proveedor');
+    } finally {
+      setEditingSupplier(null);
+    }
   };
 
   const handleDragStart = (index) => { setDragIndex(index) }
@@ -125,12 +180,24 @@ export const ShoppingList = ({ urlBase }) => {
 
       <h3>Productos por adquirir</h3>
       {canEdit ? <p>Arrastra las filas para cambiar la prioridad (las agregadas a mano van arriba por defecto)</p> : null}
+      <div className="divForm">
+        <div className="inputSimple">
+          <h3>Proveedor</h3>
+          <select value={supplierFilter} onChange={(e) => setSupplierFilter(e.target.value)} className="only_select">
+            <option value="">Todos ({items.length})</option>
+            {suppliersInList.map((s) => (
+              <option key={s.key} value={s.key}>{s.name} ({items.filter((it) => (it.fk_supplier === null || it.fk_supplier === undefined ? "none" : String(it.fk_supplier)) === s.key).length})</option>
+            ))}
+          </select>
+        </div>
+      </div>
       <div className="result">
       <table className="infoTable">
         <thead>
           <tr>
             {canEdit ? <th></th> : null}
             <th>Producto</th>
+            <th>Proveedor</th>
             <th>Stock total</th>
             <th>Costo S/.</th>
             {canEdit ? <th>Acciones</th> : null}
@@ -140,22 +207,42 @@ export const ShoppingList = ({ urlBase }) => {
           </tr>
         </thead>
         <tbody>
-          {items.map((item, index) => (
+          {visibleItems.map((item, index) => (
             <tr
               key={item.id_shopping}
-              draggable={canEdit}
+              draggable={canEdit && !supplierFilter}
               onDragStart={() => handleDragStart(index)}
               onDragOver={(e) => handleDragOver(e, index)}
               onDrop={(e) => handleDrop(e, index)}
               onDragEnd={handleDragEnd}
               style={{
                 opacity: dragIndex === index ? 0.4 : 1,
-                cursor: canEdit ? 'grab' : 'default',
+                cursor: canEdit && !supplierFilter ? 'grab' : 'default',
                 borderTop: dragOverIndex === index ? '3px solid #4f86c6' : '',
               }}
             >
               {canEdit ? <td>≡</td> : null}
               <td>{item.product_name}</td>
+              <td
+                onDoubleClick={() => canEdit && setEditingSupplier(item.id_shopping)}
+                style={canEdit ? { cursor: 'pointer' } : undefined}
+                title={canEdit ? 'Doble clic para cambiar proveedor' : undefined}
+              >
+                {editingSupplier === item.id_shopping ? (
+                  <select
+                    autoFocus
+                    value={item.fk_supplier === null || item.fk_supplier === undefined ? '' : String(item.fk_supplier)}
+                    onChange={(e) => saveItemSupplier(item, e.target.value)}
+                    onBlur={() => setEditingSupplier(null)}
+                    onKeyDown={(e) => { if (e.key === 'Escape') setEditingSupplier(null); }}
+                  >
+                    <option value="">Sin proveedor</option>
+                    {suppliers.map((s) => <option key={s.id_supplier} value={s.id_supplier}>{s.name}</option>)}
+                  </select>
+                ) : (
+                  <>{item.supplier_name || "—"}</>
+                )}
+              </td>
               <td>{item.total_stock}</td>
               <td>{item.cost}</td>
               

@@ -2,11 +2,12 @@ import { useState, useEffect, useContext } from "react";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import { ButtonSave } from "./form/inputSearch";
-import { TableGet } from "./table.jsx";
+import { TableGet, TABLE_HEADERS } from "./table.jsx";
 import { ExistenceEditableTable } from "./ExistenceEditableTable.jsx";
 import axios from "axios";
 import { SalesService } from "../services/sales.js";
 import { PopUpWindow } from "../../src/components/form/popupwindow.jsx";
+import { ProformaModal } from "./proforma.jsx";
 import noImagen from "./img/no_imagen.png";
 const saleService = new SalesService()
 import { ContextGlobal  } from "../context/globalContext.jsx";
@@ -30,8 +31,12 @@ export const SelesForm = ({ urlBase }) => {
   const [total, setTotal] = useState(0);
   const [revenue, setRevenue] = useState(0);
   const [PUnit, setPUnit] = useState(0);
-  const [dateSell, setDateSell] = useState('');
-  const [dataCustomer, setDataCustomer] = useState('');
+  const [proforma, setProforma] = useState([]);
+  const [showProforma, setShowProforma] = useState(false);
+  const [proformaCliente, setProformaCliente] = useState('');
+  const [proformaFecha, setProformaFecha] = useState(new Date().toISOString().slice(0, 10));
+  const [savingProforma, setSavingProforma] = useState(false);
+  const [salesKey, setSalesKey] = useState(0);
   const [idUser, setIdUser] = useState(1);
   const [idBranch, setIdBranch] = useState(1);
   const [showMoreUsers, setShowMoreUsers] = useState(false);
@@ -194,7 +199,6 @@ const handleCostKey = (e) => {
   const handleCount = ({ target: { value } }) => { setCount(parseInt(value)) };
   const handleTotal = ({ target: { value } }) => { setTotal(parseFloat(value)) };
   const handleChange = (e) => { setQuery(e.target.value), setShow(false), SetShowSales(false) }
-  const handleDate = (e) => { setDateSell(e.target.value) }
 
    const handleIdUser = (e) => {
      const value = parseInt(e.target.value)
@@ -209,8 +213,7 @@ const handleCostKey = (e) => {
    }
 
 
-  const changeCostumer = (e) => { setDataCustomer(e.target.value) }
-  const handleClick = (event) => {
+    const handleClick = (event) => {
     const textoLi = event.target.textContent
     products.forEach((elem) => {
       if (elem.name == textoLi) {
@@ -243,36 +246,113 @@ const handleCostKey = (e) => {
   };
 
 
-  const handleButton = async () => {
-
-    if (dateSell != '' && revenue > 0 && count > 0 && productGlobal.name != undefined) {
-      const body = { dateSell, count, total, PUnit, revenue, dataCustomer, product:productGlobal, idUser, idBranch }
-      
-      try {
-        await saleService.register(urlBase, body)
-        SetShowSales(true)
-        alert('Felicidades...Venta Registrada!')
-        // limpiar formulario para evitar repetir datos
-        setQuery(''); setSuggestions([]); setProductGlobal({}); setCost(0); setTotal(0); setRevenue(0); setPUnit(0); setCount(1); setDataCustomer(''); setDateSell(''); setShow(false); setUrlImage(noImagen); setIsOnline(false); setRevenueEditing(undefined);
-        // reset inputs no controlados
-        document.querySelectorAll('input[type="number"]').forEach(el=>{ if(el.placeholder==="") el.value=""; });
-        const dateEl = document.querySelector('input[type="date"].registrationDate'); if(dateEl) dateEl.value='';
-        const custEl = document.querySelector('input[placeholder="Cliente"]'); if(custEl) custEl.value='';
-      } catch(e){ console.error(e); alert('Error al registrar venta'); }
-    } else {
-      if (dateSell === '') {
-        alert('No hay una fecha seleccionada!')
+  const addToProforma = () => {
+    if (!productGlobal || productGlobal.id_product === undefined) {
+      alert('la selección del producto es incorrecta');
+      return;
+    }
+    if (!(count > 0)) {
+      alert('Cantidad debe ser mayor que cero');
+      return;
+    }
+    const pUnit = parseFloat(PUnit) || 0;
+    const lineRevenue = parseFloat(((pUnit - cost) * count).toFixed(2));
+    if (lineRevenue < 0) {
+      alert('Esta venta es a perdida, por lo cual no se puede agregar!');
+      return;
+    }
+    const line = {
+      key: `${productGlobal.id_product}-${idBranch}-${pUnit}`,
+      product: { id_product: productGlobal.id_product, name: productGlobal.name, url_image: productGlobal.url_image },
+      count,
+      pUnit,
+      cost: parseFloat(cost) || 0,
+      idUser,
+      idBranch
+    };
+    setProforma((prev) => {
+      const idx = prev.findIndex((l) => l.key === line.key);
+      if (idx >= 0) {
+        const next = [...prev];
+        next[idx] = { ...next[idx], count: next[idx].count + count };
+        return next;
       }
-      if (revenue < 0) {
-        alert('Esta venta es a perdida, por lo cual no se puede registrar!')
-      } if (count < 0) {
-        alert('Cantidad debe ser mayor que cero')
-      } if (productGlobal.name === undefined) {
-        alert('la selección del producto es incorrecta')
-      }
+      return [...prev, line];
+    });
+    // limpiar selección para el siguiente producto (se conserva usuario/sucursal)
+    setQuery(''); setSuggestions([]); setProductGlobal({}); setCost(0); setTotal(0); setRevenue(0); setPUnit(0); setCount(1); setShow(false); setUrlImage(noImagen); setIsOnline(false); setRevenueEditing(undefined); setCostEditing(undefined);
+    document.querySelectorAll('.descriptionSell input[type="number"]').forEach(el => { el.value = ""; });
+  };
 
+  const updateProformaQty = (key, delta) => {
+    setProforma((prev) => prev.map((l) =>
+      l.key === key ? { ...l, count: Math.max(1, l.count + delta) } : l
+    ));
+  };
+
+  const updateProformaPrice = (key, value) => {
+    setProforma((prev) => prev.map((l) =>
+      l.key === key ? { ...l, pUnit: value === "" ? "" : parseFloat(value) || 0 } : l
+    ));
+  };
+
+  const removeProformaLine = (key) => {
+    setProforma((prev) => prev.filter((l) => l.key !== key));
+  };
+
+  const saveProforma = async () => {
+    if (!proformaFecha) {
+      alert('Selecciona la fecha de la venta!');
+      return;
+    }
+    for (const l of proforma) {
+      const pUnit = parseFloat(l.pUnit);
+      if (!(l.count > 0)) {
+        alert(`Cantidad inválida para ${l.product.name}`);
+        return;
+      }
+      if (!(pUnit > 0)) {
+        alert(`Precio inválido para ${l.product.name}`);
+        return;
+      }
+      const rev = parseFloat(((pUnit - l.cost) * l.count).toFixed(2));
+      if (rev < 0) {
+        alert(`La línea ${l.product.name} es a perdida, por lo cual no se puede registrar!`);
+        return;
+      }
+    }
+    setSavingProforma(true);
+    try {
+      for (const l of proforma) {
+        const pUnit = parseFloat(l.pUnit);
+        await saleService.register(urlBase, {
+          dateSell: proformaFecha,
+          count: l.count,
+          total: parseFloat((pUnit * l.count).toFixed(2)),
+          PUnit: pUnit,
+          revenue: parseFloat(((pUnit - l.cost) * l.count).toFixed(2)),
+          dataCustomer: proformaCliente,
+          product: l.product,
+          idUser: l.idUser,
+          idBranch: l.idBranch
+        });
+      }
+      setProforma([]);
+      setShowProforma(false);
+      setProformaCliente('');
+      alert('Felicidades...Venta Registrada!');
+      SetShowSales(true);
+      setSalesKey((k) => k + 1);
+    } catch (e) {
+      console.error(e);
+      alert('Error al registrar venta');
+    } finally {
+      setSavingProforma(false);
     }
   };
+
+  const proformaTotal = proforma.reduce((a, l) => a + (parseFloat(l.pUnit || 0) * l.count), 0);
+  const proformaCount = proforma.reduce((a, l) => a + l.count, 0);
 
   const bgByUser = { 1: '#e0f0ff', 2: '#ffe0ec', 3: '#e0ffe8' }[idUser] || '#ffffff';
   const borderByUser = { 1: '#3b82f6', 2: '#ec4899', 3: '#22c55e' }[idUser] || '#e5e7eb';
@@ -324,10 +404,6 @@ const handleCostKey = (e) => {
       </div>
       <div className="selectsBox" style={{gap:20}}>
 
-      <div>
-            <h3>Fecha</h3>
-            <input type="date" onChange={handleDate} className="registrationDate" placeholder="Fecha" required />
-          </div>
       <div style={{display:'flex',flexDirection:'column',gap:6}}>
         <h3>Usuario</h3>
         <label style={{display:'flex',gap:6,alignItems:'center',fontSize:13}}><input type="checkbox" checked={idUser===1} onChange={()=>setIdUser(1)} /> Dennis</label>
@@ -348,8 +424,7 @@ const handleCostKey = (e) => {
         <button type="button" onClick={()=>setShowMoreBranches(v=>!v)} style={{fontSize:11,background:'none',border:'none',color:'#2962FF',cursor:'pointer',padding:0,textAlign:'left'}}>{showMoreBranches ? '▲ ver menos' : '••• ver más'}</button>
       </div>
       </div>
-      <input type="text" onChange={changeCostumer} placeholder="Cliente"/>
-       <div className="summarySell">
+      <div className="summarySell">
         <p>{`Productos (${count}) x (${PUnit}): `}</p>
         <p>{`S/.${(total).toFixed(2)}`}</p>
         </div> 
@@ -387,8 +462,31 @@ const handleCostKey = (e) => {
         <p>{(productGlobal.updated ? (productGlobal.updated.slice(0, 10)) : productGlobal.updated)}</p>
         </div>  
       <div className="button_save_sell">
-        <button onClick={handleButton} className="saveSell">Guardar</button>
+        <button onClick={addToProforma} className="saveSell">Agregar a proforma</button>
       </div>
+
+      {proforma.length > 0 && (
+        <button className="proforma_float" onClick={() => setShowProforma(true)}>
+          <span className="proforma_icon">🧾</span>
+          <span>S/.{proformaTotal.toFixed(2)}</span>
+          <span className="proforma_count">{proformaCount}</span>
+        </button>
+      )}
+      {showProforma && (
+        <ProformaModal
+          lines={proforma}
+          cliente={proformaCliente}
+          setCliente={setProformaCliente}
+          fecha={proformaFecha}
+          setFecha={setProformaFecha}
+          onClose={() => setShowProforma(false)}
+          onQty={updateProformaQty}
+          onPrice={updateProformaPrice}
+          onRemove={removeProformaLine}
+          onSave={saveProforma}
+          saving={savingProforma}
+        />
+      )}
 
       
       
@@ -401,7 +499,7 @@ const handleCostKey = (e) => {
       }</>}
       <h3>Ultimas Ventas</h3>
 
-      {<>{showSales ? <TableGet url={`${urlBase}/api/v1/ventas`} /> : <></>
+      {<>{showSales ? <TableGet key={salesKey} url={`${urlBase}/api/v1/ventas`} headers={TABLE_HEADERS.sales} /> : <></>
       }</>}
     </>
   );

@@ -5,7 +5,7 @@ import imageCompression from "browser-image-compression";
 import "./salesForm.css";
 import axios from 'axios';
 import { TitleForm } from "./form/titleForm.jsx";
-import { TableGet } from "./table.jsx";
+import { TableGet, TABLE_HEADERS } from "./table.jsx";
 
 export const NewProduct = ({urlBase}) => {
   const [name, setName] = useState('');
@@ -111,7 +111,7 @@ export const NewProduct = ({urlBase}) => {
       </div>
       {/* <ButtonSave titulo={"Crear"} func={handleButton}/> */}
       <h3>Ultimos Creados</h3>
-      <TableGet url={`${urlBase}/api/v1/products/latestproducts`}/>
+      <TableGet url={`${urlBase}/api/v1/products/latestproducts`} headers={TABLE_HEADERS.products}/>
     </>
   );
 };

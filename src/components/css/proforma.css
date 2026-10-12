@@ -1,0 +1,141 @@
+.proforma_float{
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 30px;
+    border: none;
+    background-color: var(--color-success, #22c55e);
+    color: #fff;
+    font-weight: bold;
+    font-size: 1em;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+    cursor: pointer;
+}
+
+.proforma_float .proforma_icon{
+    font-size: 1.4em;
+}
+
+.proforma_float .proforma_count{
+    background-color: #fff;
+    color: #111;
+    border-radius: 12px;
+    padding: 0 8px;
+    font-size: 0.9em;
+}
+
+.proforma_frame{
+    width: 90%;
+    margin: 5%;
+}
+
+.proforma_head{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+}
+
+.proforma_head label{
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    font-weight: bold;
+}
+
+.proforma_lines{
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.proforma_line{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.04);
+    flex-wrap: wrap;
+}
+
+.guide_extra{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-basis: 100%;
+    flex-wrap: wrap;
+}
+
+.guide_extra label{
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    font-size: 0.9em;
+}
+
+.proforma_frame img.proforma_img{
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: none;
+}
+
+.proforma_name{
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    font-size: 0.9em;
+}
+
+.proforma_price{
+    width: 80px;
+}
+
+.proforma_step{
+    min-width: 28px;
+    font-weight: bold;
+}
+
+.proforma_qty{
+    min-width: 24px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.proforma_branch{
+    font-size: 0.85em;
+    font-weight: bold;
+}
+
+.proforma_line_total{
+    min-width: 60px;
+    text-align: right;
+    font-weight: bold;
+}
+
+.proforma_remove{
+    background-color: #ef4444 !important;
+    min-width: 28px;
+}
+
+.proforma_total{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    font-weight: bold;
+    font-size: 1.15em;
+    padding: 6px 10px;
+}

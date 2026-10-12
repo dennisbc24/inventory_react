@@ -1,25 +1,33 @@
-import { useState } from "react";
-import { ButtonSave, InputSimple} from "./form/inputSearch";
+import { useState, useEffect } from "react";
+import { InputSimple } from "./form/inputSearch";
 import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
-import {  TableGet } from "./table.jsx";
+import { TableGet, TABLE_HEADERS } from "./table.jsx";
 
-export const InventorySearchForm = ({urlBase}) => {
-  
+export const InventorySearchForm = ({ urlBase }) => {
+
   const [keyWord, setKeyWord] = useState('');
-  const [show, setShow] = useState(false);
-     
-  const handleInput = ({ target: { value } }) => { setKeyWord(value), setShow(false)};
-  const handleButton = () => {setShow(true)};
+  const [search, setSearch] = useState('');
+
+  const handleInput = ({ target: { value } }) => { setKeyWord(value) };
+
+  useEffect(() => {
+    if (!keyWord.trim()) {
+      setSearch('');
+      return;
+    }
+    const t = setTimeout(() => setSearch(keyWord.trim()), 600);
+    return () => clearTimeout(t);
+  }, [keyWord]);
+
   return (
     <>
     <TitleForm text='Buscar Stock de Producto'></TitleForm>
     <div className="divForm">
-        <InputSimple func={handleInput} />
+        <InputSimple func={handleInput} valor={keyWord} />
     </div>
-    <ButtonSave titulo={"Buscar"} func={handleButton}></ButtonSave>
-      
-    {<>{ show ? <TableGet url={`${urlBase}/api/v1/existence/byName?keyWord=${keyWord}`} minWitdh="380px"/> : <></>
+
+    {<>{ search !== '' ? <TableGet key={search} url={`${urlBase}/api/v1/existence/byName?keyWord=${encodeURIComponent(search)}`} minWitdh="380px" headers={TABLE_HEADERS.byName}/> : <></>
     }</>}
     </>
   );

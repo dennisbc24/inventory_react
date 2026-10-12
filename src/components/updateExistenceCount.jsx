@@ -3,7 +3,7 @@ import {  InputSimple,  ParrafoInput, SelectSimple} from "./form/inputSearch";
 import axios from "axios";
 import "./css/updateExistenceCount.css";
 import { TitleForm } from "./form/titleForm.jsx";
-import { TableGet } from "./table.jsx";
+import { TableGet, TABLE_HEADERS } from "./table.jsx";
 import noImagen from "./img/no_imagen.png";
 
 export const UpdateExistenceCount = ({urlBase}) => {
@@ -122,7 +122,7 @@ export const UpdateExistenceCount = ({urlBase}) => {
         ))}
       </ul>
       <h3>Stock</h3>
-      {show ? <TableGet url={`${urlBase}/api/v1/existence?product=${product.id_product}`}/> : <></>}
+      {show ? <TableGet url={`${urlBase}/api/v1/existence?product=${product.id_product}`} headers={TABLE_HEADERS.existence}/> : <></>}
 {<>{show ? 
     <div className="divFormTwo">
       <section className="form">

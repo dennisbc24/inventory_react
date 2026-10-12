@@ -26,6 +26,8 @@ import { Landing } from './main.jsx';
 import { LastTransactions } from './transactions/lastTransactions.jsx';
 import { LastEntries } from './entries/lastEntries.jsx';
 import { ShoppingList } from './shoppingList.jsx';
+import { SuppliersManager } from './suppliersManager.jsx';
+import { ProductsList } from './productsList.jsx';
 import { CategoriesManager } from './categoriesManager.jsx';
 
 import { ContextGlobal  } from "../context/globalContext.jsx";
@@ -33,7 +35,7 @@ import "./theme.css";
 import "../obsidian.css";
 import { ThemeToggle } from "./themeToggle.jsx";
 
-import { TableGet } from './table.jsx';
+import { TableGet, TABLE_HEADERS } from './table.jsx';
 import { ContextUser } from "../context/userContext";
 
 
@@ -54,7 +56,6 @@ useEffect(()=>{
     if(loggedUserJSON){
         setUser(JSON.parse(loggedUserJSON))
         setUsuario(JSON.parse(loggedUserJSON))
-        console.log(JSON.parse(loggedUserJSON));
         
     }
 
@@ -125,7 +126,7 @@ useEffect(()=>{
         <Route path='/sumSalesMonthly' element={<Monthly urlBase={urlGlobal}/>}/>
     </Route>
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin','viewer','seller']} user={user}/>}>
-        <Route path='/products' element={<TableGet url={`${urlGlobal}/api/v1/products`} minWitdh="900px"/>}/>
+        <Route path='/products' element={<ProductsList urlBase={urlGlobal}/>}/>
     </Route>
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
         <Route path='/box' element={<Box urlBase={urlGlobal}/>}/>
@@ -134,13 +135,16 @@ useEffect(()=>{
         <Route path='/shoppingList' element={<ShoppingList urlBase={urlGlobal}/>}/>
     </Route>
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin','viewer','seller']} user={user}/>}>
-        <Route path='/lastBestProducts' element={<TableGet url={`${urlGlobal}/api/v1/ventas/topSellingProducts`} minWitdh="800px" title="Productos populares" showDetail/>}/>
+        <Route path='/lastBestProducts' element={<TableGet url={`${urlGlobal}/api/v1/ventas/topSellingProducts`} minWitdh="800px" title="Productos populares" showDetail headers={TABLE_HEADERS.topSelling}/>}/>
     </Route>
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin','viewer','seller']} user={user}/>}>
-        <Route path='/stockLow' element={<TableGet url={`${urlGlobal}/api/v1/existence/stockLow`} minWitdh="800px" title="Stock bajo" showDetail/>}/>
+        <Route path='/stockLow' element={<TableGet url={`${urlGlobal}/api/v1/existence/stockLow`} minWitdh="800px" title="Stock bajo" showDetail headers={TABLE_HEADERS.stockLow}/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
+        <Route path='/suppliers' element={<SuppliersManager urlBase={urlGlobal}/>}/>
     </Route>
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin','viewer','seller']} user={user}/>}>
-        <Route path='/bestProducts' element={<TableGet url={`${urlGlobal}/api/v1/ventas/bestProducts`} minWitdh="800px" title="Mejores Productos" showDetail/>}/>
+        <Route path='/bestProducts' element={<TableGet url={`${urlGlobal}/api/v1/ventas/bestProducts`} minWitdh="800px" title="Mejores Productos" showDetail headers={TABLE_HEADERS.bestProducts}/>}/>
     </Route>
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
         <Route path='/categories' element={<CategoriesManager urlBase={urlGlobal}/>}/>

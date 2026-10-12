@@ -133,6 +133,7 @@ export function Menu() {
         { role === 'admin' ? <EnlaceLi name ='Eliminar Venta' link='/deleteSale'/> : null}
         { role === 'admin' ? <EnlaceLi name='Producto' link='/updateProduct'/> : null}
         { role === 'admin' ? <EnlaceLi name='Categorías' link='/categories'/> : null}
+        { role === 'admin' ? <EnlaceLi name='Proveedores' link='/suppliers'/> : null}
       </Pestana>: null}
       
       {/* <Pestana titulo='Otros'>

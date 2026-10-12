@@ -3,10 +3,12 @@ import {  InputSimple,  SelectSimple, ButtonSave} from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
 import "./css/transactions.css";
+import "./css/proforma.css";
 import { InventoryService } from "../services/inventory.js";
 const inventoryService = new InventoryService()
 import { TitleForm } from "./form/titleForm.jsx";
-import { TableGet } from "./table.jsx";
+import { TableGet, TABLE_HEADERS } from "./table.jsx";
+import { GuideModal, BRANCH_NAMES, USER_NAMES, genGuideCode } from "./guideModal.jsx";
 import { ExistenceEditableTable } from "./ExistenceEditableTable.jsx";
 import noImagen from "./img/no_imagen.png";
 import entregaImagen from "./icons/entrega.png";
@@ -23,6 +25,11 @@ export const TransactionsForm = ({urlBase}) => {
   const [branchB, setBranchB] = useState(1);
   const [show, setShow] = useState(true)
   const [showStock, setShowStock] = useState(false)
+  const [guideLines, setGuideLines] = useState([]);
+  const [showGuide, setShowGuide] = useState(false);
+  const [guideCode, setGuideCode] = useState("");
+  const [savingGuide, setSavingGuide] = useState(false);
+  const [transKey, setTransKey] = useState(0);
 
   useEffect(() => {
     // Simula la carga de todos los productos al inicio
@@ -86,34 +93,79 @@ export const TransactionsForm = ({urlBase}) => {
     };
 
 
-  const handleButton = async () => {
-    if (dateTrans != '' && branchA !== branchB && count > 0 && product.id_product != undefined ){
-      try {
-        const id_product = product.id_product
-        await inventoryService.registerTransaction(urlBase,{branchA,branchB,count,idUser,dateTrans,id_product})
-        alert('Traslado registrado con exito')
-        // limpiar para evitar repetir
-        setQuery(''); setSuggestions([]); setProduct([]); setCount(0); setDateTrans(''); setShowStock(false); setShow(true);
-        const dateEl = document.querySelector('input[name="fecha"]'); if(dateEl) dateEl.value='';
-      } catch(e){ console.error(e); alert('Error al registrar traslado'); }
-      setShow(true)
-
+  const addToGuide = () => {
+    if (dateTrans != '' && branchA !== branchB && count > 0 && product.id_product != undefined) {
+      if (guideLines.some((l) => l.product.id_product === product.id_product)) {
+        alert('Ese producto ya está en la guía');
+        return;
+      }
+      const line = {
+        key: `${product.id_product}-${Date.now()}`,
+        product: { id_product: product.id_product, name: product.name, url_image: product.url_image },
+        count
+      };
+      setGuideLines((prev) => [...prev, line]);
+      setQuery(''); setSuggestions([]); setProduct([]); setCount(0); setShowStock(false);
+      const countEl = document.querySelector('input[placeholder="Cuantos?"]'); if (countEl) countEl.value = '';
     } else {
-if (dateTrans == '' ) {
-  alert('Debes seleccionar una fecha')
-}if (branchA === branchB) {
-  alert('El origen y el destino es el mismo')
-}if (count < 1) {
-  alert('la cantidad es menor de 1')
-}if (product.id_product === undefined) {
-  alert('selecciona un producto')
-}
+      if (dateTrans == '') {
+        alert('Debes seleccionar una fecha')
+      } if (branchA === branchB) {
+        alert('El origen y el destino es el mismo')
+      } if (count < 1) {
+        alert('la cantidad es menor de 1')
+      } if (product.id_product === undefined) {
+        alert('selecciona un producto')
+      }
     }
-
-    
-    
-    
   };
+
+  const updateGuideQty = (key, delta) => {
+    setGuideLines((prev) => prev.map((l) =>
+      l.key === key ? { ...l, count: Math.max(1, l.count + delta) } : l
+    ));
+  };
+
+  const removeGuideLine = (key) => {
+    setGuideLines((prev) => prev.filter((l) => l.key !== key));
+  };
+
+  const openGuide = () => {
+    setGuideCode(genGuideCode('GT'));
+    setShowGuide(true);
+  };
+
+  const saveGuide = async () => {
+    if (dateTrans == '' || branchA === branchB) {
+      alert('Revisa fecha, origen y destino de la guía');
+      return;
+    }
+    for (const l of guideLines) {
+      if (!(parseInt(l.count) > 0)) {
+        alert(`Cantidad inválida para ${l.product.name}`);
+        return;
+      }
+    }
+    setSavingGuide(true);
+    try {
+      for (const l of guideLines) {
+        await inventoryService.registerTransaction(urlBase, {
+          branchA, branchB, count: parseInt(l.count), idUser, dateTrans, id_product: l.product.id_product
+        });
+      }
+      setGuideLines([]);
+      setShowGuide(false);
+      alert('Guía de traslado registrada con éxito');
+      setTransKey((k) => k + 1);
+    } catch (e) {
+      console.error(e);
+      alert('Error al registrar traslado');
+    } finally {
+      setSavingGuide(false);
+    }
+  };
+
+  const guideQty = guideLines.reduce((a, l) => a + (parseInt(l.count) || 0), 0);
   return (
     <>
     <main>
@@ -165,14 +217,36 @@ if (dateTrans == '' ) {
         </div>
         
       </div>
-      <ButtonSave titulo={"Guardar"} func={handleButton}/>
+      <ButtonSave titulo={"Agregar a guía"} func={addToGuide}/>
     </main>
+
+      {guideLines.length > 0 && (
+        <button className="proforma_float" onClick={openGuide}>
+          <span className="proforma_icon">🚚</span>
+          <span>{guideQty} uds.</span>
+          <span className="proforma_count">{guideLines.length}</span>
+        </button>
+      )}
+      {showGuide && (
+        <GuideModal
+          title="GUÍA DE TRASLADO"
+          code={guideCode}
+          header={[["Fecha", dateTrans], ["Desde", BRANCH_NAMES[branchA] || branchA], ["Hacia", BRANCH_NAMES[branchB] || branchB], ["Usuario", USER_NAMES[idUser] || idUser]]}
+          lines={guideLines}
+          onQty={updateGuideQty}
+          onRemove={removeGuideLine}
+          totalLabel="Total unidades"
+          onSave={saveGuide}
+          saving={savingGuide}
+          onClose={() => setShowGuide(false)}
+        />
+      )}
     
       <h3>Stock {product?.name ? `- ${product.name}` : ''} {product?.id_product && <span style={{fontSize:12,color:'#888'}}>(doble click admin para editar)</span>}</h3>
       {<>{ showStock ? <ExistenceEditableTable url={`${urlBase}/api/v1/existence?product=${product.id_product}`}/> : <></>
     }</>}
       <h3>Ultimas Movimientos</h3>
-      {<>{ show ? <TableGet url={`${urlBase}/api/v1/transactions`} minWitdh="860px"/> : <></>
+      {<>{ show ? <TableGet key={transKey} url={`${urlBase}/api/v1/transactions`} minWitdh="860px" headers={TABLE_HEADERS.transactions}/> : <></>
     }</>}
       
     </>

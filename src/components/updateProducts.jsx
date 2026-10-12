@@ -20,6 +20,7 @@ export const UpdateProductForm = ({urlBase}) => {
   const [cost, setCost] = useState(0)
   const [fk_category, setFk_category] = useState('')
   const [categoriaObj, setCategoriaObj] = useState({name:'', id_category: ''})
+  const [proveedorObj, setProveedorObj] = useState({name:'', id_supplier: ''})
   const [isOnline, setIsOnline] = useState(false)
   const [attributes, setAttributes] = useState({});
   const [photo, setPhoto] = useState(null);
@@ -77,6 +78,8 @@ export const UpdateProductForm = ({urlBase}) => {
     formData.append('sugested_price', sugested_price);
     formData.append('wholesale_price', wholesale_price);
     formData.append('fk_category', fk_category);
+    formData.append('fk_supplier', proveedorObj.id_supplier ?? '');
+    formData.append('supplier', proveedorObj.name || '');
     formData.append('is_online', isOnline ? 'true' : 'false');
     formData.append('attributes', JSON.stringify(attributes));
     formData.append('name', name);
@@ -91,7 +94,7 @@ export const UpdateProductForm = ({urlBase}) => {
       alert(sendData.data);
       // limpiar para evitar repetir
       setQuery(''); setSuggestions([]); setProduct([]); setId_Product(''); setShow(false);
-      setName(''); setCost(0); setSugested_price(''); setWholesale_price(''); setFk_category(''); setCategoriaObj({name:'',id_category:''}); setIsOnline(false); setAttributes({}); setPhoto(null); setFileKey(k=>k+1);
+      setName(''); setCost(0); setSugested_price(''); setWholesale_price(''); setFk_category(''); setCategoriaObj({name:'',id_category:''}); setProveedorObj({name:'',id_supplier:''}); setIsOnline(false); setAttributes({}); setPhoto(null); setFileKey(k=>k+1);
       const form = document.querySelector('form'); if(form) form.reset();
       
     } catch (error) {
@@ -134,6 +137,7 @@ export const UpdateProductForm = ({urlBase}) => {
           setId_Product(elem.id_product)
           setFk_category(elem.fk_category || '')
           setCategoriaObj({name: elem.category_name || '', id_category: elem.fk_category || ''})
+          setProveedorObj({name: elem.supplier || '', id_supplier: elem.fk_supplier || ''})
           setIsOnline(!!elem.is_online)
           setAttributes(elem.attributes && typeof elem.attributes === 'object' ? elem.attributes : (typeof elem.attributes === 'string' ? JSON.parse(elem.attributes||'{}') : {}))
           setShow('true')
@@ -192,9 +196,11 @@ export const UpdateProductForm = ({urlBase}) => {
         <InputSimple key={fileKey} titulo="Subir Imagen" tipo="file" func={handleInputFileChange} nombre='image_product'></InputSimple>
         <ParrafoInput titulo="Categoría actual" parrafo={product.category_name || 'Sin categoría'}></ParrafoInput>
         <ParrafoInput titulo="Categoría seleccionada" parrafo={categoriaObj.name || '—'}></ParrafoInput>
+        <SearchInput urlApi={`${urlBase}/api/v1/suppliers`} funcSet={setProveedorObj} place="Buscar Proveedor (cambiar)"/>
+        <ParrafoInput titulo="Proveedor actual" parrafo={product.supplier || 'Sin proveedor'}></ParrafoInput>
+        <ParrafoInput titulo="Proveedor seleccionado" parrafo={proveedorObj.name || '—'}></ParrafoInput>
         <ParrafoInput titulo="Online actual" parrafo={product.is_online ? 'Sí' : 'No'}></ParrafoInput>
           <ParrafoInput titulo="Codigo" parrafo={id_product}></ParrafoInput>
-          <ParrafoInput titulo="Proveedor" parrafo={product.supplier}></ParrafoInput>
           <ParrafoInput titulo="Creado" parrafo={product.created}></ParrafoInput>
 
         <button type="submit">Upload</button>
