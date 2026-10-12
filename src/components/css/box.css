@@ -1,3 +1,43 @@
 .caja_item{
     display: flex;
 }
+
+.deliver_filters{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-end;
+    margin-bottom: 14px;
+}
+
+.deliver_filters h3{
+    font-size: 1em;
+    margin-bottom: 4px;
+}
+
+.deliver_summary{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.04);
+    margin-top: 14px;
+}
+
+.deliver_summary h3{
+    font-size: 0.9em;
+    margin-bottom: 2px;
+}
+
+.deliver_summary p{
+    font-weight: bold;
+    font-size: 1.15em;
+}
+
+.date_cell{
+    background-color: #fff59d;
+    padding: 2px 8px;
+    border-radius: 6px;
+}

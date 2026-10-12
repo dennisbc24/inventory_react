@@ -4,6 +4,7 @@ import "./salesForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import "./css/box.css";
 import { BoxService } from "../services/box.js";
+import { DeliverAccount } from "./deliverAccount.jsx";
 const boxService = new BoxService()
 
 export const Debs = ({urlBase})=>{
@@ -313,34 +314,84 @@ const NewTransation = ({urlBase}) => {
 
 
 const BoxByUser = ({urlBase}) => {
-    const [box1, setBox1] = useState(0);
-    const [box2, setBox2] = useState(0);
-    const [box3, setBox3] = useState(0);
+    const [boxes, setBoxes] = useState({1: 0, 2: 0, 3: 0});
+    const [editingUser, setEditingUser] = useState(null);
+    const [editValue, setEditValue] = useState("");
     const urlToCash = `${urlBase}/api/v1/users/getCash?id=`
+    const urlAdjust = `${urlBase}/api/v1/box/adjustCash`
 
-useEffect(()=>{
 const fetchBox = async () => {
   try {
     await axios.get(urlToCash)
     const response1 = await axios.get(`${urlToCash}1`)
-    setBox1(response1.data[0].cash)
     const response2 = await axios.get(`${urlToCash}2`)
-    setBox2(response2.data[0].cash)
     const response3 = await axios.get(`${urlToCash}3`)
-    setBox3(response3.data[0].cash)
-    
+    setBoxes({
+      1: response1.data[0].cash,
+      2: response2.data[0].cash,
+      3: response3.data[0].cash
+    })
   } catch (e) {
     console.error('Error al solicitar información',e);
-    
   }
 }
-fetchBox()
+
+useEffect(()=>{
+  fetchBox()
 },[])
+
+const startEdit = (id) => {
+  setEditingUser(id);
+  setEditValue(boxes[id]);
+}
+
+const saveEdit = async () => {
+  if (editingUser === null) return;
+  const newCash = parseFloat(editValue);
+  if (isNaN(newCash)) {
+    setEditingUser(null);
+    return;
+  }
+  try {
+    await axios.post(urlAdjust, { user: editingUser, newCash });
+    alert("Caja actualizada");
+  } catch (e) {
+    console.error('Error al ajustar la caja', e);
+    alert("No se pudo actualizar la caja");
+  } finally {
+    setEditingUser(null);
+    fetchBox();
+  }
+}
+
+const renderRow = (id, name) => (
+  <div className="caja_item" key={id}>
+    <h3>{name}:</h3>
+    {editingUser === id ? (
+      <input
+        type="number"
+        step="any"
+        autoFocus
+        value={editValue}
+        onChange={(e) => setEditValue(e.target.value)}
+        onBlur={saveEdit}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") e.target.blur();
+          if (e.key === "Escape") setEditingUser(null);
+        }}
+      />
+    ) : (
+      <p onDoubleClick={() => startEdit(id)} style={{ cursor: "pointer" }}>{`S/.${boxes[id]}`}</p>
+    )}
+  </div>
+)
+
   return(<>
     <TitleForm text='Caja por usuario'></TitleForm>
-   <div className="caja_item"><h3>Dennis:</h3><p>{`S/.${box1}`}</p></div>
-   <div className="caja_item"><h3>Luz:</h3><p>{`S/.${box2}`}</p></div>
-   <div className="caja_item"><h3>Miguel:</h3><p>{`S/.${box3}`}</p></div>
+    <p>Doble clic en un monto para modificarlo</p>
+    {renderRow(1, "Dennis")}
+    {renderRow(2, "Luz")}
+    {renderRow(3, "Miguel")}
 
     </>)
 }
@@ -391,6 +442,7 @@ export const Box = ({urlBase}) => {
         <option value="3">Nueva Deuda</option> */}
         <option value="4">Transferencias</option>
         <option value="5">Nueva Transacción</option>
+        <option value="7">Cuenta por entregar</option>
         {/* <option value="6">Pagar Deuda</option> */}
 
       </select>
@@ -400,6 +452,7 @@ export const Box = ({urlBase}) => {
       {option === 4 && <MoneyTransactions urlBase={urlBase}/>}
       {option === 5 && <NewTransation urlBase={urlBase}/>}
       {option === 6 && <PayDebt urlBase={urlBase}/>}
+      {option === 7 && <DeliverAccount urlBase={urlBase}/>}
 
       
         </>
