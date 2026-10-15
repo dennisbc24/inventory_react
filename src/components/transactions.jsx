@@ -1,9 +1,10 @@
 import  { useState, useEffect } from "react";
-import {  InputSimple,  SelectSimple, ButtonSave} from "./form/inputSearch";
+import {  InputSimple,  SelectSimple} from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
 import "./css/transactions.css";
 import "./css/proforma.css";
+import "./css/compactForm.css";
 import { InventoryService } from "../services/inventory.js";
 const inventoryService = new InventoryService()
 import { TitleForm } from "./form/titleForm.jsx";
@@ -183,11 +184,11 @@ export const TransactionsForm = ({urlBase}) => {
         <p>{product.name}</p>
         
         <img className="product_image" src={product.url_image ? product.url_image : noImagen} ></img>
-        <input type="date" name="fecha"  onChange={handleDate}  />
+        <div className="inputSimple compact"><h3>Fecha</h3><input type="date" name="fecha" onChange={handleDate} /></div>
 
         <div className="small_box_transaction">
 
-        <SelectSimple titulo="Desde"func={handleIdBranchA}>
+        <SelectSimple titulo="Desde"func={handleIdBranchA} className="compact">
           <option value="1">B17</option>
           <option value="3">Departamento</option>
           <option value="7">Tambopata</option>
@@ -196,7 +197,7 @@ export const TransactionsForm = ({urlBase}) => {
           <option value="6">Los Incas</option>
         </SelectSimple>
         <img src={entregaImagen} alt="delivery car image" />
-        <SelectSimple titulo="Hacia"func={handleIdBranchB}>
+        <SelectSimple titulo="Hacia"func={handleIdBranchB} className="compact">
           <option value="1">B17</option>
           <option value="3">Departamento</option>
           <option value="7">Tambopata</option>
@@ -206,18 +207,21 @@ export const TransactionsForm = ({urlBase}) => {
         </SelectSimple>
         </div>
         <div className="small_box_transaction">
-        <SelectSimple titulo="Usuario" func={handleIdUser}>
+        <SelectSimple titulo="Usuario" func={handleIdUser} className="compact">
           <option value="1">Dennis</option>
           <option value="2">Luz</option>
           <option value="3">Miguel</option>
         </SelectSimple>
 
-        <InputSimple titulo="Cantidad"  tipo="number" func={handleCount} callToAction="Cuantos?" widthInput="70px"></InputSimple>
+        <InputSimple titulo="Cantidad"  tipo="number" func={handleCount} callToAction="Cuantos?" widthInput="70px" className="compact"></InputSimple>
         
         </div>
         
       </div>
-      <ButtonSave titulo={"Agregar a guía"} func={addToGuide}/>
+      <div className="form_actions">
+        <button className="btn_primary" onClick={addToGuide}>Agregar a guía</button>
+        <button className="btn_clear" onClick={() => { setQuery(''); setSuggestions([]); setProduct([]); setCount(0); setShowStock(false); setDateTrans(''); const fe = document.querySelector('input[name="fecha"]'); if (fe) fe.value = ''; }}>Limpiar</button>
+      </div>
     </main>
 
       {guideLines.length > 0 && (

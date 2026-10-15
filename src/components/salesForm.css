@@ -107,6 +107,17 @@ font-size: smaller;
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 10px;
+}
+.sell_topbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+.sell_topbar .saveSell{
+    margin-top: 0;
+    white-space: nowrap;
 }
 .saveSell{
     background-color: var(--color-success);

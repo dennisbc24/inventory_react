@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { TitleForm } from "./form/titleForm.jsx";
+import { todayPeru } from "../utils/date.js";
 import "./salesForm.css";
 import "./table.css";
 import "./css/box.css";
@@ -12,7 +13,7 @@ const money = (n) => `S/.${n.toFixed(2)}`;
 const fechaLatina = (iso) => iso ? iso.split("-").reverse().join("/") : "";
 
 export const DeliverAccount = ({ urlBase }) => {
-  const today = new Date().toISOString().slice(0, 10);
+  const today = todayPeru();
   const [idUser, setIdUser] = useState(1);
   const [idReceiver, setIdReceiver] = useState(2);
   const [from, setFrom] = useState(today);

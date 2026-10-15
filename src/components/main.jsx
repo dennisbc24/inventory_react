@@ -6,8 +6,7 @@ import gastosImg from "./icons/icons8-spend-64.png";
 import trasladosImg from "./icons/icons8-mover-por-carretilla-60.png";
 import ingresosImg from "./icons/icons8-lista-64.png";
 import car from "./icons/icons8-carrito-de-compras-50.png";
-import flecha_abajo from "./icons/flecha_abajo.png";
-import flecha_arriba from "./icons/flecha_arriba.png";
+
 import home from "./icons/home.png";
 import ventas from "./icons/footer_carrito.png";
 import inventario from "./icons/footer_inventario.png";
@@ -16,6 +15,8 @@ import alerta from "./icons/footer_alerta.png";
 import { SalesService } from "../services/sales.js";
 import {InventoryService} from "../services/inventory.js";
 import {SalesChart} from "./graph/graph.jsx";
+import shoppingService from "../services/shoppingList.js";
+import noImagen from "./img/no_imagen.png";
 const salesService = new SalesService();
 const inventoryService = new InventoryService();
 
@@ -34,7 +35,18 @@ const Card = ({title, colorCard, link, paragraph}) => {
     )
 }
 
-const Product_Card = ({productosImg, img, title, description, link}) =>{
+const StarIcon = () => (
+  <svg viewBox="0 0 24 24" width="28" height="28" fill="#f59e0b" style={{ flexShrink: 0 }}>
+    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+  </svg>
+);
+const AlarmIcon = () => (
+  <svg viewBox="0 0 24 24" width="28" height="28" fill="#dc2626" style={{ flexShrink: 0 }}>
+    <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" />
+  </svg>
+);
+
+const Product_Card = ({productosImg, img, icon, title, description, link}) =>{
 return(
     <Link className="sumaries_products_home" to={link}>
                 <div className="product_summary_card">
@@ -44,7 +56,7 @@ return(
                         <p>{description}</p>
                     </div>
                 </div>
-                <img src={img}/>
+                {icon || <img src={img}/>}
         </Link> 
 )
 }
@@ -76,6 +88,28 @@ export const Landing = () => {
     const [sellingProducts, setSellingProducts] = useState([]);
    // const [inventoryValueByProduct, setInventoryValueByProduct] = useState([]);
     const [stocvkLow, setStockLow] = useState([]);
+    const [shoppingItems, setShoppingItems] = useState([]);
+    const [shopIdx, setShopIdx] = useState(0);
+useEffect(() => {
+    const fetchShoppingList = async () => {
+        try {
+            const data = await shoppingService.getList(urlGlobal);
+            setShoppingItems(data || []);
+        } catch (e) { console.error(e); }
+    };
+    fetchShoppingList();
+}, []);
+useEffect(() => {
+    if (shoppingItems.length <= 1) return;
+    const t = setInterval(() => setShopIdx((i) => (i + 1) % shoppingItems.length), 4000);
+    return () => clearInterval(t);
+}, [shoppingItems]);
+const [sellIdx, setSellIdx] = useState(0);
+useEffect(() => {
+    if (sellingProducts.length <= 1) return;
+    const t = setInterval(() => setSellIdx((i) => (i + 1) % sellingProducts.length), 4000);
+    return () => clearInterval(t);
+}, [sellingProducts]);
 useEffect(() => {
     const fetchSalesOfTheDay = async () => {
         const totalSales = await salesService.getSalesOfTheDay(urlGlobal);
@@ -133,15 +167,16 @@ useEffect(() => {
             <Card title={'Ganancia Hoy'} colorCard={'red'} link={'/searchSales'} paragraph={`S/.${revenueOfTheDay}`} />
             <Card title={'Traslados'} colorCard={'purple'} link={'/lastTransactions'} paragraph={'Ver movimientos'} />
             <Card title={'Mejores Productos'} colorCard={'#00b4ff'} paragraph={'100 mejores'} link={'/bestProducts'}/>
-            <Card title={'Lista de Compras'} colorCard={'orange'} paragraph={'Productos por adquirir'} link={'/shoppingList'}/>
+            <Card title={'Stock bajo'} colorCard={'orange'} paragraph={'Ver stock bajo'} link={'/stockLow'}/>
             {/* <Card title={'Producto Vendido'} colorCard={'#00b4ff'} link={''}/> */}
 
         </div>
-            <Product_Card title={'Productos populares'} description={sellingProducts[0]?.producto || 'No hay datos'} img={flecha_arriba} productosImg={sellingProducts[0]?.img || ''} link={'/lastBestProducts'}/>
-            <Product_Card img={flecha_abajo} title={'Stock bajo'} description={
-                
-                stocvkLow[0]?.nombre|| 'No hay datos'} link={'/stockLow'} 
-                productosImg={stocvkLow[0]?.url_image || ''}/>
+            <Product_Card title={`Productos populares (${sellIdx + 1}/${sellingProducts.length || 0})`}
+                description={sellingProducts.length ? sellingProducts[sellIdx]?.producto || 'No hay datos' : 'No hay datos'}
+                icon={<StarIcon/>} link={'/lastBestProducts'} productosImg={sellingProducts[sellIdx]?.img || noImagen}/>
+            <Product_Card title={`Lista de Compras (${shopIdx + 1}/${shoppingItems.length || 0})`}
+                description={shoppingItems.length ? `${shoppingItems[shopIdx]?.product_name || ''} - Stock: ${shoppingItems[shopIdx]?.total_stock ?? 0}` : 'Sin productos en la lista'}
+                icon={<AlarmIcon/>} link={'/shoppingList'} productosImg={shoppingItems[shopIdx]?.url_image || noImagen}/>
         <section className="summaries_card">
             <Summary_Card img={car} title={'Registro de venta'} description={'Registrar'} color={'green'} link={'/putSale'}/>
             <Summary_Card img={ingresosImg} title={'Añadir ingreso'} description={'ingreso'} color={'#220080'} link={'/entries'}/>

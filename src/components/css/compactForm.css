@@ -1,0 +1,57 @@
+/* Formularios compactos: etiqueta a la izquierda, input a la derecha */
+.inputSimple.compact,
+.selectSimple.compact,
+.parrafoForm.compact{
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  height: auto;
+  margin: 6px 0;
+}
+.inputSimple.compact h3,
+.selectSimple.compact h3,
+.parrafoForm.compact h3{
+  margin: 0;
+  width: 110px;
+  font-size: 0.95rem;
+  text-align: left;
+  flex-shrink: 0;
+}
+.parrafoForm.compact p{
+  margin: 0;
+  font-size: 0.95rem;
+}
+.form_actions{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0;
+}
+.btn_primary{
+  padding: 10px 18px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(180deg, #22c55e, #16a34a);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.btn_primary:hover{
+  background: linear-gradient(180deg, #16a34a, #15803d);
+}
+.btn_clear{
+  padding: 9px 14px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #92400e;
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn_clear:hover{
+  background: #fde68a;
+}

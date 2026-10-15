@@ -8,6 +8,7 @@ import axios from "axios";
 import { SalesService } from "../services/sales.js";
 import { PopUpWindow } from "../../src/components/form/popupwindow.jsx";
 import { ProformaModal } from "./proforma.jsx";
+import { todayPeru } from "../utils/date.js";
 import noImagen from "./img/no_imagen.png";
 const saleService = new SalesService()
 import { ContextGlobal  } from "../context/globalContext.jsx";
@@ -34,7 +35,7 @@ export const SelesForm = ({ urlBase }) => {
   const [proforma, setProforma] = useState([]);
   const [showProforma, setShowProforma] = useState(false);
   const [proformaCliente, setProformaCliente] = useState('');
-  const [proformaFecha, setProformaFecha] = useState(new Date().toISOString().slice(0, 10));
+  const [proformaFecha, setProformaFecha] = useState(todayPeru());
   const [savingProforma, setSavingProforma] = useState(false);
   const [salesKey, setSalesKey] = useState(0);
   const [idUser, setIdUser] = useState(1);
@@ -354,13 +355,44 @@ const handleCostKey = (e) => {
   const proformaTotal = proforma.reduce((a, l) => a + (parseFloat(l.pUnit || 0) * l.count), 0);
   const proformaCount = proforma.reduce((a, l) => a + l.count, 0);
 
-  const bgByUser = { 1: '#e0f0ff', 2: '#ffe0ec', 3: '#e0ffe8' }[idUser] || '#ffffff';
-  const borderByUser = { 1: '#3b82f6', 2: '#ec4899', 3: '#22c55e' }[idUser] || '#e5e7eb';
+  const handleDirectSave = async () => {
+    if (!productGlobal || productGlobal.id_product === undefined) {
+      alert('la selección del producto es incorrecta');
+      return;
+    }
+    if (!(count > 0)) {
+      alert('Cantidad debe ser mayor que cero');
+      return;
+    }
+    const rev = parseFloat(revenue);
+    if (!(rev > 0)) {
+      alert('La ganancia debe ser mayor a 0 para registrar!');
+      return;
+    }
+    try {
+      await saleService.register(urlBase, {
+        dateSell: todayPeru(),
+        count, total, PUnit, revenue: rev, dataCustomer: '',
+        product: productGlobal, idUser, idBranch
+      });
+      SetShowSales(true);
+      setSalesKey((k) => k + 1);
+      alert('Felicidades...Venta Registrada!');
+      setQuery(''); setSuggestions([]); setProductGlobal({}); setCost(0); setTotal(0); setRevenue(0); setPUnit(0); setCount(1); setShow(false); setUrlImage(noImagen); setIsOnline(false); setRevenueEditing(undefined); setCostEditing(undefined);
+      document.querySelectorAll('.descriptionSell input[type="number"]').forEach(el => { el.value = ""; });
+    } catch (e) {
+      console.error(e);
+      alert('Error al registrar venta');
+    }
+  };
 
   return (
     <>
-    <main style={{ background: bgByUser, borderLeft: `4px solid ${borderByUser}`, borderRadius: 12, padding: 16, transition: 'background 0.3s, border-color 0.3s' }}>
-<TitleForm text='Registrar Venta'></TitleForm>
+    <main style={{ padding: 16 }}>
+      <div className="sell_topbar">
+        <TitleForm text='Registrar Venta'></TitleForm>
+        <button onClick={handleDirectSave} className="saveSell">Guardar directo</button>
+      </div>
       {closeWindow ? <PopUpWindow text='Actualizar Imagen'></PopUpWindow> : <></>}
       <input type="text" className="only_input" value={query} onChange={handleChange} placeholder="Buscar..." />
       <ul className="suggestions_lu">   {suggestions.map((suggestion, index) => (

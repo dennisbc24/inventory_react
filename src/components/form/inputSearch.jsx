@@ -8,9 +8,9 @@ export function InputSearch() {
     )  
 }
 
-export function InputSimple({titulo,tipo,func, valor, callToAction='', nombre, widthInput='150px', step}) {
+export function InputSimple({titulo,tipo,func, valor, callToAction='', nombre, widthInput='150px', step, className=''}) {
     return(
-        <div className='inputSimple'>
+        <div className={`inputSimple ${className}`}>
             <h3>{titulo}</h3>
         <input type={tipo} onChange={func} value={valor} name={nombre} className='only_input' placeholder={callToAction} style={{'width':`${widthInput}`}} step={step}/>
         </div>
@@ -18,9 +18,9 @@ export function InputSimple({titulo,tipo,func, valor, callToAction='', nombre, w
     )  
 }
 
-export function SelectSimple({children,titulo,func}) {
+export function SelectSimple({children,titulo,func, className=''}) {
     return(
-        <div className='selectSimple'> 
+        <div className={`selectSimple ${className}`}> 
         <h3>{titulo}</h3>
         <select name="listSelect" onChange={func} className='only_select'>
             {children}

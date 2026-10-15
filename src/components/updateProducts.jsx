@@ -3,6 +3,7 @@ import {  InputSimple,  ParrafoInput, SearchInput} from "./form/inputSearch";
 import { AttributesEditor } from "./form/AttributesEditor.jsx";
 import axios from "axios";
 import "./salesForm.css";
+import "./css/compactForm.css";
 import { TitleForm } from "./form/titleForm.jsx";
 import noImagen from "./img/no_imagen.png";
 import imageCompression from "browser-image-compression";
@@ -104,6 +105,11 @@ export const UpdateProductForm = ({urlBase}) => {
   };
 
   const handleChange = (e) => {setQuery(e.target.value)}
+  const handleClear = () => {
+    setQuery(''); setSuggestions([]); setProduct([]); setId_Product(''); setShow(false);
+    setName(''); setCost(0); setSugested_price(''); setWholesale_price(''); setFk_category(''); setCategoriaObj({name:'',id_category:''}); setProveedorObj({name:'',id_supplier:''}); setIsOnline(false); setAttributes({}); setPhoto(null); setFileKey(k=>k+1);
+    const form = document.querySelector('form'); if(form) form.reset();
+  };
   const handleCost = (e) => setCost(e.target.value)
   const handleName = (e) => setName(e.target.value)
   const handleSuggestedPrice = (e) => setSugested_price(e.target.value)
@@ -176,34 +182,37 @@ export const UpdateProductForm = ({urlBase}) => {
         ))}
       </ul>
 {<>{show ? <form onSubmit={handleSubmit} encType='multipart/form-data'>
-          <ParrafoInput titulo="Actualizado" parrafo={product.updated}></ParrafoInput>
+          <ParrafoInput titulo="Actualizado" parrafo={product.updated} clase="parrafoForm compact"></ParrafoInput>
           <img className="product_image" src={product.url_image ? product.url_image : noImagen} ></img>
 
-        <InputSimple titulo='Nombre' tipo='text' valor={name} func={handleName} nombre='name'></InputSimple>
+        <InputSimple titulo='Nombre' tipo='text' valor={name} func={handleName} nombre='name' className="compact"></InputSimple>
         
-        <InputSimple titulo='Costo' tipo='number' step="any" valor={cost} func={handleCost} nombre='cost'></InputSimple>
-        <InputSimple titulo='Precio Sugerido' tipo='number' step="any" valor={sugested_price} func={handleSuggestedPrice} nombre='sugested_price'></InputSimple>
-        <InputSimple titulo='Precio por mayor' tipo='number' step="any" valor={wholesale_price} func={handleWholeSalePrice} nombre='wholesale_price'></InputSimple>
+        <InputSimple titulo='Costo' tipo='number' step="any" valor={cost} func={handleCost} nombre='cost' className="compact"></InputSimple>
+        <InputSimple titulo='P. Sugerido' tipo='number' step="any" valor={sugested_price} func={handleSuggestedPrice} nombre='sugested_price' className="compact"></InputSimple>
+        <InputSimple titulo='P. por mayor' tipo='number' step="any" valor={wholesale_price} func={handleWholeSalePrice} nombre='wholesale_price' className="compact"></InputSimple>
         <SearchInput urlApi={`${urlBase}/api/v1/categories`} funcSet={setCategoriaObj} place="Buscar Categoría (cambiar)"/>
-        <InputSimple titulo='Categoría ID' tipo='number' valor={fk_category} func={handleCategory} nombre='fk_category' callToAction="ID categoría (ver lista)"></InputSimple>
-        <div className='inputSimple'>
+        <InputSimple titulo='Categoría ID' tipo='number' valor={fk_category} func={handleCategory} nombre='fk_category' callToAction="ID categoría (ver lista)" className="compact"></InputSimple>
+        <div className='inputSimple compact'>
           <h3>Venta online</h3>
           <label style={{display:'flex',gap:8,alignItems:'center'}}>
             <input type="checkbox" checked={isOnline} onChange={e=>setIsOnline(e.target.checked)} /> Habilitar para ecommerce
           </label>
         </div>
         {isOnline && <AttributesEditor value={attributes} onChange={setAttributes} />}
-        <InputSimple key={fileKey} titulo="Subir Imagen" tipo="file" func={handleInputFileChange} nombre='image_product'></InputSimple>
-        <ParrafoInput titulo="Categoría actual" parrafo={product.category_name || 'Sin categoría'}></ParrafoInput>
-        <ParrafoInput titulo="Categoría seleccionada" parrafo={categoriaObj.name || '—'}></ParrafoInput>
+        <InputSimple key={fileKey} titulo="Subir Imagen" tipo="file" func={handleInputFileChange} nombre='image_product' className="compact"></InputSimple>
+        <ParrafoInput titulo="Categoría actual" parrafo={product.category_name || 'Sin categoría'} clase="parrafoForm compact"></ParrafoInput>
+        <ParrafoInput titulo="Categoría nueva" parrafo={categoriaObj.name || '—'} clase="parrafoForm compact"></ParrafoInput>
         <SearchInput urlApi={`${urlBase}/api/v1/suppliers`} funcSet={setProveedorObj} place="Buscar Proveedor (cambiar)"/>
-        <ParrafoInput titulo="Proveedor actual" parrafo={product.supplier || 'Sin proveedor'}></ParrafoInput>
-        <ParrafoInput titulo="Proveedor seleccionado" parrafo={proveedorObj.name || '—'}></ParrafoInput>
-        <ParrafoInput titulo="Online actual" parrafo={product.is_online ? 'Sí' : 'No'}></ParrafoInput>
-          <ParrafoInput titulo="Codigo" parrafo={id_product}></ParrafoInput>
-          <ParrafoInput titulo="Creado" parrafo={product.created}></ParrafoInput>
+        <ParrafoInput titulo="Proveedor actual" parrafo={product.supplier || 'Sin proveedor'} clase="parrafoForm compact"></ParrafoInput>
+        <ParrafoInput titulo="Proveedor nuevo" parrafo={proveedorObj.name || '—'} clase="parrafoForm compact"></ParrafoInput>
+        <ParrafoInput titulo="Online actual" parrafo={product.is_online ? 'Sí' : 'No'} clase="parrafoForm compact"></ParrafoInput>
+          <ParrafoInput titulo="Codigo" parrafo={id_product} clase="parrafoForm compact"></ParrafoInput>
+          <ParrafoInput titulo="Creado" parrafo={product.created} clase="parrafoForm compact"></ParrafoInput>
 
-        <button type="submit">Upload</button>
+        <div className="form_actions">
+          <button type="submit" className="btn_primary">Guardar cambios</button>
+          <button type="button" className="btn_clear" onClick={handleClear}>Limpiar</button>
+        </div>
 
       </form> : <></>
       }</>}

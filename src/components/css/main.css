@@ -64,14 +64,25 @@ body{
 
 .sumaries_products_home img{
   width: 60px;
-  height: auto;
+  height: 60px;
+  object-fit: contain;
   margin: 4px;
   border-radius: 5px;
+  flex-shrink: 0;
 }
 .product_summary_card{
   display: flex;
   min-width: 275px;
-
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+}
+.product_summary_card h3,
+.product_summary_card p{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
 }
 
 .sumaries_home_card img{

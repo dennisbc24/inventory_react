@@ -9,6 +9,7 @@ import { TitleForm } from "./form/titleForm.jsx";
 import {  TableGet, TableGet2, TABLE_HEADERS } from "./table.jsx";
 import { SalesService } from "../services/sales.js";
 import { ContextUser } from "../context/userContext.jsx";
+import { todayPeru } from "../utils/date.js";
 import noImagen from "./img/no_imagen.png";
 
 
@@ -84,7 +85,7 @@ const SearchByProduct=({urlBase})=>{
 
 const SearchByDate= ({url}) => {
   
-  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
+  const [date, setDate] = useState(todayPeru());
   const [rows, setRows] = useState([]);
   const [devSale, setDevSale] = useState(null);
   const [motivoDev, setMotivoDev] = useState("");
@@ -133,8 +134,8 @@ const SearchByDate= ({url}) => {
     }
     setSaving(true);
     try {
-      await axios.delete(`${url}/api/v1/ventas?id=${devSale.id_sale}&tipo=DEVOLUCION&motivo=${encodeURIComponent(mf)}`);
-      alert("Devolución registrada: venta eliminada y cash restado");
+      const { data } = await axios.post(`${url}/api/v1/ventas/devolucion`, { id_sale: devSale.id_sale, motivo: mf });
+      alert(`${data.message}. Reembolso: S/.${num(data.refund).toFixed(2)}`);
       setDevSale(null);
       setMotivoDev("");
       setMotivoDevCustom("");
@@ -198,26 +199,17 @@ const SearchByDate= ({url}) => {
     }
     setSaving(true);
     try {
-      await axios.delete(`${url}/api/v1/ventas?id=${cambioSale.id_sale}&tipo=CAMBIO&motivo=${encodeURIComponent(mf)}`);
-      const saleDate = String(cambioSale.fecha).slice(0, 10);
-      for (const l of exLines) {
-        await saleService.register(url, {
-          dateSell: saleDate,
-          count: l.count,
-          total: parseFloat((l.pUnit * l.count).toFixed(2)),
-          PUnit: l.pUnit,
-          revenue: l.revenue,
-          dataCustomer: cambioSale.cliente || mf,
-          product: l.product,
-          idUser: cambioSale.fk_id_user,
-          idBranch: cambioSale.fk_id_branch
-        });
-      }
+      const { data } = await axios.post(`${url}/api/v1/ventas/cambio`, {
+        id_sale: cambioSale.id_sale,
+        motivo: mf,
+        lines: exLines.map((l) => ({ fk_product: l.product.id_product, count: l.count, p_unit: l.pUnit }))
+      });
+      const d = num(data.diff);
       alert(
-        diff > 0
-          ? `Cambio registrado. Diferencia S/.${diff.toFixed(2)} a cobrar`
-          : diff < 0
-            ? `Cambio registrado. Diferencia S/.${Math.abs(diff).toFixed(2)} a devolver al cliente`
+        d > 0
+          ? `Cambio registrado. Diferencia S/.${d.toFixed(2)} a cobrar (reflejado en cuenta)`
+          : d < 0
+            ? `Cambio registrado. Diferencia S/.${Math.abs(d).toFixed(2)} a devolver al cliente (reflejado en cuenta)`
             : "Cambio registrado sin diferencia"
       );
       setCambioSale(null);
@@ -323,7 +315,7 @@ const SearchByDate= ({url}) => {
           <div className="product_modal_field"><strong>Cliente:</strong><span>{devSale.cliente || "—"}</span></div>
           <div className="product_modal_field"><strong>Vendedor:</strong><span>{devSale.vendedor}</span></div>
         </div>
-        <p>Se borrará la venta y se restará el cash.</p>
+        <p>Se anulará la venta con un movimiento inverso, se devolverá el stock y se restará el cash.</p>
         <MotivoField motivo={motivoDev} setMotivo={setMotivoDev} custom={motivoDevCustom} setCustom={setMotivoDevCustom} />
         <button className="pop_up_button" onClick={confirmDevolucion} disabled={saving}>
           {saving ? "Procesando..." : "Confirmar devolución"}

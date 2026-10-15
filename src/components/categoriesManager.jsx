@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import { TitleForm } from "./form/titleForm.jsx";
 import { InputSimple, ParrafoInput, SearchInput } from "./form/inputSearch";
+import "./css/compactForm.css";
 
 export const CategoriesManager = ({ urlBase }) => {
   const [categories, setCategories] = useState([]);
@@ -170,12 +171,13 @@ export const CategoriesManager = ({ urlBase }) => {
       {/* Crear */}
       <div style={{ border: '1px solid #ddd', borderRadius: 12, padding: 16, marginBottom: 20 }}>
         <h3>Crear categoría</h3>
-        <form onSubmit={handleCreate} style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'end' }}>
-          <InputSimple titulo="Nombre*" tipo="text" valor={newName} func={e=>setNewName(e.target.value)} nombre="newName" callToAction="Ej: Ollas" />
-          <InputSimple titulo="Slug (auto)" tipo="text" valor={newSlug} func={e=>setNewSlug(e.target.value)} nombre="newSlug" callToAction="ollas" />
-          <InputSimple titulo="Posición" tipo="number" valor={newPos} func={e=>setNewPos(e.target.value)} nombre="newPos" />
-          <InputSimple titulo="Descripción" tipo="text" valor={newDesc} func={e=>setNewDesc(e.target.value)} nombre="newDesc" callToAction="opcional" widthInput="250px" />
-          <button type="submit" style={{ height: 36, padding: '0 16px', borderRadius: 20, background: 'black', color: 'white' }}>Crear</button>
+        <form onSubmit={handleCreate} style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center' }}>
+          <InputSimple titulo="Nombre*" tipo="text" valor={newName} func={e=>setNewName(e.target.value)} nombre="newName" callToAction="Ej: Ollas" className="compact" />
+          <InputSimple titulo="Slug (auto)" tipo="text" valor={newSlug} func={e=>setNewSlug(e.target.value)} nombre="newSlug" callToAction="ollas" className="compact" />
+          <InputSimple titulo="Posición" tipo="number" valor={newPos} func={e=>setNewPos(e.target.value)} nombre="newPos" className="compact" widthInput="80px" />
+          <InputSimple titulo="Descripción" tipo="text" valor={newDesc} func={e=>setNewDesc(e.target.value)} nombre="newDesc" callToAction="opcional" widthInput="200px" className="compact" />
+          <button type="submit" className="btn_primary">Crear</button>
+          <button type="button" className="btn_clear" onClick={()=>{setNewName(""); setNewSlug(""); setNewDesc(""); setNewPos(0);}}>Limpiar</button>
         </form>
         <p style={{ fontSize: 12, color: '#666' }}>Slug vacío se genera de nombre. Compartida con shop: `cocinamejor.store/categoria/{"{slug}"}`</p>
       </div>

@@ -1,0 +1,48 @@
+.new_product_form{
+  max-width: 520px;
+  margin: 0 auto;
+}
+.np_stock{
+  margin: 14px 0;
+  padding: 10px;
+  border: 1px dashed #c1c1c1;
+  border-radius: 8px;
+}
+.np_stock > h3{
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+}
+.np_stock_row{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+}
+.np_stock_row select,
+.np_stock_row input{
+  padding: 6px 8px;
+  border: 1px solid #c1c1c1;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+.np_stock_row input{
+  width: 90px;
+}
+.np_stock_row .np_remove{
+  background: #fee2e2;
+  color: #b91c1c;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 6px 10px;
+  font-weight: bold;
+}
+.np_add_row{
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 6px 10px;
+  margin-top: 4px;
+}

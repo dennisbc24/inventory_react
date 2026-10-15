@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
-import {  InputSimple,  SelectSimple,  ParrafoInput, ButtonSave} from "./form/inputSearch";
+import {  InputSimple,  SelectSimple,  ParrafoInput} from "./form/inputSearch";
 import axios from "axios";
 import "./salesForm.css";
 import "./css/proforma.css";
+import "./css/compactForm.css";
 import { TitleForm} from "./form/titleForm.jsx";
 import { TableGet, TABLE_HEADERS } from "./table.jsx";
 import { ExistenceEditableTable } from "./ExistenceEditableTable.jsx";
 import { GuideModal, BRANCH_NAMES, USER_NAMES, genGuideCode } from "./guideModal.jsx";
+import { todayPeru } from "../utils/date.js";
 import noImagen from "./img/no_imagen.png";
 import { InventoryService } from "../services/inventory.js";
 const inventoryService = new InventoryService()
@@ -219,8 +221,8 @@ const guideQty = guideLines.reduce((a, l) => a + (parseInt(l.count) || 0), 0);
       
 
       <div className="divForm">
-        <ParrafoInput titulo="Producto" parrafo={product.name}></ParrafoInput>
-        <SelectSimple titulo="Sucursal"func={handleIdBranch}>
+        <ParrafoInput titulo="Producto" parrafo={product.name} clase="parrafoForm compact"></ParrafoInput>
+        <SelectSimple titulo="Sucursal"func={handleIdBranch} className="compact">
           <option value="1">B17</option>
           <option value="3">Departamento</option>
           <option value="7">Tambopata</option>
@@ -230,14 +232,17 @@ const guideQty = guideLines.reduce((a, l) => a + (parseInt(l.count) || 0), 0);
         </SelectSimple>
         <img className="product_image" src={product.url_image ? product.url_image : noImagen} ></img>
 
-        <SelectSimple titulo="Usuario" func={handleIdUser}>
+        <SelectSimple titulo="Usuario" func={handleIdUser} className="compact">
           <option value="1">Dennis</option>
           <option value="2">Luz</option>
           <option value="3">Miguel</option>
         </SelectSimple>
-        <InputSimple titulo="Cantidad" tipo="number" func={handleCount} callToAction="Cuantos ingresan?"></InputSimple>
+        <InputSimple titulo="Cantidad" tipo="number" func={handleCount} callToAction="Cuantos ingresan?" className="compact"></InputSimple>
       </div>
-      <ButtonSave titulo={"Agregar a guía"} func={addToGuide}/>
+      <div className="form_actions">
+        <button className="btn_primary" onClick={addToGuide}>Agregar a guía</button>
+        <button className="btn_clear" onClick={() => { setQuery(''); setSuggestions([]); setProduct([]); setId_Product(1); setCount(0); setShow(false); const inp = document.querySelector('input[placeholder="Buscar producto..."]'); if (inp) inp.value = ''; }}>Limpiar</button>
+      </div>
     </main>
 
       {guideLines.length > 0 && (
@@ -251,7 +256,7 @@ const guideQty = guideLines.reduce((a, l) => a + (parseInt(l.count) || 0), 0);
         <GuideModal
           title="GUÍA DE INGRESO"
           code={guideCode}
-          header={[["Fecha", new Date().toISOString().slice(0, 10).split("-").reverse().join("/")], ["Sucursal", BRANCH_NAMES[idBranch] || idBranch], ["Usuario", USER_NAMES[idUser] || idUser]]}
+          header={[["Fecha", todayPeru().split("-").reverse().join("/")], ["Sucursal", BRANCH_NAMES[idBranch] || idBranch], ["Usuario", USER_NAMES[idUser] || idUser]]}
           lines={guideLines}
           onQty={updateGuideQty}
           onRemove={removeGuideLine}

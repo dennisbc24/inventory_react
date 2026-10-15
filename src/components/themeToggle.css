@@ -1,7 +1,7 @@
 .theme-toggle {
   position: fixed;
-  bottom: 70px;
-  right: 15px;
+  top: 70px;
+  left: 15px;
   z-index: 1000;
   background: #253ca8;
   color: white;
