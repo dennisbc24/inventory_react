@@ -1,6 +1,33 @@
 .small_box_transaction{
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-around;
-    min-width: 350px;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+.small_box_transaction img{
+    max-width: 120px;
+    height: auto;
+}
+.small_box_transaction .selectSimple{
+    min-width: 0;
+}
+.small_box_transaction .selectSimple select{
+    max-width: 140px;
+    width: 100%;
+    box-sizing: border-box;
+}
+@media (max-width: 480px){
+    .small_box_transaction{
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+    }
+    .small_box_transaction img{
+        align-self: center;
+        max-width: 100px;
+    }
 }
