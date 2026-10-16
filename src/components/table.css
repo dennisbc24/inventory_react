@@ -1,6 +1,13 @@
-.table_header{
+.table_header,
+.table_header tr{
     background-color: var(--persian-blue-800);
-    color: var(--dark-text);
+}
+.table_header th{
+    background-color: var(--persian-blue-800);
+    color: #ffffff;
+    padding: 8px 10px;
+    text-align: left;
+    white-space: nowrap;
 }
 
 .table_body{

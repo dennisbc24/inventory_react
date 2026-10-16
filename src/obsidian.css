@@ -62,7 +62,12 @@
   color: #e7ecf8;
 }
 
-[data-theme="obsidian"] .table_header {
+[data-theme="obsidian"] .table_header,
+[data-theme="obsidian"] .table_header tr {
+  background-color: #232c4a;
+}
+
+[data-theme="obsidian"] .table_header th {
   background-color: #232c4a;
   color: #e7ecf8;
 }
