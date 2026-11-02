@@ -7,6 +7,7 @@ import { ContextUser } from "../context/userContext.jsx";
 import axios from "axios";
 import noImagen from "./img/no_imagen.png";
 import { ProductModal } from "./form/productModal.jsx";
+import { ShoppingOrdersPanel } from "./shoppingOrdersPanel.jsx";
 
 export const ShoppingList = ({ urlBase }) => {
   const [items, setItems] = useState([]);
@@ -154,6 +155,13 @@ export const ShoppingList = ({ urlBase }) => {
   return (
     <>
       <TitleForm text='Lista de Compras'></TitleForm>
+
+      <ShoppingOrdersPanel
+        urlBase={urlBase}
+        shoppingItems={items}
+        canEdit={canEdit}
+        onChanged={loadList}
+      />
 
       {canEdit ? (
       <div className="divForm">
