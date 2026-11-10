@@ -1,0 +1,67 @@
+.sales_chart_header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.sales_chart_header h3 {
+  margin: 0;
+  font-family: sans-serif;
+  color: var(--card-text);
+}
+
+.sales_chart_totals {
+  margin: 0;
+  width: 100%;
+  font-size: 0.85rem;
+  color: var(--card-text);
+  opacity: 0.85;
+}
+
+.chart_ranges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chart_ranges button {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--persian-blue-200);
+  background: transparent;
+  color: var(--card-text);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.chart_ranges button:hover {
+  background: var(--persian-blue-50);
+}
+
+.chart_ranges button.active {
+  background: var(--persian-blue-600);
+  border-color: var(--persian-blue-600);
+  color: #ffffff;
+}
+
+.chart_state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 0.9rem;
+  color: var(--card-text);
+  opacity: 0.75;
+}
+
+@media (max-width: 600px) {
+  .chart_ranges button {
+    padding: 5px 9px;
+    font-size: 0.75rem;
+  }
+}
