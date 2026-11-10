@@ -98,6 +98,8 @@ const SearchByDate= ({url}) => {
   const [exPrice, setExPrice] = useState(0);
   const [exLines, setExLines] = useState([]);
   const [saving, setSaving] = useState(false);
+  const [editDateId, setEditDateId] = useState(null);
+  const [editDateValue, setEditDateValue] = useState("");
   const { usuario } = useContext(ContextUser);
   const canModify = usuario?.role === 'admin';
 
@@ -111,6 +113,35 @@ const SearchByDate= ({url}) => {
       setRows(Array.isArray(data) ? data.map(normRow) : []);
     } catch (e) {
       console.error(e);
+    }
+  };
+
+  const startEditDate = (r) => {
+    if (!canModify) return;
+    setEditDateId(r.id_sale);
+    setEditDateValue(String(r.fecha || "").slice(0, 10));
+  };
+
+  const cancelEditDate = () => {
+    setEditDateId(null);
+    setEditDateValue("");
+  };
+
+  const saveEditDate = async () => {
+    if (editDateId === null) return;
+    const newDate = editDateValue;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(newDate)) {
+      alert("Selecciona una fecha válida");
+      return;
+    }
+    try {
+      await axios.put(`${url}/api/v1/ventas/${editDateId}/date`, { date: newDate });
+      setEditDateId(null);
+      setEditDateValue("");
+      fetchSales();
+    } catch (e) {
+      console.error(e);
+      alert(e?.response?.data?.message || "Error al actualizar la fecha");
     }
   };
 
@@ -242,6 +273,7 @@ const SearchByDate= ({url}) => {
               <th>Ganancia</th>
               <th>Hora</th>
               <th>Cliente</th>
+              <th>Fecha</th>
               {canModify ? <th>Acciones</th> : null}
             </tr>
           </thead>
@@ -256,6 +288,27 @@ const SearchByDate= ({url}) => {
                 <td>{r.ganancia}</td>
                 <td>{String(r.hora).slice(0, 5)}</td>
                 <td>{r.cliente || "—"}</td>
+                <td
+                  onDoubleClick={() => startEditDate(r)}
+                  style={{ cursor: canModify ? "pointer" : "default" }}
+                  title={canModify ? "Doble clic para editar la fecha" : undefined}
+                >
+                  {editDateId === r.id_sale ? (
+                    <input
+                      type="date"
+                      autoFocus
+                      value={editDateValue}
+                      onChange={(e) => setEditDateValue(e.target.value)}
+                      onBlur={saveEditDate}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") e.target.blur();
+                        if (e.key === "Escape") cancelEditDate();
+                      }}
+                    />
+                  ) : (
+                    <>{String(r.fecha).slice(0, 10) || "—"}</>
+                  )}
+                </td>
                 {canModify ? (
                   <td>
                     <button onClick={() => { setDevSale(r); setMotivoDev(""); setMotivoDevCustom(""); }}>Devolver</button>
@@ -265,7 +318,7 @@ const SearchByDate= ({url}) => {
               </tr>
             ))}
             {rows.length === 0 && (
-              <tr><td colSpan={canModify ? 9 : 8}>Sin ventas en esa fecha</td></tr>
+              <tr><td colSpan={canModify ? 10 : 9}>Sin ventas en esa fecha</td></tr>
             )}
           </tbody>
         </table>
