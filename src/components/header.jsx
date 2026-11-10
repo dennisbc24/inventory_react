@@ -101,6 +101,7 @@ export function Menu() {
           <EnlaceLi name='Buscar Gasto' link='/searchSpends'/>
 <EnlaceLi name='Caja' link='/box'/>
           <EnlaceLi name='Lista de Compras' link='/shoppingList'/>
+          {role === 'admin' ? <EnlaceLi name='Facturas' link='/invoices'/> : null}
           
 
     

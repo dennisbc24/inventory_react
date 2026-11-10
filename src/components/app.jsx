@@ -29,6 +29,7 @@ import { ShoppingList } from './shoppingList.jsx';
 import { SuppliersManager } from './suppliersManager.jsx';
 import { ProductsList } from './productsList.jsx';
 import { CategoriesManager } from './categoriesManager.jsx';
+import { InvoicesManager } from './invoicesManager.jsx';
 
 import { ContextGlobal  } from "../context/globalContext.jsx";
 import "./theme.css";
@@ -148,6 +149,9 @@ useEffect(()=>{
     </Route>
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
         <Route path='/categories' element={<CategoriesManager urlBase={urlGlobal}/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
+        <Route path='/invoices' element={<InvoicesManager urlBase={urlGlobal}/>}/>
     </Route>
     
 

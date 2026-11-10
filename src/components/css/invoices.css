@@ -1,0 +1,135 @@
+.invoice_month {
+  padding: 0 10px;
+}
+
+.invoice_summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 0 10px;
+  margin: 12px 0;
+}
+
+.invoice_summary_card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 170px;
+  padding: 12px 16px;
+  border: 1px solid var(--persian-blue-200);
+  border-radius: 12px;
+  background: var(--persian-blue-50);
+  color: var(--color-fourth);
+}
+
+.invoice_summary_card span {
+  font-size: 0.85rem;
+}
+
+.invoice_summary_card strong {
+  font-size: 1.25rem;
+  color: var(--persian-blue-800);
+}
+
+.invoice_summary_card small {
+  font-size: 0.72rem;
+  opacity: 0.8;
+}
+
+.invoice_summary_card--danger {
+  border-color: var(--color-danger);
+  background: var(--color-invalid-bg);
+}
+
+.invoice_summary_card--danger strong {
+  color: var(--color-danger);
+}
+
+.invoice_bar {
+  height: 10px;
+  margin: 0 10px 16px;
+  border-radius: 999px;
+  background: var(--persian-blue-100);
+  overflow: hidden;
+}
+
+.invoice_bar span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--color-success);
+  transition: width 0.2s ease;
+}
+
+.invoice_bar span.invoice_bar_full {
+  background: var(--color-danger);
+}
+
+.invoice_grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 6px 18px;
+}
+
+.invoice_grid .inputSimple.compact h3,
+.invoice_grid .selectSimple.compact h3 {
+  width: 130px;
+}
+
+.invoice_amount_pen {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 6px 0;
+}
+
+.invoice_amount_pen h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  width: 130px;
+}
+
+.invoice_amount_pen p {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: bold;
+  color: var(--color-success);
+}
+
+.invoice_hint {
+  margin: 0 10px 10px;
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+.invoice_actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.invoice_actions button {
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--persian-blue-300);
+  background: var(--persian-blue-50);
+  color: var(--persian-blue-800);
+  cursor: pointer;
+}
+
+.invoice_actions button:hover {
+  background: var(--persian-blue-100);
+}
+
+.invoice_actions .invoice_delete {
+  border-color: var(--color-danger);
+  background: var(--color-invalid-bg);
+  color: var(--color-danger);
+}
+
+@media (max-width: 600px) {
+  .invoice_summary_card {
+    min-width: 0;
+    flex: 1 1 140px;
+  }
+}
