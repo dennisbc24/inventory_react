@@ -23,6 +23,7 @@ export const UpdateProductForm = ({urlBase}) => {
   const [categoriaObj, setCategoriaObj] = useState({name:'', id_category: ''})
   const [proveedorObj, setProveedorObj] = useState({name:'', id_supplier: ''})
   const [isOnline, setIsOnline] = useState(false)
+  const [isDiscontinued, setIsDiscontinued] = useState(false)
   const [attributes, setAttributes] = useState({});
   const [photo, setPhoto] = useState(null);
   const [fileKey, setFileKey] = useState(0);
@@ -82,6 +83,7 @@ export const UpdateProductForm = ({urlBase}) => {
     formData.append('fk_supplier', proveedorObj.id_supplier ?? '');
     formData.append('supplier', proveedorObj.name || '');
     formData.append('is_online', isOnline ? 'true' : 'false');
+    formData.append('is_discontinued', isDiscontinued ? 'true' : 'false');
     formData.append('attributes', JSON.stringify(attributes));
     formData.append('name', name);
     formData.append('nameFile', name.replaceAll(' ','+' ));
@@ -95,7 +97,7 @@ export const UpdateProductForm = ({urlBase}) => {
       alert(sendData.data);
       // limpiar para evitar repetir
       setQuery(''); setSuggestions([]); setProduct([]); setId_Product(''); setShow(false);
-      setName(''); setCost(0); setSugested_price(''); setWholesale_price(''); setFk_category(''); setCategoriaObj({name:'',id_category:''}); setProveedorObj({name:'',id_supplier:''}); setIsOnline(false); setAttributes({}); setPhoto(null); setFileKey(k=>k+1);
+      setName(''); setCost(0); setSugested_price(''); setWholesale_price(''); setFk_category(''); setCategoriaObj({name:'',id_category:''}); setProveedorObj({name:'',id_supplier:''}); setIsOnline(false); setIsDiscontinued(false); setAttributes({}); setPhoto(null); setFileKey(k=>k+1);
       const form = document.querySelector('form'); if(form) form.reset();
       
     } catch (error) {
@@ -107,7 +109,7 @@ export const UpdateProductForm = ({urlBase}) => {
   const handleChange = (e) => {setQuery(e.target.value)}
   const handleClear = () => {
     setQuery(''); setSuggestions([]); setProduct([]); setId_Product(''); setShow(false);
-    setName(''); setCost(0); setSugested_price(''); setWholesale_price(''); setFk_category(''); setCategoriaObj({name:'',id_category:''}); setProveedorObj({name:'',id_supplier:''}); setIsOnline(false); setAttributes({}); setPhoto(null); setFileKey(k=>k+1);
+    setName(''); setCost(0); setSugested_price(''); setWholesale_price(''); setFk_category(''); setCategoriaObj({name:'',id_category:''}); setProveedorObj({name:'',id_supplier:''}); setIsOnline(false); setIsDiscontinued(false); setAttributes({}); setPhoto(null); setFileKey(k=>k+1);
     const form = document.querySelector('form'); if(form) form.reset();
   };
   const handleCost = (e) => setCost(e.target.value)
@@ -145,6 +147,7 @@ export const UpdateProductForm = ({urlBase}) => {
           setCategoriaObj({name: elem.category_name || '', id_category: elem.fk_category || ''})
           setProveedorObj({name: elem.supplier || '', id_supplier: elem.fk_supplier || ''})
           setIsOnline(!!elem.is_online)
+          setIsDiscontinued(!!elem.is_discontinued)
           setAttributes(elem.attributes && typeof elem.attributes === 'object' ? elem.attributes : (typeof elem.attributes === 'string' ? JSON.parse(elem.attributes||'{}') : {}))
           setShow('true')
         }
@@ -199,6 +202,12 @@ export const UpdateProductForm = ({urlBase}) => {
           </label>
         </div>
         {isOnline && <AttributesEditor value={attributes} onChange={setAttributes} />}
+        <div className='inputSimple compact'>
+          <h3>Descontinuado</h3>
+          <label style={{display:'flex',gap:8,alignItems:'center'}}>
+            <input type="checkbox" checked={isDiscontinued} onChange={e=>setIsDiscontinued(e.target.checked)} /> No reponer (descontinuado)
+          </label>
+        </div>
         <InputSimple key={fileKey} titulo="Subir Imagen" tipo="file" func={handleInputFileChange} nombre='image_product' className="compact"></InputSimple>
         <ParrafoInput titulo="Categoría actual" parrafo={product.category_name || 'Sin categoría'} clase="parrafoForm compact"></ParrafoInput>
         <ParrafoInput titulo="Categoría nueva" parrafo={categoriaObj.name || '—'} clase="parrafoForm compact"></ParrafoInput>
@@ -206,6 +215,8 @@ export const UpdateProductForm = ({urlBase}) => {
         <ParrafoInput titulo="Proveedor actual" parrafo={product.supplier || 'Sin proveedor'} clase="parrafoForm compact"></ParrafoInput>
         <ParrafoInput titulo="Proveedor nuevo" parrafo={proveedorObj.name || '—'} clase="parrafoForm compact"></ParrafoInput>
         <ParrafoInput titulo="Online actual" parrafo={product.is_online ? 'Sí' : 'No'} clase="parrafoForm compact"></ParrafoInput>
+        <ParrafoInput titulo="Descontinuado actual" parrafo={product.is_discontinued ? 'Sí - no reponer' : 'No'} clase="parrafoForm compact"></ParrafoInput>
+        <ParrafoInput titulo="Descontinuado nuevo" parrafo={isDiscontinued ? 'Sí - no reponer' : 'No'} clase="parrafoForm compact"></ParrafoInput>
           <ParrafoInput titulo="Codigo" parrafo={id_product} clase="parrafoForm compact"></ParrafoInput>
           <ParrafoInput titulo="Creado" parrafo={product.created} clase="parrafoForm compact"></ParrafoInput>
 

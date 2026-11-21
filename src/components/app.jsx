@@ -30,6 +30,7 @@ import { SuppliersManager } from './suppliersManager.jsx';
 import { ProductsList } from './productsList.jsx';
 import { CategoriesManager } from './categoriesManager.jsx';
 import { InvoicesManager } from './invoicesManager.jsx';
+import { Proyecciones } from './proyecciones.jsx';
 
 import { ContextGlobal  } from "../context/globalContext.jsx";
 import "./theme.css";
@@ -152,6 +153,9 @@ useEffect(()=>{
     </Route>
     <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin']} user={user}/>}>
         <Route path='/invoices' element={<InvoicesManager urlBase={urlGlobal}/>}/>
+    </Route>
+    <Route element={<ProtectedRoute isAllow={!!user} allowedRoles={['admin','seller','viewer']} user={user}/>}>
+        <Route path='/proyecciones' element={<Proyecciones urlBase={urlGlobal}/>}/>
     </Route>
     
 

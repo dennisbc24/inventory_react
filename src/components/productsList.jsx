@@ -19,6 +19,7 @@ export const ProductsList = ({ urlBase }) => {
   const [supplier, setSupplier] = useState("");
   const [onlyStock, setOnlyStock] = useState(false);
   const [onlyOnline, setOnlyOnline] = useState(false);
+  const [onlyDiscontinued, setOnlyDiscontinued] = useState(false);
   const [sort, setSort] = useState("nombre-az");
   const [page, setPage] = useState(1);
   const [selected, setSelected] = useState(null);
@@ -46,7 +47,7 @@ export const ProductsList = ({ urlBase }) => {
     return () => { active = false; };
   }, [urlBase]);
 
-  useEffect(() => { setPage(1); }, [keyWord, category, supplier, onlyStock, onlyOnline, sort]);
+  useEffect(() => { setPage(1); }, [keyWord, category, supplier, onlyStock, onlyOnline, onlyDiscontinued, sort]);
 
   const categories = useMemo(() => {
     const map = new Map();
@@ -72,6 +73,7 @@ export const ProductsList = ({ urlBase }) => {
       if (supplier && String(p.fk_supplier) !== String(supplier)) return false;
       if (onlyStock && num(p.stock_total) <= 0) return false;
       if (onlyOnline && !p.is_online) return false;
+      if (onlyDiscontinued && !p.is_discontinued) return false;
       return true;
     });
     const byNum = (fn) => (a, b) => fn(a) - fn(b);
@@ -88,7 +90,7 @@ export const ProductsList = ({ urlBase }) => {
       default: break;
     }
     return list;
-  }, [products, keyWord, category, supplier, onlyStock, onlyOnline, sort]);
+  }, [products, keyWord, category, supplier, onlyStock, onlyOnline, onlyDiscontinued, sort]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const safePage = Math.min(page, totalPages);
@@ -118,6 +120,30 @@ export const ProductsList = ({ urlBase }) => {
       alert(e?.response?.data?.message || 'Error al actualizar proveedor');
     } finally {
       setEditingSupplier(null);
+    }
+  };
+
+  const toggleDiscontinued = async (product) => {
+    const next = !product.is_discontinued;
+    const supName = product.supplier || (supplierName(product) === '—' ? '' : supplierName(product));
+    try {
+      const fd = new FormData();
+      fd.append('name', product.name);
+      fd.append('cost', product.cost ?? 0);
+      fd.append('sugested_price', product.list_price ?? '');
+      fd.append('wholesale_price', product.lowest_price ?? '');
+      fd.append('fk_category', product.fk_category ?? '');
+      fd.append('is_online', product.is_online ? 'true' : 'false');
+      fd.append('is_discontinued', next ? 'true' : 'false');
+      fd.append('attributes', JSON.stringify(product.attributes || {}));
+      fd.append('fk_supplier', product.fk_supplier ?? '');
+      fd.append('supplier', supName);
+      await axios.patch(`${urlBase}/api/v1/products/${product.id_product}`, fd);
+      setProducts((prev) => prev.map((p) =>
+        p.id_product === product.id_product ? { ...p, is_discontinued: next } : p
+      ));
+    } catch (e) {
+      alert(e?.response?.data?.message || 'Error al actualizar descontinuado');
     }
   };
 
@@ -162,6 +188,9 @@ export const ProductsList = ({ urlBase }) => {
           <label style={{ display: 'flex', gap: 6, alignItems: 'center', fontSize: 13 }}>
             <input type="checkbox" checked={onlyOnline} onChange={(e) => setOnlyOnline(e.target.checked)} /> Solo online
           </label>
+          <label style={{ display: 'flex', gap: 6, alignItems: 'center', fontSize: 13 }}>
+            <input type="checkbox" checked={onlyDiscontinued} onChange={(e) => setOnlyDiscontinued(e.target.checked)} /> Solo descontinuados
+          </label>
         </div>
       </div>
 
@@ -179,6 +208,7 @@ export const ProductsList = ({ urlBase }) => {
               <th>P. Mayor S/.</th>
               <th>Stock</th>
               <th>Online</th>
+              <th>Descontinuado</th>
               <th>Ver</th>
             </tr>
           </thead>
@@ -213,11 +243,20 @@ export const ProductsList = ({ urlBase }) => {
                 <td>{p.lowest_price ?? "—"}</td>
                 <td>{num(p.stock_total)}</td>
                 <td>{p.is_online ? "Sí" : "No"}</td>
+                <td>
+                  <button
+                    type="button"
+                    onClick={() => toggleDiscontinued(p)}
+                    title={p.is_discontinued ? 'Volver a habilitar para reposición' : 'Marcar como no reponer'}
+                  >
+                    {p.is_discontinued ? "Sí - reactivar" : "No - descontinuar"}
+                  </button>
+                </td>
                 <td><button onClick={() => setSelected(p)}>Ver</button></td>
               </tr>
             ))}
             {pageItems.length === 0 && (
-              <tr><td colSpan={10}>Sin productos con esos filtros</td></tr>
+              <tr><td colSpan={11}>Sin productos con esos filtros</td></tr>
             )}
           </tbody>
         </table>

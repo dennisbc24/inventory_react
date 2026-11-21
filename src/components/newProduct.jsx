@@ -28,6 +28,7 @@ export const NewProduct = ({urlBase}) => {
   const [proveedor, setProveedor] = useState([{name:'',id_supplier:0}]);
   const [categoria, setCategoria] = useState({name:'',id_category:0});
   const [isOnline, setIsOnline] = useState(false);
+  const [isDiscontinued, setIsDiscontinued] = useState(false);
   const [attributes, setAttributes] = useState({});
   const [stockRows, setStockRows] = useState([]);
 
@@ -55,7 +56,7 @@ export const NewProduct = ({urlBase}) => {
   const handleClear = () => {
     setName(''); setCost(0); setLowest_price(0); setList_price(0);
     setProveedor([{name:'',id_supplier:0}]); setCategoria({name:'',id_category:0});
-    setIsOnline(false); setAttributes({}); setPhoto(null); setFileKey(k=>k+1);
+    setIsOnline(false); setIsDiscontinued(false); setAttributes({}); setPhoto(null); setFileKey(k=>k+1);
     setStockRows([]);
     const form = document.querySelector('form'); if(form) form.reset();
   };
@@ -79,6 +80,7 @@ export const NewProduct = ({urlBase}) => {
     formData.append('fk_supplier', proveedor.id_supplier);
     formData.append('fk_category', categoria.id_category || '');
     formData.append('is_online', isOnline ? 'true' : 'false');
+    formData.append('is_discontinued', isDiscontinued ? 'true' : 'false');
     formData.append('attributes', JSON.stringify(attributes));
     formData.append('photo', photo);
     formData.append('stock', JSON.stringify(stockRows.filter(r => Number(r.amount) > 0)));
@@ -91,7 +93,7 @@ export const NewProduct = ({urlBase}) => {
       // limpiar formulario y archivo
       setName(''); setCost(0); setLowest_price(0); setList_price(0);
       setProveedor([{name:'',id_supplier:0}]); setCategoria({name:'',id_category:0});
-      setIsOnline(false); setAttributes({}); setPhoto(null); setFileKey(k=>k+1);
+      setIsOnline(false); setIsDiscontinued(false); setAttributes({}); setPhoto(null); setFileKey(k=>k+1);
       setStockRows([]);
       // reset inputs no controlados
       const form = document.querySelector('form'); if(form) form.reset();
@@ -121,6 +123,12 @@ export const NewProduct = ({urlBase}) => {
         </label>
       </div>
       {isOnline && <AttributesEditor value={attributes} onChange={setAttributes} />}
+      <div className='inputSimple compact'>
+        <h3>Descontinuado</h3>
+        <label style={{display:'flex',gap:8,alignItems:'center'}}>
+          <input type="checkbox" checked={isDiscontinued} onChange={e=>setIsDiscontinued(e.target.checked)} /> No reponer (descontinuado)
+        </label>
+      </div>
 
       <div className="np_stock">
         <h3>Stock inicial por sucursal (opcional)</h3>
@@ -139,6 +147,7 @@ export const NewProduct = ({urlBase}) => {
       <ParrafoInput titulo={'Proveedor'} parrafo={proveedor.name} clase="parrafoForm compact"/>
       <ParrafoInput titulo={'Categoría'} parrafo={categoria.name} clase="parrafoForm compact"/>
       <ParrafoInput titulo={'Online'} parrafo={isOnline ? 'Sí - visible en shop' : 'No'} clase="parrafoForm compact"/>
+      <ParrafoInput titulo={'Descontinuado'} parrafo={isDiscontinued ? 'Sí - no reponer' : 'No'} clase="parrafoForm compact"/>
       <div className="form_actions">
         <button type="submit" className="btn_primary">Crear Producto</button>
         <button type="button" className="btn_clear" onClick={handleClear}>Limpiar</button>

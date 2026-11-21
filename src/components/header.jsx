@@ -101,6 +101,7 @@ export function Menu() {
           <EnlaceLi name='Buscar Gasto' link='/searchSpends'/>
 <EnlaceLi name='Caja' link='/box'/>
           <EnlaceLi name='Lista de Compras' link='/shoppingList'/>
+          <EnlaceLi name='Proyecciones' link='/proyecciones'/>
           {role === 'admin' ? <EnlaceLi name='Facturas' link='/invoices'/> : null}
           
 
@@ -118,6 +119,7 @@ export function Menu() {
           <EnlaceLi name='BUSCAR STOCK' link='/inventorySearch'/>
           <EnlaceLi name='BUSCAR GASTO' link='/searchSpends'/> 
           <EnlaceLi name='LISTA DE COMPRAS' link='/shoppingList'/>
+          <EnlaceLi name='PROYECCIONES' link='/proyecciones'/>
         </>  : null}
 
     {role === 'admin' || role === 'seller' ? 
