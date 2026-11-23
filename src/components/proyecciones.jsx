@@ -187,8 +187,6 @@ export function Proyecciones({ urlBase }) {
   const [activeProductIndex, setActiveProductIndex] = useState(0);
   const [horizon, setHorizon] = useState(28);
   const [granularity, setGranularity] = useState("day");
-  const [leadTimeMin, setLeadTimeMin] = useState(4);
-  const [leadTimeMax, setLeadTimeMax] = useState(7);
   const [budget, setBudget] = useState(2000);
   const [coverageDays, setCoverageDays] = useState(60);
   const [serviceLevel, setServiceLevel] = useState(0.8);
@@ -342,10 +340,6 @@ export function Proyecciones({ urlBase }) {
       if (skuId) params.set("sku_id", skuId);
       params.set("horizon", String(horizon));
       params.set("granularity", granularity);
-      const minLead = Math.max(0, Number(leadTimeMin) || 0);
-      const maxLead = Math.max(minLead, Number(leadTimeMax) || 0);
-      params.set("lead_time_min", String(minLead));
-      params.set("lead_time_max", String(maxLead));
       const { data } = await axios.get(
         `${urlBase}/api/v1/forecasting/demand?${params.toString()}`
       );
@@ -374,10 +368,6 @@ export function Proyecciones({ urlBase }) {
       params.set("budget", String(budget));
       params.set("coverage_days", String(Math.max(60, Number(coverageDays) || 60)));
       params.set("service_level", String(serviceLevel));
-      const minLead = Math.max(0, Number(leadTimeMin) || 0);
-      const maxLead = Math.max(minLead, Number(leadTimeMax) || 0);
-      params.set("lead_time_min", String(minLead));
-      params.set("lead_time_max", String(maxLead));
       const { data } = await axios.get(
         `${urlBase}/api/v1/forecasting/restock?${params.toString()}`
       );
@@ -684,43 +674,6 @@ export function Proyecciones({ urlBase }) {
             </select>
           </div>
 
-          <div className="proyecciones_field">
-            <label htmlFor="proyecciones_lead_min">Lead time mín. (días)</label>
-            <input
-              id="proyecciones_lead_min"
-              type="number"
-              min="0"
-              step="1"
-              className="only_input"
-              value={leadTimeMin}
-              onChange={(event) => setLeadTimeMin(Number(event.target.value))}
-              onBlur={() => {
-                const next = Math.max(0, Number(leadTimeMin) || 0);
-                setLeadTimeMin(next);
-                setLeadTimeMax((current) =>
-                  Math.max(next, Number(current) || 0)
-                );
-              }}
-            />
-          </div>
-
-          <div className="proyecciones_field">
-            <label htmlFor="proyecciones_lead_max">Lead time máx. (días)</label>
-            <input
-              id="proyecciones_lead_max"
-              type="number"
-              min="0"
-              step="1"
-              className="only_input"
-              value={leadTimeMax}
-              onChange={(event) => setLeadTimeMax(Number(event.target.value))}
-              onBlur={() => {
-                const min = Math.max(0, Number(leadTimeMin) || 0);
-                setLeadTimeMax(Math.max(min, Number(leadTimeMax) || 0));
-              }}
-            />
-          </div>
-
           <ButtonSave
             titulo={loading ? "Calculando..." : "Ver proyecciones"}
             func={loadForecast}
@@ -729,11 +682,11 @@ export function Proyecciones({ urlBase }) {
         </div>
         <p className="proyecciones_hint">
           La proyección usa el historial de ventas, feriados, quincenas y
-          temporadas. El lead time seleccionado se aplica a todos los productos
-          de este cálculo. El stock mostrado es el total de todas las
-          sucursales; la sucursal filtra solo la demanda. Si elegís un producto,
-          el cálculo es más rápido. La búsqueda ignora tildes y tolera errores
-          menores de escritura.
+          temporadas. El lead time es fijo (4 a 20 días) para todos los
+          productos. El stock mostrado es el total de todas las sucursales; la
+          sucursal filtra solo la demanda. Si elegís un producto, el cálculo es
+          más rápido. La búsqueda ignora tildes y tolera errores menores de
+          escritura.
         </p>
       </section>
 
@@ -1166,45 +1119,6 @@ export function Proyecciones({ urlBase }) {
               <option value={0.95}>95%</option>
             </select>
           </div>
-          <div className="proyecciones_field">
-            <label htmlFor="proyecciones_plan_lead_min">
-              Lead time mín. (días)
-            </label>
-            <input
-              id="proyecciones_plan_lead_min"
-              type="number"
-              min="0"
-              step="1"
-              className="only_input"
-              value={leadTimeMin}
-              onChange={(event) => setLeadTimeMin(Number(event.target.value))}
-              onBlur={() => {
-                const next = Math.max(0, Number(leadTimeMin) || 0);
-                setLeadTimeMin(next);
-                setLeadTimeMax((current) =>
-                  Math.max(next, Number(current) || 0)
-                );
-              }}
-            />
-          </div>
-          <div className="proyecciones_field">
-            <label htmlFor="proyecciones_plan_lead_max">
-              Lead time máx. (días)
-            </label>
-            <input
-              id="proyecciones_plan_lead_max"
-              type="number"
-              min="0"
-              step="1"
-              className="only_input"
-              value={leadTimeMax}
-              onChange={(event) => setLeadTimeMax(Number(event.target.value))}
-              onBlur={() => {
-                const min = Math.max(0, Number(leadTimeMin) || 0);
-                setLeadTimeMax(Math.max(min, Number(leadTimeMax) || 0));
-              }}
-            />
-          </div>
           <ButtonSave
             titulo={planLoading ? "Calculando..." : "Calcular reposición"}
             func={loadPlan}
@@ -1214,10 +1128,11 @@ export function Proyecciones({ urlBase }) {
         <p className="proyecciones_hint">
           La reposición usa el stock total de todas las sucursales y la
           demanda de la sucursal seleccionada (o de todas). La cantidad
-          sugerida cubre el lead time seleccionado más al menos 60 días de
-          ventas proyectadas. Ocultá un producto para liberar presupuesto y
-          financiar el siguiente. Si un producto no se volverá a comprar,
-          marcalo como “Descontinuar” para excluirlo de la reposición.
+          sugerida cubre el lead time fijo (4 a 20 días) más al menos 60 días
+          de ventas proyectadas. El cálculo se precalcula una vez al día, así
+          que esta vista responde al instante. Ocultá un producto para liberar
+          presupuesto y financiar el siguiente. Si un producto no se volverá a
+          comprar, marcalo como “Descontinuar” para excluirlo de la reposición.
         </p>
 
         {planError ? (
