@@ -203,6 +203,12 @@ export function Proyecciones({ urlBase }) {
   const [error, setError] = useState("");
   const [planError, setPlanError] = useState("");
   const [discontinuingKey, setDiscontinuingKey] = useState(null);
+  // Capital Inmovilizado (slow-moving)
+  const [slowMoving, setSlowMoving] = useState(null);
+  const [slowMovingLoading, setSlowMovingLoading] = useState(false);
+  const [slowMovingError, setSlowMovingError] = useState("");
+  const [slowMovingOnlySlow, setSlowMovingOnlySlow] = useState(true);
+  const [activeTab, setActiveTab] = useState("demand"); // "demand", "restock", "slow-moving"
 
   useEffect(() => {
     let active = true;
@@ -381,6 +387,25 @@ export function Proyecciones({ urlBase }) {
     }
   };
 
+  const loadSlowMoving = async () => {
+    setSlowMovingLoading(true);
+    setSlowMovingError("");
+    try {
+      const params = new URLSearchParams();
+      if (branchId) params.set("branch_id", branchId);
+      params.set("only_slow", slowMovingOnlySlow ? "true" : "false");
+      const { data } = await axios.get(
+        `${urlBase}/api/v1/forecasting/slow-moving-capital?${params.toString()}`
+      );
+      setSlowMoving(data);
+    } catch (loadError) {
+      setSlowMoving(null);
+      setSlowMovingError(errorMessage(loadError));
+    } finally {
+      setSlowMovingLoading(false);
+    }
+  };
+
   const planView = useMemo(() => {
     const candidates = (plan?.items || [])
       .filter((item) => item.suggested_order_qty > 0)
@@ -556,8 +581,34 @@ export function Proyecciones({ urlBase }) {
     <div className="proyecciones_page">
       <TitleForm text="Proyecciones" />
 
-      <section className="proyecciones_card">
-        <div className="proyecciones_toolbar">
+      <div className="proyecciones_tabs">
+        <button
+          type="button"
+          className={`proyecciones_tab ${activeTab === "demand" ? "active" : ""}`}
+          onClick={() => setActiveTab("demand")}
+        >
+          Demanda
+        </button>
+        <button
+          type="button"
+          className={`proyecciones_tab ${activeTab === "restock" ? "active" : ""}`}
+          onClick={() => setActiveTab("restock")}
+        >
+          Reposición
+        </button>
+        <button
+          type="button"
+          className={`proyecciones_tab ${activeTab === "slow-moving" ? "active" : ""}`}
+          onClick={() => setActiveTab("slow-moving")}
+        >
+          Capital Inmovilizado
+        </button>
+      </div>
+
+      {activeTab === "demand" && (
+        <>
+          <section className="proyecciones_card">
+            <div className="proyecciones_toolbar">
           <div className="proyecciones_field">
             <label htmlFor="proyecciones_branch">Sucursal</label>
             <select
@@ -690,11 +741,11 @@ export function Proyecciones({ urlBase }) {
         </p>
       </section>
 
-      {error ? <div className="proyecciones_error">{error}</div> : null}
+          {error ? <div className="proyecciones_error">{error}</div> : null}
 
-      {forecast ? (
-        <>
-          <section className="proyecciones_stats">
+          {forecast ? (
+            <>
+              <section className="proyecciones_stats">
             <div className="proyecciones_stat">
               <span>SKU / sucursal</span>
               <strong>{integer(forecasts.length)}</strong>
@@ -998,10 +1049,14 @@ export function Proyecciones({ urlBase }) {
         </section>
       ) : null}
 
-      <section className="proyecciones_card">
-        <div className="proyecciones_card_header">
-          <div>
-            <h3>Reposición con presupuesto</h3>
+        </>
+      )}
+
+      {activeTab === "restock" && (
+        <section className="proyecciones_card">
+          <div className="proyecciones_card_header">
+            <div>
+              <h3>Reposición con presupuesto</h3>
             <p>
               Prioriza la proyección de demanda y el riesgo de quiebre; usa
               rotación, rentabilidad absoluta y urgencia de stock como factores
@@ -1318,6 +1373,177 @@ export function Proyecciones({ urlBase }) {
           </>
         ) : null}
       </section>
+      )}
+
+      {activeTab === "slow-moving" && (
+        <>
+          <section className="proyecciones_card">
+            <div className="proyecciones_card_header">
+              <div>
+                <h3>Capital inmovilizado y baja rotación</h3>
+                <p>
+                  Productos con stock que se venden lento, ordenados por capital
+                  inmovilizado (stock × costo) de mayor a menor: primero los que
+                  más dinero le hacen dormir a la empresa. Rotación medida sobre
+                  los últimos 90 días.
+                </p>
+              </div>
+            </div>
+
+            <div className="proyecciones_toolbar">
+              <div className="proyecciones_field">
+                <label htmlFor="proyecciones_branch_slow">Sucursal</label>
+                <select
+                  id="proyecciones_branch_slow"
+                  className="only_select"
+                  value={branchId}
+                  onChange={(event) => setBranchId(event.target.value)}
+                >
+                  <option value="">Todas las sucursales</option>
+                  {branches.map((branch) => (
+                    <option key={branch.id_branch} value={branch.id_branch}>
+                      {branch.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="proyecciones_field">
+                <label htmlFor="proyecciones_slow_view">Vista</label>
+                <select
+                  id="proyecciones_slow_view"
+                  className="only_select"
+                  value={slowMovingOnlySlow ? "slow" : "all"}
+                  onChange={(event) =>
+                    setSlowMovingOnlySlow(event.target.value === "slow")
+                  }
+                >
+                  <option value="slow">Solo baja rotación</option>
+                  <option value="all">Todo el stock</option>
+                </select>
+              </div>
+              <ButtonSave
+                titulo={slowMovingLoading ? "Calculando..." : "Calcular capital inmovilizado"}
+                func={loadSlowMoving}
+                disabled={slowMovingLoading}
+              />
+            </div>
+            <p className="proyecciones_hint">
+              Baja rotación = sin ventas en 90 días o stock para más de 90 días al
+              ritmo de venta actual. La rotación es la fracción del stock que se
+              vendió en 90 días (menor = más lento). Los productos descontinuados
+              también se incluyen porque son candidatos directos a liquidar.
+            </p>
+          </section>
+
+          {slowMovingError ? (
+            <div className="proyecciones_error">{slowMovingError}</div>
+          ) : null}
+
+          {slowMoving ? (
+            <>
+              <section className="proyecciones_stats">
+                <div className="proyecciones_stat">
+                  <span>SKUs listados</span>
+                  <strong>{integer(slowMoving.summary.total_items)}</strong>
+                </div>
+                <div className="proyecciones_stat">
+                  <span>Capital inmovilizado</span>
+                  <strong>{money(slowMoving.summary.total_capital_inmovilizado)}</strong>
+                </div>
+                <div className="proyecciones_stat">
+                  <span>Capital total con stock</span>
+                  <strong>{money(slowMoving.summary.total_capital_with_stock)}</strong>
+                </div>
+                <div className="proyecciones_stat">
+                  <span>Unidades en stock</span>
+                  <strong>{integer(slowMoving.summary.total_stock_units)}</strong>
+                </div>
+                <div className="proyecciones_stat">
+                  <span>Sin ventas 90d</span>
+                  <strong>{integer(slowMoving.summary.items_with_zero_sales_90d)}</strong>
+                </div>
+                <div className="proyecciones_stat">
+                  <span>Días stock promedio</span>
+                  <strong>{decimal(slowMoving.summary.avg_days_of_supply)}</strong>
+                </div>
+              </section>
+
+              <div className="proyecciones_table_wrap">
+                <table className="proyecciones_table">
+                  <thead>
+                    <tr>
+                      <th>Rank</th>
+                      <th>Producto</th>
+                      <th>Capital inmovilizado</th>
+                      <th>Stock</th>
+                      <th>Costo unit.</th>
+                      <th>Días stock</th>
+                      <th>Rotación 90d</th>
+                      <th>Ventas 90d</th>
+                      <th>Última venta</th>
+                      <th>Ingresos 90d</th>
+                      <th>Ganancia 90d</th>
+                      <th>Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {slowMoving.items.map((item) => (
+                      <tr key={`${item.sku_id}-${item.branch_id}`}>
+                        <td>#{item.rank}</td>
+                        <td>{item.name}</td>
+                        <td>
+                          <strong>{money(item.capital_inmovilizado)}</strong>
+                        </td>
+                        <td>{integer(item.current_stock)}</td>
+                        <td>{money(item.cost)}</td>
+                        <td>
+                          {num(item.days_of_supply) >= 999
+                            ? "999+"
+                            : integer(item.days_of_supply)}
+                        </td>
+                        <td>{percent(item.rotation_score)}</td>
+                        <td>{integer(item.recent_units_90d)}</td>
+                        <td>
+                          {item.last_sale_date
+                            ? `${dayLabel(item.last_sale_date)} · ${integer(
+                                item.days_since_last_sale
+                              )} d`
+                            : "Sin ventas"}
+                        </td>
+                        <td>{money(item.recent_revenue_90d)}</td>
+                        <td>{money(item.recent_profit_90d)}</td>
+                        <td>
+                          {item.is_discontinued ? (
+                            <span className="proyecciones_badge warn">Descontinuado</span>
+                          ) : !item.has_sales_90d ? (
+                            <span className="proyecciones_badge warn">Sin ventas 90d</span>
+                          ) : item.is_slow_moving ? (
+                            <span className="proyecciones_badge">Baja rotación</span>
+                          ) : (
+                            <span className="proyecciones_badge">Rotación normal</span>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {slowMoving.items.length === 0 ? (
+                  <div className="proyecciones_empty">
+                    {slowMovingOnlySlow
+                      ? "No hay productos de baja rotación con stock para mostrar."
+                      : "No hay productos con stock para mostrar."}
+                  </div>
+                ) : null}
+              </div>
+            </>
+          ) : !slowMovingError ? (
+            <section className="proyecciones_card proyecciones_empty">
+              Elegí una sucursal (opcional) y presioná “Calcular capital inmovilizado”.
+            </section>
+          ) : null}
+        </>
+      )}
+
     </div>
   );
 }
